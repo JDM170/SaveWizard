@@ -142,9 +142,9 @@ class SecondWindow(QDialog, Ui_SecondWindow):
     def addGarage(self):
         garage = str(self.ui.garage_lineedit.text()).lower()
         self.ui.garage_lineedit.setText("")
-        if int(self.funcs.getvalue(self.lines,
-                                   self.funcs.searchlineinunit(self.lines, "status:", "garage." + garage))) != 0:
-            self.funcs.showMsgBox("Error", "Garage in \"{}\" already unlocked".format(garage))
+        if self.funcs.getvalue(self.lines,
+                               self.funcs.searchlineinunit(self.lines, "status:", "garage." + garage)) != "0":
+            self.funcs.showMsgBox("Error", "Garage in \"{}\" already unlocked.".format(garage))
         else:
             self.funcs.setvalue(self.lines,
                                 self.funcs.searchlineinunit(self.lines, "status:", "garage." + garage),
@@ -163,19 +163,20 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         try:
             while True:
                 line = self.funcs.searchline(self.lines, "garage : garage.", start=line)
-                if int(self.funcs.getvalue(self.lines, self.searchlineinunit("status:",
-                                                                             self.funcs.getunitname(self.lines, line)))) == 0:
+                if self.funcs.getvalue(self.lines,
+                                       self.funcs.searchlineinunit(self.lines, "status:",
+                                                                   self.funcs.getunitname(self.lines, line))) == "0":
                     self.funcs.setvalue(self.lines,
-                                        self.funcs.searchlineinunit(self.lines, "status:",
-                                                                    self.funcs.getunitname(self.lines, line)),
+                                        self.funcs.searchlineinunit(self.lines,
+                                                                    "status:", self.funcs.getunitname(self.lines, line)),
                                         "6")
                     self.funcs.addarrayvalue(self.lines,
-                                             self.funcs.searchlineinunit(self.lines, "vehicles:",
-                                                                         self.funcs.getunitname(self.lines, line)),
+                                             self.funcs.searchlineinunit(self.lines,
+                                                                         "vehicles:", self.funcs.getunitname(self.lines, line)),
                                              "null")
                     self.funcs.addarrayvalue(self.lines,
-                                             self.funcs.searchlineinunit(self.lines, "drivers:",
-                                                                         self.funcs.getunitname(self.lines, line)),
+                                             self.funcs.searchlineinunit(self.lines,
+                                                                         "drivers:", self.funcs.getunitname(self.lines, line)),
                                              "null")
                 line += 1
         except:
