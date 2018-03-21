@@ -2,6 +2,7 @@
 
 * Author of original "SaveWizard" script: DrEGZo
 * The original script is taken from here: <https://forum.truckersmp.com/index.php?/topic/55773-savewizard/>
+* To decrypt the file the utility is used: <https://github.com/ncs-sniper/SII_Decrypt/>
 
 ***
 
