@@ -1,0 +1,1 @@
+pyuic5 second_form.ui -o second_form.py
