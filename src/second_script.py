@@ -291,5 +291,4 @@ class SecondWindow(QDialog, Ui_SecondWindow):
     # TODO: send self.lines to MainWindow()
     def closeEvent(self, event):
         from main_script import MainWindow
-        mainw = MainWindow()
-        mainw.returnLines(self.lines)
+        MainWindow().returnLines(self.lines)

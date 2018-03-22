@@ -3,7 +3,7 @@
 
 from cx_Freeze import setup, Executable
 
-executables = [Executable('main_script.py',
+executables = [Executable('__init__.py',
                           targetName="SaveWizard.exe",
                           base="Win32GUI")]
 

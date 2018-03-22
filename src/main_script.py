@@ -4,7 +4,6 @@
 from PyQt5.QtWidgets import QMainWindow
 from funcs import *
 from main_form import *
-from wsgiref.validate import validator
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -31,6 +30,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         #
         from PyQt5.QtCore import QRegExp
         from PyQt5.QtGui import QRegExpValidator
+        from wsgiref.validate import validator
         rx_inf = QRegExp("[0-9]{1,9}")
         validator_inf = QRegExpValidator(rx_inf)
         self.ui.money_lineedit.setValidator(validator_inf)
@@ -70,7 +70,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def openSave(self):
         from PyQt5.QtWidgets import QFileDialog
         file, _ = QFileDialog.getOpenFileName(parent=self,
-                                              caption=self.tr("Choose your file..."),
+                                              caption=self.tr("Choose your save file..."),
                                               filter=self.tr("game.sii"),  # ;;Save file (*.sii)
                                               initialFilter=self.tr("game.sii"))
         self.reopen_file()
@@ -268,12 +268,3 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ui.backup.setEnabled(False)
         self.ui.second_window.setEnabled(False)
         return
-
-
-if __name__ == '__main__':
-    from sys import argv, exit
-    from PyQt5.QtWidgets import QApplication
-    app = QApplication(argv)
-    win = MainWindow()
-    win.show()
-    exit(app.exec_())
