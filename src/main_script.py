@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from PyQt5.QtWidgets import QMainWindow
-from funcs import *
 from main_form import *
+from funcs import *
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -48,7 +48,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     # TODO: Custom functions
     def openSecondWin(self):
         from second_script import SecondWindow
-        sec_win = SecondWindow(self.ownsSC, self.ownsFR, self.ownsIT, self.ownsATS, self.lines, self)
+        sec_win = SecondWindow(self.lines, self.ownsSC, self.ownsFR, self.ownsIT, self.ownsATS, self)
         sec_win.show()
 
     def getADRfromLineedit(self):
@@ -141,8 +141,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                                                     self.funcs.searchline(self.lines, "mechanical:"))))
 
     def applyChanges(self):
-        self.applyChanges_1()
-        self.applyChanges_2()
+        if not self.ui.dont_change_all_inf.isChecked():
+            self.applyChanges_1()
+            self.applyChanges_2()
         backup = self.file_path + ".swbak"
         with open(backup, "w") as f:
             f.write(self.oldfile)
@@ -227,7 +228,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.funcs.showMsgBox("Success", "Backup successfully recovered.")
             self.checkSaveFile(self.file_path)
             return
-        except:
+        except IOError:
             self.funcs.showMsgBox("Error", "Backup not found.")
             return
 

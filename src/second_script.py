@@ -1,20 +1,20 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from funcs import *
-from second_form import *
 from PyQt5.QtWidgets import QDialog
+from second_form import *
+from funcs import *
 
 
 class SecondWindow(QDialog, Ui_SecondWindow):
     # TODO: Constructor
-    def __init__(self, ownsSC, ownsFR, ownsIT, ownsATS, lines, parent=None):
+    def __init__(self, lines, ownsSC, ownsFR, ownsIT, ownsATS, parent=None):
         QDialog.__init__(self, parent)
         Ui_SecondWindow.__init__(self)
         self.ui = Ui_SecondWindow()
         self.ui.setupUi(self)
-        #
         self.funcs = Functions()
+        #
         self.lines = lines
         self.ownsSC = ownsSC
         self.ownsFR = ownsFR
@@ -51,6 +51,10 @@ class SecondWindow(QDialog, Ui_SecondWindow):
                             "los_angeles", "san_diego", "carson_city", "las_vegas", "phoenix", "tucson", "sierra_vista",
                             "farmington", "santa_fe", "roswell", "carlsbad_nm"]
         #
+        self.ui.garage_size.addItem("Small")
+        self.ui.garage_size.addItem("Medium")
+        self.ui.garage_size.addItem("Big")
+        #
         self.ui.garages_analyze.clicked.connect(self.checkGarages)
         self.ui.garage_add.clicked.connect(self.addGarage)
         self.ui.garage_unlock_all.clicked.connect(self.addAllGarages)
@@ -64,6 +68,22 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         self.ui.agencies_analyze.clicked.connect(self.checkAgencies)
         self.ui.agency_add.clicked.connect(self.addAgency)
         self.ui.agency_unlock_all.clicked.connect(self.addAllAgency)
+
+    # TODO: Custom functions
+    def check_gsize(self):
+        text = str(self.ui.garage_size.currentText())
+        gsize = 0
+        gstatus = 0
+        if text == "Small":
+            gsize = 1
+            gstatus = 1
+        elif text == "Medium":
+            gsize = 3
+            gstatus = 2
+        elif text == "Big":
+            gsize = 5
+            gstatus = 3
+        return gsize, gstatus
 
     # TODO: Default functions
     def purchasedgarages(self):
@@ -141,24 +161,29 @@ class SecondWindow(QDialog, Ui_SecondWindow):
 
     def addGarage(self):
         garage = str(self.ui.garage_lineedit.text()).lower()
+        if garage is "":
+            self.funcs.showMsgBox("Error", "Enter a name for the city.")
+            return
+        gsize, gstatus = self.check_gsize()
         self.ui.garage_lineedit.setText("")
-        if self.funcs.getvalue(self.lines,
-                               self.funcs.searchlineinunit(self.lines, "status:", "garage." + garage)) != "0":
+        if self.funcs.getvalue(self.lines, self.funcs.searchlineinunit(self.lines, "status:", "garage." + garage)) != "0":
             self.funcs.showMsgBox("Error", "Garage in \"{}\" already unlocked.".format(garage))
         else:
             self.funcs.setvalue(self.lines,
                                 self.funcs.searchlineinunit(self.lines, "status:", "garage." + garage),
-                                "6")
-            self.funcs.addarrayvalue(self.lines,
-                                     self.funcs.searchlineinunit(self.lines, "vehicles:", "garage." + garage),
-                                     "null")
-            self.funcs.addarrayvalue(self.lines,
-                                     self.funcs.searchlineinunit(self.lines, "drivers:", "garage." + garage),
-                                     "null")
+                                str(gstatus))
+            for i in range(gsize):
+                self.funcs.addarrayvalue(self.lines,
+                                         self.funcs.searchlineinunit(self.lines, "vehicles:", "garage." + garage),
+                                         "null")
+                self.funcs.addarrayvalue(self.lines,
+                                         self.funcs.searchlineinunit(self.lines, "drivers:", "garage." + garage),
+                                         "null")
             self.funcs.showMsgBox("Success", "Garage in \"{}\" successfully unlocked.".format(garage))
             self.checkGarages()
 
     def addAllGarages(self):
+        gsize, gstatus = self.check_gsize()
         line = 0
         try:
             while True:
@@ -169,15 +194,16 @@ class SecondWindow(QDialog, Ui_SecondWindow):
                     self.funcs.setvalue(self.lines,
                                         self.funcs.searchlineinunit(self.lines,
                                                                     "status:", self.funcs.getunitname(self.lines, line)),
-                                        "6")
-                    self.funcs.addarrayvalue(self.lines,
-                                             self.funcs.searchlineinunit(self.lines,
-                                                                         "vehicles:", self.funcs.getunitname(self.lines, line)),
-                                             "null")
-                    self.funcs.addarrayvalue(self.lines,
-                                             self.funcs.searchlineinunit(self.lines,
-                                                                         "drivers:", self.funcs.getunitname(self.lines, line)),
-                                             "null")
+                                        str(gstatus))
+                    for i in range(gsize):
+                        self.funcs.addarrayvalue(self.lines,
+                                                 self.funcs.searchlineinunit(self.lines,
+                                                                             "vehicles:", self.funcs.getunitname(self.lines, line)),
+                                                 "null")
+                        self.funcs.addarrayvalue(self.lines,
+                                                 self.funcs.searchlineinunit(self.lines,
+                                                                             "drivers:", self.funcs.getunitname(self.lines, line)),
+                                                 "null")
                 line += 1
         except:
             pass
@@ -186,6 +212,9 @@ class SecondWindow(QDialog, Ui_SecondWindow):
 
     def addCity(self):
         city = str(self.ui.city_lineedit.text()).lower()
+        if city is "":
+            self.funcs.showMsgBox("Error", "Enter a name for the city.")
+            return
         self.ui.city_lineedit.setText("")
         if city in self.funcs.getarrayitems(self.lines,
                                             self.funcs.searchline(self.lines, "visited_cities:")):
@@ -215,6 +244,9 @@ class SecondWindow(QDialog, Ui_SecondWindow):
 
     def addDealership(self):
         dealer = str(self.ui.dealership_lineedit.text()).lower()
+        if dealer is "":
+            self.funcs.showMsgBox("Error", "Enter a name for the city.")
+            return
         self.ui.dealership_lineedit.setText("")
         if (not self.ownsATS and dealer not in self.dealersets2) or (self.ownsATS and dealer not in self.dealersats):
             self.funcs.showMsgBox("Error", "There is no dealership in that city.")
@@ -247,6 +279,9 @@ class SecondWindow(QDialog, Ui_SecondWindow):
 
     def addAgency(self):
         agency = str(self.ui.agency_lineedit.text()).lower()
+        if agency is "":
+            self.funcs.showMsgBox("Error", "Enter a name for the city.")
+            return
         self.ui.agency_lineedit.setText("")
         if (not self.ownsATS and agency not in self.agenciesets2) or (self.ownsATS and agency not in self.agenciesats):
             self.funcs.showMsgBox("Error", "There is no recruitment agency in that city.")
@@ -280,6 +315,9 @@ class SecondWindow(QDialog, Ui_SecondWindow):
 
     def changeHQ(self):
         hq = str(self.ui.headquarter_lineedit.text()).lower()
+        if hq is "":
+            self.funcs.showMsgBox("Error", "Enter a name for the city.")
+            return
         if self.funcs.getvalue(self.lines, self.funcs.searchline(self.lines, "hq_city:")) == hq:
             self.funcs.showMsgBox("Error", "Your headquarter is already in this city")
         elif hq not in self.purchasedgarages():
