@@ -6,25 +6,15 @@ from re import search, match, sub
 
 
 class Functions:
-    # TODO: My Functions
+    # TODO: Custom functions
     @staticmethod
     def showMsgBox(title: str, text: str):
         box = QMessageBox()
         box.setWindowTitle(title)
         box.setText(text)
         box.exec_()
-        return
 
     # TODO: Default functions
-    @staticmethod
-    def getADR(value):
-        bincode = bin(int(value))[2:]
-        bincode = "0" * (6 - len(bincode)) + bincode
-        r = []
-        for i in bincode:
-            r.append(i)
-        return r
-
     @staticmethod
     def searchline(lines, term, start=0, cancel=r"thisstringmustnotexist"):
         if search(term, lines[start]):

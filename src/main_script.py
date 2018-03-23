@@ -45,6 +45,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ui.urgent_delivery_lineedit.setValidator(validator_skill)
         self.ui.ecodriving_lineedit.setValidator(validator_skill)
 
+    # TODO: Default functions
+    @staticmethod
+    def getADR(value):
+        bincode = bin(int(value))[2:]
+        bincode = "0" * (6 - len(bincode)) + bincode
+        r = []
+        for i in bincode:
+            r.append(i)
+        return r
+
     # TODO: Custom functions
     def openSecondWin(self):
         from second_script import SecondWindow
@@ -53,13 +63,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def getADRfromLineedit(self):
         adr_list = list(self.ui.adr_lineedit.text())
-        i = 0
-        for x in adr_list:
-            if (adr_list[i] == ",") or (adr_list[i] == ".") or (adr_list[i] == " "):
-                del adr_list[i]
-                i += 1
-            else:
-                i += 1
+        for i in adr_list:
+            if (i == " ") or (i == ",") or (i == "."):
+                adr_list.remove(i)
         return adr_list
 
     def returnLines(self, lines):
@@ -119,7 +125,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ui.loan_limit_lineedit.setText(str(self.funcs.getvalue(self.lines,
                                                                     self.funcs.searchline(self.lines, "loan_limit:"))))
         #
-        adr = self.funcs.getADR(self.funcs.getvalue(self.lines, self.funcs.searchline(self.lines, "adr:")))
+        adr = self.getADR(self.funcs.getvalue(self.lines, self.funcs.searchline(self.lines, "adr:")))
         adr_list = ""
         for i in range(6):
             if i != 5:
@@ -227,7 +233,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             remove(backup)
             self.funcs.showMsgBox("Success", "Backup successfully recovered.")
             self.checkSaveFile(self.file_path)
-            return
         except IOError:
             self.funcs.showMsgBox("Error", "Backup not found.")
             return

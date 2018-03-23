@@ -25,6 +25,9 @@
   <property name="windowTitle">
    <string>SaveWizard</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="apply">
     <property name="enabled">
@@ -531,14 +534,14 @@
    <widget class="QCheckBox" name="dont_change_all_inf">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>327</y>
-      <width>131</width>
+      <x>110</x>
+      <y>325</y>
+      <width>181</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Don't save all changes</string>
+     <string>Don't save all changes in this form</string>
     </property>
    </widget>
   </widget>

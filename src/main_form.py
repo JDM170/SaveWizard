@@ -14,6 +14,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(380, 390)
         MainWindow.setMinimumSize(QtCore.QSize(380, 390))
         MainWindow.setMaximumSize(QtCore.QSize(380, 390))
+        MainWindow.setLocale(QtCore.QLocale(QtCore.QLocale.English, QtCore.QLocale.UnitedStates))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.apply = QtWidgets.QPushButton(self.centralwidget)
@@ -235,7 +236,7 @@ class Ui_MainWindow(object):
         self.owns_it.setCheckable(True)
         self.owns_it.setObjectName("owns_it")
         self.dont_change_all_inf = QtWidgets.QCheckBox(self.centralwidget)
-        self.dont_change_all_inf.setGeometry(QtCore.QRect(130, 327, 131, 20))
+        self.dont_change_all_inf.setGeometry(QtCore.QRect(110, 325, 181, 20))
         self.dont_change_all_inf.setObjectName("dont_change_all_inf")
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -270,5 +271,5 @@ class Ui_MainWindow(object):
         self.owns_sc.setText(_translate("MainWindow", "Owns Scandinavia?"))
         self.owns_fr.setText(_translate("MainWindow", "Owns France?"))
         self.owns_it.setText(_translate("MainWindow", "Owns Italia?"))
-        self.dont_change_all_inf.setText(_translate("MainWindow", "Don\'t save all changes"))
+        self.dont_change_all_inf.setText(_translate("MainWindow", "Don\'t save all changes in this form"))
 
