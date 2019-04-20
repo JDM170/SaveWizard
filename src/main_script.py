@@ -59,6 +59,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def openSecondWin(self):
         from second_script import SecondWindow
         sec_win = SecondWindow(self.lines, self.ownsSC, self.ownsFR, self.ownsIT, self.ownsATS, self)
+        sec_win.setModal(True)
         sec_win.show()
 
     def getADRfromLineedit(self):

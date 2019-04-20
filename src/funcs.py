@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import QMessageBox
 from re import search, match, sub
 
 
@@ -9,6 +8,7 @@ class Functions:
     # TODO: Custom functions
     @staticmethod
     def showMsgBox(title: str, text: str):
+        from PyQt5.QtWidgets import QMessageBox
         box = QMessageBox()
         box.setWindowTitle(title)
         box.setText(text)
