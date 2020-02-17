@@ -261,7 +261,7 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="garage_lineedit"/>
+     <widget class="QLineEdit" name="garage_edit"/>
     </item>
     <item row="4" column="0">
      <widget class="QPushButton" name="garage_unlock_all">
@@ -318,7 +318,7 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="city_lineedit"/>
+     <widget class="QLineEdit" name="city_edit"/>
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="city_label">
@@ -372,7 +372,7 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="dealership_lineedit"/>
+     <widget class="QLineEdit" name="dealership_edit"/>
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="dealership_label">
@@ -426,7 +426,7 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="agency_lineedit"/>
+     <widget class="QLineEdit" name="agency_edit"/>
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="agency_label">
@@ -480,7 +480,7 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="headquarter_lineedit"/>
+     <widget class="QLineEdit" name="headquarter_edit"/>
     </item>
     <item row="2" column="0">
      <widget class="QPushButton" name="headquarter_change">

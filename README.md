@@ -17,4 +17,10 @@ This program allows:
 
 ***
 
+Requirments:
+Python 3.5.4
+PyQt 5.6.0
+
+***
+
 #### Since the program is in development, I won't give up help and guidance on my errors in the code.

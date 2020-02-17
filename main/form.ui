@@ -103,7 +103,7 @@
     </property>
     <layout class="QGridLayout" name="basic_inf_layout">
      <item row="0" column="1">
-      <widget class="QLineEdit" name="money_lineedit"/>
+      <widget class="QLineEdit" name="money_edit"/>
      </item>
      <item row="0" column="2">
       <widget class="QCheckBox" name="money_dont_change">
@@ -126,7 +126,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="xp_lineedit"/>
+      <widget class="QLineEdit" name="xp_edit"/>
      </item>
      <item row="1" column="2">
       <widget class="QCheckBox" name="xp_dont_change">
@@ -149,7 +149,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="loan_limit_lineedit"/>
+      <widget class="QLineEdit" name="loan_limit_edit"/>
      </item>
      <item row="2" column="2">
       <widget class="QCheckBox" name="loan_limit_dont_change">
@@ -184,7 +184,7 @@
     </property>
     <layout class="QGridLayout" name="skills_layout">
      <item row="1" column="1">
-      <widget class="QLineEdit" name="long_distance_lineedit"/>
+      <widget class="QLineEdit" name="long_distance_edit"/>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="urgent_delivery_label">
@@ -207,10 +207,10 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="adr_lineedit"/>
+      <widget class="QLineEdit" name="adr_edit"/>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="urgent_delivery_lineedit"/>
+      <widget class="QLineEdit" name="urgent_delivery_edit"/>
      </item>
      <item row="3" column="2">
       <widget class="QCheckBox" name="fragile_cargo_dont_change">
@@ -220,7 +220,7 @@
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="ecodriving_lineedit"/>
+      <widget class="QLineEdit" name="ecodriving_edit"/>
      </item>
      <item row="2" column="2">
       <widget class="QCheckBox" name="high_value_cargo_dont_change">
@@ -230,7 +230,7 @@
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="fragile_cargo_lineedit"/>
+      <widget class="QLineEdit" name="fragile_cargo_edit"/>
      </item>
      <item row="0" column="2">
       <widget class="QCheckBox" name="adr_dont_change">
@@ -247,7 +247,7 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="high_value_cargo_lineedit"/>
+      <widget class="QLineEdit" name="high_value_cargo_edit"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="high_value_cargo_label">
