@@ -1,0 +1,14 @@
+{
+	"base": ["aberdeen", "berlin", "bialystok", "birmingham", "bremen", "brno", "brussel", "calais",
+		"debrecen", "dortmund", "dover", "dresden", "edinburgh", "frankfurt",  "glasgow", "graz", "grohningen",
+		"hamburg", "hannover", "innsbruck", "kassel", "klagenfurt", "koln", "kosice", "leipzig", "liege",
+		"linz", "liverpool", "lodz", "london", "luxembourg", "manchester", "mannheim", "munchen", "newcastle",
+		"nurnberg", "ostrava", "pecs", "plymouth", "poznan", "prague", "sheffield", "southampton", "stuttgart",
+		"swansea", "szczecin",  "wien", "zurich"],
+	"east": ["budapest", "gdansk", "krakow", "szeged", "warszava"],
+	"scandinavia": ["aalborg", "bergen", "helsingborg", "kobenhavn", "malmo", "odense", "oslo", "stavanger",
+		"stockholm"],
+	"france": ["bordeaux", "clermont", "geneve", "larochelle", "lyon", "marseille", "metz", "paris", "reims", "rennes",
+		"toulouse"],
+	"italy": ["bologna", "catania", "milano", "napoli", "pescara", "roma", "taranto", "venezia"]
+}

@@ -2,24 +2,27 @@
 <ui version="4.0">
  <class>SecondWindow</class>
  <widget class="QDialog" name="SecondWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>660</width>
-    <height>450</height>
+    <height>440</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>660</width>
-    <height>430</height>
+    <height>440</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>660</width>
-    <height>450</height>
+    <height>440</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -40,8 +43,14 @@
    <layout class="QGridLayout" name="garages_layout">
     <item row="1" column="0">
      <widget class="QTextBrowser" name="garages_text">
+      <property name="acceptDrops">
+       <bool>false</bool>
+      </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="openLinks">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -55,6 +64,9 @@
       </property>
       <property name="text">
        <string>Owned garages:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
@@ -83,29 +95,6 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="cities_layout">
-    <item row="1" column="0">
-     <widget class="QTextBrowser" name="cities_text">
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="openLinks">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="cities_analyze">
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Analyze</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QLabel" name="cities_visited_label">
       <property name="font">
@@ -117,6 +106,22 @@
       <property name="text">
        <string>Visited cities:</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QTextBrowser" name="cities_text">
+      <property name="acceptDrops">
+       <bool>false</bool>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="openLinks">
+       <bool>false</bool>
+      </property>
      </widget>
     </item>
    </layout>
@@ -127,7 +132,7 @@
      <x>10</x>
      <y>250</y>
      <width>131</width>
-     <height>191</height>
+     <height>181</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="dealerships_layout">
@@ -142,25 +147,21 @@
       <property name="text">
        <string>Dealerships:</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </item>
     <item row="1" column="0">
      <widget class="QTextBrowser" name="dealerships_text">
+      <property name="acceptDrops">
+       <bool>false</bool>
+      </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="dealerships_analyze">
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Analyze</string>
+      <property name="openLinks">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -172,7 +173,7 @@
      <x>340</x>
      <y>250</y>
      <width>131</width>
-     <height>191</height>
+     <height>181</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="agencies_layout">
@@ -187,25 +188,21 @@
       <property name="text">
        <string>Agencies:</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </item>
     <item row="1" column="0">
      <widget class="QTextBrowser" name="agencies_text">
+      <property name="acceptDrops">
+       <bool>false</bool>
+      </property>
       <property name="horizontalScrollBarPolicy">
        <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="agencies_analyze">
-      <property name="font">
-       <font>
-        <family>Times New Roman</family>
-        <pointsize>10</pointsize>
-       </font>
-      </property>
-      <property name="text">
-       <string>Analyze</string>
+      <property name="openLinks">
+       <bool>false</bool>
       </property>
      </widget>
     </item>
@@ -217,7 +214,7 @@
      <x>320</x>
      <y>10</y>
      <width>20</width>
-     <height>431</height>
+     <height>420</height>
     </rect>
    </property>
    <property name="orientation">
@@ -256,7 +253,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Add</string>
+       <string>Unlock</string>
       </property>
      </widget>
     </item>
@@ -264,7 +261,7 @@
      <widget class="QLineEdit" name="garage_edit"/>
     </item>
     <item row="4" column="0">
-     <widget class="QPushButton" name="garage_unlock_all">
+     <widget class="QPushButton" name="garage_add_all">
       <property name="font">
        <font>
         <family>Times New Roman</family>
@@ -287,6 +284,9 @@
       <property name="text">
        <string>Enter garage name:</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </item>
     <item row="2" column="0">
@@ -298,7 +298,7 @@
    <property name="geometry">
     <rect>
      <x>480</x>
-     <y>50</y>
+     <y>60</y>
      <width>171</width>
      <height>107</height>
     </rect>
@@ -313,7 +313,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Add</string>
+       <string>Visit</string>
       </property>
      </widget>
     </item>
@@ -331,10 +331,13 @@
       <property name="text">
        <string>Enter city name:</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </item>
     <item row="3" column="0">
-     <widget class="QPushButton" name="city_unlock_all">
+     <widget class="QPushButton" name="city_add_all">
       <property name="font">
        <font>
         <family>Times New Roman</family>
@@ -352,14 +355,14 @@
    <property name="geometry">
     <rect>
      <x>150</x>
-     <y>280</y>
+     <y>290</y>
      <width>171</width>
      <height>107</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="add_dealership">
+   <layout class="QGridLayout" name="add_dealer">
     <item row="2" column="0">
-     <widget class="QPushButton" name="dealership_add">
+     <widget class="QPushButton" name="dealer_add">
       <property name="font">
        <font>
         <family>Times New Roman</family>
@@ -367,15 +370,15 @@
        </font>
       </property>
       <property name="text">
-       <string>Add</string>
+       <string>Research</string>
       </property>
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="dealership_edit"/>
+     <widget class="QLineEdit" name="dealer_edit"/>
     </item>
     <item row="0" column="0">
-     <widget class="QLabel" name="dealership_label">
+     <widget class="QLabel" name="dealer_label">
       <property name="font">
        <font>
         <family>Times New Roman</family>
@@ -385,10 +388,13 @@
       <property name="text">
        <string>Enter dealership name:</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </item>
     <item row="3" column="0">
-     <widget class="QPushButton" name="dealership_unlock_all">
+     <widget class="QPushButton" name="dealer_add_all">
       <property name="font">
        <font>
         <family>Times New Roman</family>
@@ -396,7 +402,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Unlock all</string>
+       <string>Research all</string>
       </property>
      </widget>
     </item>
@@ -406,7 +412,7 @@
    <property name="geometry">
     <rect>
      <x>480</x>
-     <y>280</y>
+     <y>290</y>
      <width>171</width>
      <height>107</height>
     </rect>
@@ -421,12 +427,9 @@
        </font>
       </property>
       <property name="text">
-       <string>Add</string>
+       <string>Research</string>
       </property>
      </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLineEdit" name="agency_edit"/>
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="agency_label">
@@ -439,10 +442,13 @@
       <property name="text">
        <string>Enter agency name:</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </item>
     <item row="3" column="0">
-     <widget class="QPushButton" name="agency_unlock_all">
+     <widget class="QPushButton" name="agency_add_all">
       <property name="font">
        <font>
         <family>Times New Roman</family>
@@ -450,9 +456,12 @@
        </font>
       </property>
       <property name="text">
-       <string>Unlock all</string>
+       <string>Research all</string>
       </property>
      </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLineEdit" name="agency_edit"/>
     </item>
    </layout>
   </widget>
@@ -477,6 +486,9 @@
       <property name="text">
        <string>Your headquarter:</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
     </item>
     <item row="1" column="0">
@@ -498,6 +510,28 @@
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>garages_text</tabstop>
+  <tabstop>garages_analyze</tabstop>
+  <tabstop>garage_edit</tabstop>
+  <tabstop>garage_size</tabstop>
+  <tabstop>garage_add</tabstop>
+  <tabstop>garage_add_all</tabstop>
+  <tabstop>headquarter_edit</tabstop>
+  <tabstop>headquarter_change</tabstop>
+  <tabstop>cities_text</tabstop>
+  <tabstop>city_edit</tabstop>
+  <tabstop>city_add</tabstop>
+  <tabstop>city_add_all</tabstop>
+  <tabstop>dealerships_text</tabstop>
+  <tabstop>dealer_edit</tabstop>
+  <tabstop>dealer_add</tabstop>
+  <tabstop>dealer_add_all</tabstop>
+  <tabstop>agencies_text</tabstop>
+  <tabstop>agency_edit</tabstop>
+  <tabstop>agency_add</tabstop>
+  <tabstop>agency_add_all</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

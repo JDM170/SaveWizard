@@ -3,16 +3,28 @@
 
 from PyQt5.QtWidgets import QMessageBox
 from re import search, match, sub
+lines = ''
 
 
-def show_message(title: str, text: str):
+def set_lines(from_other):
+    global lines
+    lines = from_other
+
+
+def get_lines():
+    global lines
+    return lines
+
+
+def show_message(title, text):
     box = QMessageBox()
     box.setWindowTitle(title)
     box.setText(text)
     box.exec_()
 
 
-def searchline(lines, term, start=0, cancel=r"thisstringmustnotexist"):
+def search_line(term, start=0, cancel=r"this_string_must_not_exist"):
+    global lines
     if search(term, lines[start]):
         return start
     start += 1
@@ -25,77 +37,89 @@ def searchline(lines, term, start=0, cancel=r"thisstringmustnotexist"):
     return None
 
 
-def searchlineinunit(lines, term, unit):
-    line = searchline(lines, " : " + unit + " {")
-    return searchline(lines, term, start=line, cancel="}")
+def search_line_in_unit(term, unit):
+    global lines
+    line = search_line(" : " + unit + " {")
+    return search_line(term, start=line, cancel="}")
 
 
-def searchalllines(lines, term):
+def search_all_lines(term):
+    global lines
     matches = []
     start = 0
-    while searchline(lines, term, start=start + 1):
-        start = searchline(lines, term, start=start + 1)
+    while search_line(term, start=start + 1):
+        start = search_line(term, start=start + 1)
         matches.append(start)
     if matches is None:
         return None
     return matches
 
 
-def getvalue(lines, line):
+def get_value(line):
+    global lines
     return search(r": (.+)$", lines[line]).group(1)
 
 
-def setvalue(lines, line, value):
+def set_value(line, value):
+    global lines
     name = match(r"(.+):", lines[line]).group(1)
     lines[line] = name + ": " + value
 
 
-def getunitname(lines, line):
+def get_unit_name(line):
+    global lines
     return search(r" : (.+) {$", lines[line]).group(1)
 
 
-def getarraylength(lines, line):
+def get_array_length(line):
+    global lines
     return int(search(r": ([0-9]+)$", lines[line]).group(1))
 
 
-def getarrayvaluebyindex(lines, line, index):
+def get_array_value_by_index(line, index):
+    global lines
     return search(r": (.+)$", lines[line + index + 1]).group(1)
 
 
-def getarrayindexbyvalue(lines, line, value):
+def get_array_index_by_value(line, value):
+    global lines
     count = 0
-    for i in range(getarraylength(lines, line)):
-        if getvalue(lines, line + count + 1) == value:
+    for i in range(get_array_length(line)):
+        if get_value(line + count + 1) == value:
             return count
         count += 1
     return None
 
 
-def getarrayitems(lines, line):
+def get_array_items(line):
+    global lines
     items = []
-    count = getarraylength(lines, line)
-    for i in range(count):
+    for i in range(get_array_length(line)):
         items.append(search(r": (.+)$", lines[line + i + 1]).group(1))
     if items is None:
         return None
     return items
 
 
-def addarrayvalue(lines, line, value):
-    count = getarraylength(lines, line)
+def add_array_value(line, value):
+    global lines
     name = match(r"(.+):", lines[line]).group(1)
+    count = get_array_length(line)
     lines[line] = name + ": " + str(count + 1)
     lines.insert(line + count + 1, name + "[" + str(count) + "]: " + value)
 
 
-def removearrayvalue(lines, line, value):
+def remove_array_value(line, value):
+    global lines
     name = match(r"(.+):", lines[line]).group(1)
-    del lines[line + 1 + getarrayindexbyvalue(lines, line, value)]
-    lines[line] = name + ": " + str(getarraylength(lines, line) - 1)
-    for i in range(getarraylength(lines, line)):
+    del lines[line + 1 + get_array_index_by_value(line, value)]
+    count = get_array_length(line)
+    lines[line] = name + ": " + str(count - 1)
+    for i in range(count):
         lines[line + i + 1] = sub(r"\[[0-9]+\]", "[" + str(i) + "]", lines[line + i + 1])
 
 
-def changearrayvalue(lines, line, index, value):
+def change_array_value(line, index, value):
+    global lines
     line += index + 1
-    setvalue(lines, line, value)
+    set_value(line, value)

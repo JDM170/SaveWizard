@@ -1,0 +1,7 @@
+{
+	"arizona": "company.volatile.aport_phx.phoenix",
+	"new_mexico": "company.volatile.aport_abq.albuquerque",
+	"oregon": "company.volatile.aport_pcc.portland",
+	"washington": "company.volatile.port_sea.seattle",
+	"utah": "company.volatile.gal_oil_sit.price"
+}

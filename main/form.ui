@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>380</width>
-    <height>390</height>
+    <width>360</width>
+    <height>370</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>380</width>
-    <height>390</height>
+    <width>360</width>
+    <height>370</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>380</width>
-    <height>390</height>
+    <width>360</width>
+    <height>370</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -35,9 +35,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>216</x>
-      <y>352</y>
-      <width>151</width>
+      <x>210</x>
+      <y>330</y>
+      <width>141</width>
       <height>31</height>
      </rect>
     </property>
@@ -57,9 +57,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>6</x>
-      <y>352</y>
-      <width>151</width>
+      <x>10</x>
+      <y>330</y>
+      <width>141</width>
       <height>31</height>
      </rect>
     </property>
@@ -95,9 +95,9 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>72</y>
-      <width>361</width>
+      <x>14</x>
+      <y>50</y>
+      <width>331</width>
       <height>81</height>
      </rect>
     </property>
@@ -176,9 +176,9 @@
    <widget class="QWidget" name="gridLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>160</y>
-      <width>361</width>
+      <x>14</x>
+      <y>138</y>
+      <width>331</width>
       <height>161</height>
      </rect>
     </property>
@@ -329,9 +329,9 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>360</y>
-      <width>31</width>
+      <x>160</x>
+      <y>340</y>
+      <width>41</width>
       <height>21</height>
      </rect>
     </property>
@@ -339,205 +339,13 @@
      <string>...</string>
     </property>
    </widget>
-   <widget class="QCheckBox" name="owns_sc">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>50</y>
-      <width>131</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="palette">
-     <palette>
-      <active>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </active>
-      <inactive>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </inactive>
-      <disabled>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </disabled>
-     </palette>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::RightToLeft</enum>
-    </property>
-    <property name="text">
-     <string>Owns Scandinavia?</string>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="owns_fr">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>160</x>
-      <y>50</y>
-      <width>101</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="palette">
-     <palette>
-      <active>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </active>
-      <inactive>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </inactive>
-      <disabled>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </disabled>
-     </palette>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::RightToLeft</enum>
-    </property>
-    <property name="text">
-     <string>Owns France?</string>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QCheckBox" name="owns_it">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>50</y>
-      <width>91</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="palette">
-     <palette>
-      <active>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </active>
-      <inactive>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </inactive>
-      <disabled>
-       <colorrole role="WindowText">
-        <brush brushstyle="SolidPattern">
-         <color alpha="255">
-          <red>0</red>
-          <green>0</green>
-          <blue>0</blue>
-         </color>
-        </brush>
-       </colorrole>
-      </disabled>
-     </palette>
-    </property>
-    <property name="font">
-     <font>
-      <family>Times New Roman</family>
-      <pointsize>10</pointsize>
-     </font>
-    </property>
-    <property name="layoutDirection">
-     <enum>Qt::RightToLeft</enum>
-    </property>
-    <property name="text">
-     <string>Owns Italia?</string>
-    </property>
-    <property name="checkable">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QCheckBox" name="dont_change_all_inf">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>325</y>
+      <x>90</x>
+      <y>300</y>
       <width>181</width>
-      <height>20</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -546,6 +354,31 @@
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>path_button</tabstop>
+  <tabstop>money_edit</tabstop>
+  <tabstop>money_dont_change</tabstop>
+  <tabstop>xp_edit</tabstop>
+  <tabstop>xp_dont_change</tabstop>
+  <tabstop>loan_limit_edit</tabstop>
+  <tabstop>loan_limit_dont_change</tabstop>
+  <tabstop>adr_edit</tabstop>
+  <tabstop>adr_dont_change</tabstop>
+  <tabstop>long_distance_edit</tabstop>
+  <tabstop>long_distance_dont_change</tabstop>
+  <tabstop>high_value_cargo_edit</tabstop>
+  <tabstop>high_value_cargo_dont_change</tabstop>
+  <tabstop>fragile_cargo_edit</tabstop>
+  <tabstop>fragile_cargo_dont_change</tabstop>
+  <tabstop>urgent_delivery_edit</tabstop>
+  <tabstop>urgent_delivery_dont_change</tabstop>
+  <tabstop>ecodriving_edit</tabstop>
+  <tabstop>ecodriving_dont_change</tabstop>
+  <tabstop>dont_change_all_inf</tabstop>
+  <tabstop>backup</tabstop>
+  <tabstop>second_window</tabstop>
+  <tabstop>apply</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

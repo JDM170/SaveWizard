@@ -4,6 +4,7 @@
 from PyQt5.QtWidgets import QMainWindow
 from .form import Ui_MainWindow
 from util import *
+from dataIO import dataIO
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -13,19 +14,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         Ui_MainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        
+
         self.file_path = ""
         self.old_file = ""
-        self.lines = ""
-        self.owns_sc = False
-        self.owns_fr = False
-        self.owns_it = False
-        self.owns_ats = False
-        
-        self.ui.path_button.clicked.connect(self.open_save)
-        self.ui.apply.clicked.connect(self.apply_changes)
-        self.ui.backup.clicked.connect(self.recover_backup)
-        self.ui.second_window.clicked.connect(self.open_second_win)
+
+        if dataIO.is_valid_json("dlc.json") is False:
+            self.owns = False
+            show_message("Error", "'dlc.json' not found, functionality has been limited")
+        else:
+            self.owns = {}
+            self.dlc = dataIO.load_json("dlc.json")
 
         self.basic_edits = {
             self.ui.money_edit: [self.ui.money_dont_change, "money_account:"],
@@ -42,16 +40,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         from PyQt5.QtCore import QRegExp
         from PyQt5.QtGui import QRegExpValidator
-        # Money, exp, loan limit validators
-        rx_inf = QRegExp("[0-9]{1,9}")
-        validator_inf = QRegExpValidator(rx_inf)
+
+        validator_inf = QRegExpValidator(QRegExp("[0-9]{1,9}"))
         for key in self.basic_edits.keys():
             key.setValidator(validator_inf)
-        # Skill validators
-        rx_skill = QRegExp("[0-6]{1,1}")
-        validator_skill = QRegExpValidator(rx_skill)
+            key.textEdited.connect(self.text_edited)
+
+        self.ui.adr_edit.textEdited.connect(self.text_edited)  # TODO: Validator for ADR
+        validator_skill = QRegExpValidator(QRegExp("[0-6]{1,1}"))
         for key in self.skill_edits.keys():
             key.setValidator(validator_skill)
+            key.textEdited.connect(self.text_edited)
+
+        self.ui.path_button.clicked.connect(self.open_save)
+        self.ui.apply.clicked.connect(self.apply_changes)
+        self.ui.backup.clicked.connect(self.recover_backup)
+        self.ui.second_window.clicked.connect(self.open_second_win)
+
+    def text_edited(self):
+        sender = self.sender()
+        if sender in self.basic_edits:
+            self.basic_edits[sender][0].setChecked(False)
+        if sender == self.ui.adr_edit:
+            self.ui.adr_dont_change.setChecked(False)
+        if sender in self.skill_edits:
+            self.skill_edits[sender][0].setChecked(False)
 
     @staticmethod
     def get_adr(value):
@@ -62,12 +75,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             r.append(i)
         return r
 
-    def open_second_win(self):
-        from second.script import SecondWindow
-        second_win = SecondWindow(self.lines, self.owns_sc, self.owns_fr, self.owns_it, self.owns_ats, self)
-        second_win.setModal(True)
-        second_win.show()
-
     def get_adr_from_line(self):
         adr_list = list(self.ui.adr_edit.text())
         for i in adr_list:
@@ -75,22 +82,28 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 adr_list.remove(i)
         return adr_list
 
-    def return_lines(self, lines):
-        self.lines = lines
-        return
+    def reopen_file(self):
+        self.file_path = ""
+        self.old_file = ""
+        set_lines("")
 
-    def open_save(self):
-        from PyQt5.QtWidgets import QFileDialog
-        file, _ = QFileDialog.getOpenFileName(parent=self,
-                                              caption=self.tr("Choose your save file..."),
-                                              filter=self.tr("game.sii"),  # ;;Save file (*.sii)
-                                              initialFilter=self.tr("game.sii"))
-        self.reopen_file()
-        if file != "":
-            self.file_path = file
-            self.check_save_file(self.file_path)
-        else:
-            return
+        if self.owns is not False:
+            self.owns = {}
+
+        for key, value in self.basic_edits.items():
+            key.setText("")
+            value[0].setChecked(True)
+
+        self.ui.adr_edit.setText("")
+        self.ui.adr_dont_change.setChecked(True)
+        for key, value in self.skill_edits.items():
+            key.setText("")
+            value[0].setChecked(True)
+
+        self.ui.apply.setEnabled(False)
+        self.ui.backup.setEnabled(False)
+        self.ui.second_window.setEnabled(False)
+        # return
 
     def check_save_file(self, file):
         try:
@@ -106,45 +119,48 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             except UnicodeDecodeError:
                 show_message("Error", "Error to decrypt and open file. Try again.")
                 return
-        self.lines = self.old_file.split("\n")
-        for i in self.lines:
-            if "company.volatile.sag_tre.oslo" in i:
-                self.owns_sc = True
-                self.ui.owns_sc.setChecked(True)
-            if "company.volatile.lisette_log.roscoff" in i:
-                self.owns_fr = True
-                self.ui.owns_fr.setChecked(True)
-            if "company.volatile.marina_it.ancona" in i:
-                self.owns_it = True
-                self.ui.owns_it.setChecked(True)
-            if "company.volatile.gal_oil_gst.oakland" in i:
-                self.owns_ats = True
+        set_lines(self.old_file.split("\n"))
+
+        if self.owns is not False:
+            self.owns["base"] = True
+            for i in get_array_items(search_line("companies:")):
+                for key, value in self.dlc.items():
+                    if value in i:
+                        self.owns[key] = True
 
         for key, value in self.basic_edits.items():
-            key.setText(str(getvalue(self.lines, searchline(self.lines, value[1]))))
+            key.setText(str(get_value(search_line(value[1]))))
 
-        adr = self.get_adr(getvalue(self.lines, searchline(self.lines, "adr:")))
+        adr = self.get_adr(get_value(search_line("adr:")))
         adr_list = ""
         for i in range(6):
-            if i != 5:
-                elem = adr[i] + ","
-            else:
-                elem = adr[i]
-            adr_list += elem
+            adr_list += adr[i] + "," if i != 5 else adr[i]
         self.ui.adr_edit.setText(adr_list)
 
         for key, value in self.skill_edits.items():
-            key.setText(str(getvalue(self.lines, searchline(self.lines, value[1]))))
+            key.setText(str(get_value(search_line(value[1]))))
 
         self.ui.apply.setEnabled(True)
         self.ui.backup.setEnabled(True)
         self.ui.second_window.setEnabled(True)
 
+    def open_save(self):
+        from PyQt5.QtWidgets import QFileDialog
+        file, _ = QFileDialog.getOpenFileName(parent=self,
+                                              caption=self.tr("Choose your save file..."),
+                                              filter=self.tr("game.sii"))
+        self.reopen_file()
+        if file != "":
+            self.file_path = file
+            self.check_save_file(self.file_path)
+        else:
+            return
+
     def apply_changes(self):
         if not self.ui.dont_change_all_inf.isChecked():
             for key, value in self.basic_edits.items():
                 if not value[0].isChecked():
-                    setvalue(self.lines, searchline(self.lines, value[1]), str(key.text()))
+                    set_value(search_line(value[1]), key.text())
                 value[1].setChecked(False)
             if not self.ui.adr_dont_change.isChecked():
                 adr_set = self.get_adr_from_line()
@@ -154,16 +170,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     show_message("Error", "ADR can't have more than 6 elements.")
                 else:
                     adr_new = int("".join(adr_set), 2)
-                    setvalue(self.lines, searchline(self.lines, "adr:"), str(adr_new))
+                    set_value(search_line("adr:"), str(adr_new))
             for key, value in self.skill_edits.items():
                 if not value[0].isChecked():
-                    setvalue(self.lines, searchline(self.lines, value[1]), str(key.text()))
+                    set_value(search_line(value[1]), key.text())
                 value[1].setChecked(False)
         backup = self.file_path + ".swbak"
         with open(backup, "w") as f:
             f.write(self.old_file)
         with open(self.file_path, "w") as f:
-            f.write("\n".join(self.lines))
+            f.write("\n".join(get_lines()))
         show_message("Success", "Changes successfully applied!")
         self.check_save_file(self.file_path)
         return
@@ -183,28 +199,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             show_message("Error", "Backup not found.")
             return
 
-    def reopen_file(self):
-        self.file_path = ""
-        self.old_file = ""
-        self.lines = ""
-
-        self.owns_sc = False
-        self.owns_fr = False
-        self.owns_it = False
-        self.ui.owns_sc.setChecked(False)
-        self.ui.owns_fr.setChecked(False)
-        self.ui.owns_it.setChecked(False)
-        self.owns_ats = False
-
-        for key, value in self.basic_edits.items():
-            key.setText("")
-            value[0].setChecked(False)
-
-        for key, value in self.skill_edits.items():
-            key.setText("")
-            value[0].setChecked(False)
-
-        self.ui.apply.setEnabled(False)
-        self.ui.backup.setEnabled(False)
-        self.ui.second_window.setEnabled(False)
-        return
+    def open_second_win(self):
+        from second.script import SecondWindow
+        second_win = SecondWindow(self.owns, self)
+        second_win.show()

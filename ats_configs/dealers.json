@@ -1,0 +1,8 @@
+{
+	"base": ["bakersfield", "los_angeles", "sacramento", "santa_cruz", "san_diego", "san_francisco"],
+	"arizona": ["flagstaff", "phoenix", "tucson", "yuma"],
+	"new_mexico": ["alamogordo", "albuquerque", "farmington", "hobbs"],
+	"oregon": ["eugene", "medford", "pendleton", "portland", "salem"],
+	"washington": ["bellingham", "seattle", "spokane", "tacoma", "yakima"],
+	"utah": ["ogden", "price", "provo", "salina", "salt_lake_city", "vernal"]
+}

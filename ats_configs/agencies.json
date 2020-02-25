@@ -1,0 +1,9 @@
+{
+	"base": ["bakersfield", "fresno", "los_angeles", "oxnard", "redding", "san_diego",
+		"san_rafael", "santa_cruz", "stockton", "carson_city", "las_vegas"],
+	"arizona": ["phoenix", "sierra_vista", "tucson"],
+	"new_mexico": ["carlsbad_nm", "farmington", "roswell", "santa_fe"],
+	"oregon": ["bend", "eugene", "ontario", "salem"],
+	"washington": ["bellingham", "olympia", "seattle", "wenatchee", "yakima"],
+	"utah": ["moab", "salt_lake_city", "st_george"]
+}

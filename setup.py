@@ -3,13 +3,13 @@
 
 from cx_Freeze import setup, Executable
 
-executables = [Executable('__init__.py', targetName="SaveWizard.exe", base="Win32GUI")]
-excludes = ['email', 'html', 'http', 'logging', 'pydoc_data', 'unittest', 'urllib', 'xml', 'tempfile', 'select',
-            'datetime', 'hashlib', 'shlex', 'shutil', 'socket', 'platform', 'webbrowser', 'pydoc', 'selectors', 'tty',
-            'inspect', 'doctest', 'plistlib', 'calendar', 'subprocess', 'copy', 'bz2', 'stringprep', 'posixpath',
-            'dummy_threading', '_strptime', 'pwd']
-zip_include_packages = ['collections', 'encodings', 'importlib', 'PyQt5', 'sip', 'main', 'second']
-include_files = ['SII_Decrypt.exe']
+executables = [Executable('__init__.py', targetName='SaveWizard.exe', base='Win32GUI')]
+excludes = ['email', 'html', 'http', 'logging', 'pydoc_data', 'unittest', 'urllib', 'xml', 'tempfile', 'select', 'pwd',
+            'datetime', 'shlex', 'shutil', 'socket', 'platform', 'webbrowser', 'pydoc', 'selectors', 'tty', 'inspect',
+            'doctest', 'plistlib', 'calendar', 'subprocess', 'copy', 'bz2', 'stringprep', 'posixpath', '_strptime',
+            'dummy_threading']
+zip_include_packages = ['collections', 'encodings', 'importlib', 'json', 'hashlib', 'PyQt5', 'sip', 'main', 'second']
+include_files = ['SII_Decrypt.exe', 'dlc.json', 'dealers.json', 'agencies.json']
 options = {
     'build_exe': {
         'excludes': excludes,
@@ -21,9 +21,10 @@ options = {
 }
 
 setup(
-    name="SaveWizard",
-    version="1.0",
-    description="For editing ETS2 sii files",
+    name='SaveWizard',
+    version='1.1',
+    description='For editing ETS2 sii files',
     executables=executables,
-    options=options
+    options=options,
+    requires=['PyQt5']
 )
