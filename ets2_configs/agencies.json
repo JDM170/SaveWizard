@@ -10,5 +10,8 @@
 		"stockholm"],
 	"france": ["bordeaux", "clermont", "geneve", "larochelle", "lyon", "marseille", "metz", "paris", "reims", "rennes",
 		"toulouse"],
-	"italy": ["bologna", "catania", "milano", "napoli", "pescara", "roma", "taranto", "venezia"]
+	"italy": ["bologna", "catania", "milano", "napoli", "pescara", "roma", "taranto", "venezia"],
+	"balticsea": ["daugavpils", "helsinki", "kaliningrad", "kaunas", "klaipeda", "kouvola", "lahti", "parnu", "pori",
+		"pskov", "riga", "tallinn", "turku", "vilnius"],
+	"blacksea": ["bucuresti", "cluj_napoca", "iasi", "istanbul", "plovdiv", "sofia"]
 }
