@@ -41,18 +41,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         from PyQt5.QtCore import QRegExp
         from PyQt5.QtGui import QRegExpValidator
 
-        validator_inf = QRegExpValidator(QRegExp("[0-9]{1,9}"))
+        basic_validator = QRegExpValidator(QRegExp("[0-9]{1,9}"))
         for key in self.basic_edits.keys():
-            key.setValidator(validator_inf)
+            key.setValidator(basic_validator)
             key.textEdited.connect(self.text_edited)
 
         self.ui.adr_edit.textEdited.connect(self.text_edited)  # TODO: Validator for ADR
-        validator_skill = QRegExpValidator(QRegExp("[0-6]{1,1}"))
+        skills_validator = QRegExpValidator(QRegExp("[0-6]{1,1}"))
         for key in self.skill_edits.keys():
-            key.setValidator(validator_skill)
+            key.setValidator(skills_validator)
             key.textEdited.connect(self.text_edited)
 
-        self.ui.path_button.clicked.connect(self.open_save)
+        self.ui.path_button.clicked.connect(self.open_file_dialog)
         self.ui.apply.clicked.connect(self.apply_changes)
         self.ui.backup.clicked.connect(self.recover_backup)
         self.ui.second_window.clicked.connect(self.open_second_win)
@@ -82,7 +82,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 adr_list.remove(i)
         return adr_list
 
-    def reopen_file(self):
+    def clear_fields(self):
         self.file_path = ""
         self.old_file = ""
         set_lines("")
@@ -103,9 +103,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ui.apply.setEnabled(False)
         self.ui.backup.setEnabled(False)
         self.ui.second_window.setEnabled(False)
-        # return
 
-    def check_save_file(self, file):
+    def get_file_data(self, file):
         try:
             with open(file, "r") as f:
                 self.old_file = f.read()
@@ -144,25 +143,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ui.backup.setEnabled(True)
         self.ui.second_window.setEnabled(True)
 
-    def open_save(self):
+    def open_file_dialog(self):
         from PyQt5.QtWidgets import QFileDialog
         file, _ = QFileDialog.getOpenFileName(parent=self,
                                               caption=self.tr("Choose your save file..."),
                                               filter=self.tr("game.sii"))
-        self.reopen_file()
+        self.clear_fields()
         if file != "":
             self.file_path = file
-            self.check_save_file(self.file_path)
+            self.get_file_data(self.file_path)
         else:
             return
 
     def apply_changes(self):
         if not self.ui.dont_change_all_inf.isChecked():
             for key, value in self.basic_edits.items():
-                if not value[0].isChecked():
+                if value[0].isChecked() is False:
                     set_value(search_line(value[1]), key.text())
-                value[1].setChecked(False)
-            if not self.ui.adr_dont_change.isChecked():
+                    value[0].setChecked(True)
+            if self.ui.adr_dont_change.isChecked() is False:
                 adr_set = self.get_adr_from_line()
                 if len(adr_set) < 6:
                     show_message("Error", "ADR can't have less than 6 elements.")
@@ -172,16 +171,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                     adr_new = int("".join(adr_set), 2)
                     set_value(search_line("adr:"), str(adr_new))
             for key, value in self.skill_edits.items():
-                if not value[0].isChecked():
+                if value[0].isChecked() is False:
                     set_value(search_line(value[1]), key.text())
-                value[1].setChecked(False)
+                    value[0].setChecked(True)
         backup = self.file_path + ".swbak"
         with open(backup, "w") as f:
             f.write(self.old_file)
         with open(self.file_path, "w") as f:
             f.write("\n".join(get_lines()))
         show_message("Success", "Changes successfully applied!")
-        self.check_save_file(self.file_path)
+        self.get_file_data(self.file_path)
         return
 
     def recover_backup(self):
@@ -194,7 +193,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             from os import remove
             remove(backup)
             show_message("Success", "Backup successfully recovered.")
-            self.check_save_file(self.file_path)
+            self.get_file_data(self.file_path)
         except IOError:
             show_message("Error", "Backup not found.")
             return
