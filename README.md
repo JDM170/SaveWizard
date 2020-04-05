@@ -22,8 +22,8 @@ Features:
 ***
 
 Requirments:
-Python 3.5.4,
-PyQt 5.6.0
+* Python 3.5.4 or higher
+* PyQt 5.6.0 or higher
 
 ***
 
