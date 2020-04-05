@@ -1,15 +1,20 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import QMainWindow
+from os import system, remove
+from PyQt5.QtCore import Qt, QRegExp
+from PyQt5.QtGui import QRegExpValidator
+from PyQt5.QtWidgets import QMainWindow, QFileDialog
+
 from .form import Ui_MainWindow
 from util import *
 from dataIO import dataIO
+from second.script import SecondWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
-        from PyQt5.QtCore import Qt
+        # Setup UI
         QMainWindow.__init__(self, parent, flags=Qt.Window)
         Ui_MainWindow.__init__(self)
         self.ui = Ui_MainWindow()
@@ -18,13 +23,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.file_path = ""
         self.old_file = ""
 
+        # Checking DLC file
         if dataIO.is_valid_json("dlc.json") is False:
             self.owns = False
-            show_message("Error", "'dlc.json' not found, functionality has been limited")
+            show_message(QMessageBox.Warning, "Warning", "'dlc.json' not found, functionality has been limited")
         else:
             self.owns = {}
             self.dlc = dataIO.load_json("dlc.json")
 
+        # Storing edits with his checkboxes and file-lines
         self.basic_edits = {
             self.ui.money_edit: [self.ui.money_dont_change, "money_account:"],
             self.ui.xp_edit: [self.ui.xp_dont_change, "experience_points:"],
@@ -38,9 +45,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.ui.ecodriving_edit: [self.ui.ecodriving_dont_change, "mechanical:"],
         }
 
-        from PyQt5.QtCore import QRegExp
-        from PyQt5.QtGui import QRegExpValidator
-
+        # Setting up validators for edits
         basic_validator = QRegExpValidator(QRegExp("[0-9]{1,9}"))
         for key in self.basic_edits.keys():
             key.setValidator(basic_validator)
@@ -52,6 +57,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             key.setValidator(skills_validator)
             key.textEdited.connect(self.text_edited)
 
+        # Connecting buttons
         self.ui.path_button.clicked.connect(self.open_file_dialog)
         self.ui.apply.clicked.connect(self.apply_changes)
         self.ui.backup.clicked.connect(self.recover_backup)
@@ -85,7 +91,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def clear_fields(self):
         self.file_path = ""
         self.old_file = ""
-        set_lines("")
+        set_lines([])
 
         if self.owns is not False:
             self.owns = {}
@@ -110,13 +116,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 self.old_file = f.read()
         except UnicodeDecodeError:
             try:
-                from os import system
                 system("SII_Decrypt.exe --on_file -i \"{}\"".format(file))
                 with open(file, "r") as f:
                     self.old_file = f.read()
-                show_message("Success", "File successfully decrypted.")
+                show_message(QMessageBox.Information, "Success", "File successfully decrypted.")
             except UnicodeDecodeError:
-                show_message("Error", "Error to decrypt and open file. Try again.")
+                show_message(QMessageBox.Critical, "Error", "Error to decrypt and open file. Try again.")
                 return
         set_lines(self.old_file.split("\n"))
 
@@ -144,7 +149,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ui.second_window.setEnabled(True)
 
     def open_file_dialog(self):
-        from PyQt5.QtWidgets import QFileDialog
         file, _ = QFileDialog.getOpenFileName(parent=self,
                                               caption=self.tr("Choose your save file..."),
                                               filter=self.tr("game.sii"))
@@ -164,9 +168,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             if self.ui.adr_dont_change.isChecked() is False:
                 adr_set = self.get_adr_from_line()
                 if len(adr_set) < 6:
-                    show_message("Error", "ADR can't have less than 6 elements.")
+                    show_message(QMessageBox.Critical, "Error", "ADR can't have less than 6 elements.")
                 elif len(adr_set) > 6:
-                    show_message("Error", "ADR can't have more than 6 elements.")
+                    show_message(QMessageBox.Critical, "Error", "ADR can't have more than 6 elements.")
                 else:
                     adr_new = int("".join(adr_set), 2)
                     set_value(search_line("adr:"), str(adr_new))
@@ -179,7 +183,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             f.write(self.old_file)
         with open(self.file_path, "w") as f:
             f.write("\n".join(get_lines()))
-        show_message("Success", "Changes successfully applied!")
+        show_message(QMessageBox.Information, "Success", "Changes successfully applied!")
         self.get_file_data(self.file_path)
         return
 
@@ -190,15 +194,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             with open(self.file_path, "w") as g:
                 g.write(f.read())
             f.close()
-            from os import remove
             remove(backup)
-            show_message("Success", "Backup successfully recovered.")
+            show_message(QMessageBox.Information, "Success", "Backup successfully recovered.")
             self.get_file_data(self.file_path)
         except IOError:
-            show_message("Error", "Backup not found.")
+            show_message(QMessageBox.Critical, "Error", "Backup not found.")
             return
 
     def open_second_win(self):
-        from second.script import SecondWindow
         second_win = SecondWindow(self.owns, self)
         second_win.show()

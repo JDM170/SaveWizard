@@ -9,7 +9,7 @@ excludes = ['email', 'html', 'http', 'logging', 'pydoc_data', 'unittest', 'urlli
             'doctest', 'plistlib', 'calendar', 'subprocess', 'copy', 'bz2', 'stringprep', 'posixpath', '_strptime',
             'dummy_threading']
 zip_include_packages = ['collections', 'encodings', 'importlib', 'json', 'hashlib', 'PyQt5', 'sip', 'main', 'second']
-include_files = ['SII_Decrypt.exe', 'dlc.json', 'dealers.json', 'agencies.json']
+include_files = ['SII_Decrypt.exe', 'ats_configs', 'ets2_configs']
 options = {
     'build_exe': {
         'excludes': excludes,

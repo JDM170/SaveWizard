@@ -1,28 +1,31 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtWidgets import QMessageBox
 from re import search, match, sub
-lines = ''
+from PyQt5.QtWidgets import QMessageBox
+
+lines = []
 
 
-def set_lines(from_other):
+# Custom functions
+def set_lines(new_lines):
     global lines
-    lines = from_other
+    lines = new_lines
 
 
-def get_lines():
+def get_lines(index=None):
     global lines
+    if index is not None:
+        return lines[index]
     return lines
 
 
-def show_message(title, text):
-    box = QMessageBox()
-    box.setWindowTitle(title)
-    box.setText(text)
-    box.exec_()
+def show_message(icon, title, text):
+    box = QMessageBox(icon, title, text, QMessageBox.Ok)
+    box.exec()
 
 
+# Stock functions
 def search_line(term, start=0, cancel=r"this_string_must_not_exist"):
     global lines
     if search(term, lines[start]):
@@ -46,10 +49,10 @@ def search_line_in_unit(term, unit):
 def search_all_lines(term):
     global lines
     matches = []
-    start = 0
-    while search_line(term, start=start + 1):
-        start = search_line(term, start=start + 1)
-        matches.append(start)
+    line = 0
+    while search_line(term, start=line + 1):
+        line = search_line(term, start=line + 1)
+        matches.append(line)
     if matches is None:
         return None
     return matches

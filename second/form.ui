@@ -43,6 +43,12 @@
    <layout class="QGridLayout" name="garages_layout">
     <item row="1" column="0">
      <widget class="QTextBrowser" name="garages_text">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
@@ -64,6 +70,9 @@
       </property>
       <property name="text">
        <string>Owned garages:</string>
+      </property>
+      <property name="textFormat">
+       <enum>Qt::PlainText</enum>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -113,6 +122,12 @@
     </item>
     <item row="1" column="0">
      <widget class="QTextBrowser" name="cities_text">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
@@ -154,6 +169,12 @@
     </item>
     <item row="1" column="0">
      <widget class="QTextBrowser" name="dealerships_text">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
@@ -195,6 +216,12 @@
     </item>
     <item row="1" column="0">
      <widget class="QTextBrowser" name="agencies_text">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
@@ -240,7 +267,7 @@
      <x>150</x>
      <y>10</y>
      <width>171</width>
-     <height>133</height>
+     <height>135</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="add_garage">
@@ -258,7 +285,14 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="garage_edit"/>
+     <widget class="QLineEdit" name="garage_edit">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
     <item row="4" column="0">
      <widget class="QPushButton" name="garage_add_all">
@@ -290,7 +324,14 @@
      </widget>
     </item>
     <item row="2" column="0">
-     <widget class="QComboBox" name="garage_size"/>
+     <widget class="QComboBox" name="garage_size">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -300,7 +341,7 @@
      <x>480</x>
      <y>60</y>
      <width>171</width>
-     <height>107</height>
+     <height>110</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="add_city">
@@ -318,7 +359,14 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="city_edit"/>
+     <widget class="QLineEdit" name="city_edit">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="city_label">
@@ -357,7 +405,7 @@
      <x>150</x>
      <y>290</y>
      <width>171</width>
-     <height>107</height>
+     <height>108</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="add_dealer">
@@ -375,7 +423,14 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="dealer_edit"/>
+     <widget class="QLineEdit" name="dealer_edit">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
     <item row="0" column="0">
      <widget class="QLabel" name="dealer_label">
@@ -414,7 +469,7 @@
      <x>480</x>
      <y>290</y>
      <width>171</width>
-     <height>107</height>
+     <height>108</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="add_agency">
@@ -461,7 +516,14 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="agency_edit"/>
+     <widget class="QLineEdit" name="agency_edit">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -492,7 +554,14 @@
      </widget>
     </item>
     <item row="1" column="0">
-     <widget class="QLineEdit" name="headquarter_edit"/>
+     <widget class="QLineEdit" name="headquarter_edit">
+      <property name="font">
+       <font>
+        <family>Times New Roman</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+     </widget>
     </item>
     <item row="2" column="0">
      <widget class="QPushButton" name="headquarter_change">

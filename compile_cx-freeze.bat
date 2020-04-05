@@ -1,0 +1,1 @@
+pythonqt setup.py build

@@ -95,18 +95,31 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>14</x>
+      <x>10</x>
       <y>50</y>
-      <width>331</width>
+      <width>341</width>
       <height>81</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="basic_inf_layout">
      <item row="0" column="1">
-      <widget class="QLineEdit" name="money_edit"/>
+      <widget class="QLineEdit" name="money_edit">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="0" column="2">
       <widget class="QCheckBox" name="money_dont_change">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Don't change</string>
        </property>
@@ -126,10 +139,23 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="xp_edit"/>
+      <widget class="QLineEdit" name="xp_edit">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="1" column="2">
       <widget class="QCheckBox" name="xp_dont_change">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Don't change</string>
        </property>
@@ -149,10 +175,23 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="loan_limit_edit"/>
+      <widget class="QLineEdit" name="loan_limit_edit">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="2" column="2">
       <widget class="QCheckBox" name="loan_limit_dont_change">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Don't change</string>
        </property>
@@ -176,15 +215,22 @@
    <widget class="QWidget" name="gridLayoutWidget_3">
     <property name="geometry">
      <rect>
-      <x>14</x>
-      <y>138</y>
-      <width>331</width>
+      <x>10</x>
+      <y>140</y>
+      <width>341</width>
       <height>161</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="skills_layout">
      <item row="1" column="1">
-      <widget class="QLineEdit" name="long_distance_edit"/>
+      <widget class="QLineEdit" name="long_distance_edit">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="urgent_delivery_label">
@@ -201,39 +247,91 @@
      </item>
      <item row="5" column="2">
       <widget class="QCheckBox" name="ecodriving_dont_change">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Don't change</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="adr_edit"/>
+      <widget class="QLineEdit" name="adr_edit">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="urgent_delivery_edit"/>
+      <widget class="QLineEdit" name="urgent_delivery_edit">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="3" column="2">
       <widget class="QCheckBox" name="fragile_cargo_dont_change">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Don't change</string>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QLineEdit" name="ecodriving_edit"/>
+      <widget class="QLineEdit" name="ecodriving_edit">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="2" column="2">
       <widget class="QCheckBox" name="high_value_cargo_dont_change">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Don't change</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="fragile_cargo_edit"/>
+      <widget class="QLineEdit" name="fragile_cargo_edit">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="0" column="2">
       <widget class="QCheckBox" name="adr_dont_change">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Don't change</string>
        </property>
@@ -241,13 +339,26 @@
      </item>
      <item row="1" column="2">
       <widget class="QCheckBox" name="long_distance_dont_change">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Don't change</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="high_value_cargo_edit"/>
+      <widget class="QLineEdit" name="high_value_cargo_edit">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="high_value_cargo_label">
@@ -290,6 +401,12 @@
      </item>
      <item row="4" column="2">
       <widget class="QCheckBox" name="urgent_delivery_dont_change">
+       <property name="font">
+        <font>
+         <family>Times New Roman</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Don't change</string>
        </property>
@@ -342,11 +459,17 @@
    <widget class="QCheckBox" name="dont_change_all_inf">
     <property name="geometry">
      <rect>
-      <x>90</x>
+      <x>80</x>
       <y>300</y>
-      <width>181</width>
+      <width>211</width>
       <height>31</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Times New Roman</family>
+      <pointsize>10</pointsize>
+     </font>
     </property>
     <property name="text">
      <string>Don't save all changes in this form</string>

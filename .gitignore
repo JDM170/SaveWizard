@@ -1,0 +1,16 @@
+## Ignoring PyCharm settings
+/.idea
+
+## Ignoring Python complied files
+/__pycache__
+/main/__pycache__
+/second/__pycache__
+/main/form.py
+/second/form.py
+
+## Ignoring build from cx_Freeze
+/stable_build
+
+## Ignoring build files from PyInstaller
+/build
+/dist
