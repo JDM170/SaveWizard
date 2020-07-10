@@ -22,7 +22,7 @@ options = {
 
 setup(
     name='SaveWizard',
-    version='1.1',
+    version='1.1.1',
     description='For editing ETS2 sii files',
     executables=executables,
     options=options,

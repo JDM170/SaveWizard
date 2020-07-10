@@ -8,6 +8,12 @@ from .form import Ui_SecondWindow
 from util import *
 from dataIO import dataIO
 
+garages_stat = {
+    "Small": [1, 1],
+    "Medium": [2, 3],
+    "Big": [3, 5]
+}
+
 
 class SecondWindow(QDialog, Ui_SecondWindow):
     def __init__(self, owns_list, parent=None):
@@ -35,7 +41,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             self.ui.agency_edit.setEnabled(False)
             self.ui.agency_add.setEnabled(False)
             self.ui.agency_add_all.setEnabled(False)
-            show_message(QMessageBox.Warning, "Warning", "'agencies.json' not found, agencies editing has been"
+            show_message(QMessageBox.Warning, "Warning", "'agencies.json' not found, agencies editing has been "
                                                          "disabled")
         else:
             self.agencies = []
@@ -57,8 +63,10 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         self.ui.agency_add.clicked.connect(self.add_agency)
         self.ui.agency_add_all.clicked.connect(self.add_all_agencies)
 
+        if self.owns:
+            self.fill_list(self.dealers, self.dealers_file)
+            self.fill_list(self.agencies, self.agencies_file)
         # Checking save-file
-        self.initialize_arrays()
         self.check_cities()
         self.check_dealers()
         self.check_agencies()
@@ -81,31 +89,18 @@ class SecondWindow(QDialog, Ui_SecondWindow):
                 cities.append(city)
         return cities
 
-    def initialize_arrays(self):
-        if self.owns is False:
+    def fill_list(self, array, file):
+        if array is False:
             return
         for key in self.owns.keys():
-            if self.dealers is not False and key in self.dealers_file:
-                for value in self.dealers_file[key]:
-                    self.dealers.append(value)
-            if self.agencies is not False and key in self.agencies_file:
-                for value in self.agencies_file[key]:
-                    self.agencies.append(value)
+            if key not in file:
+                continue
+            for value in file[key]:
+                array.append(value)
 
     def check_garage_size(self):
-        text = self.ui.garage_size.currentText()
-        status = 0
-        size = 0
-        if text == "Small":
-            status = 1
-            size = 1
-        elif text == "Medium":
-            status = 2
-            size = 3
-        elif text == "Big":
-            status = 3
-            size = 5
-        return str(status), size
+        stat = garages_stat[self.ui.garage_size.currentText()]
+        return str(stat[0]), stat[1]
 
     def check_garages(self):
         self.ui.garages_text.clear()
@@ -130,7 +125,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
                 add_array_value(drivers_array+i, "null")
             show_message(QMessageBox.Information, "Success", "Garage in \"{}\" successfully unlocked.".format(garage))
         else:
-            show_message(QMessageBox.Warning, "Warning", "Garage in \"{}\" already unlocked.".format(garage))
+            show_message(QMessageBox.Critical, "Error", "Garage in \"{}\" already unlocked.".format(garage))
 
     def add_all_garages(self):
         new_status, size = self.check_garage_size()
@@ -153,7 +148,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             show_message(QMessageBox.Critical, "Error", "Enter a name for the city.")
             return
         if get_value(search_line("hq_city:")) == hq:
-            show_message(QMessageBox.Critical, "Error", "Your headquarter is already in this city")
+            show_message(QMessageBox.Information, "Info", "Your headquarter is already in this city")
         elif hq not in self.purchased_garages():
             show_message(QMessageBox.Critical, "Error", "You need to own the garage in this city.")
         else:
@@ -179,7 +174,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         if city not in get_array_items(search_line("visited_cities:")):
             add_array_value(search_line("visited_cities:"), city)
             add_array_value(search_line("visited_cities_count:"), "1")
-            show_message(QMessageBox.Warning, "Success", "City \"{}\" successfully visited.".format(city))
+            show_message(QMessageBox.Information, "Success", "City \"{}\" successfully visited.".format(city))
             self.check_cities()
         else:
             show_message(QMessageBox.Critical, "Error", "You already visited \"{}\".".format(city))
@@ -211,7 +206,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         if dealer not in self.dealers:
             show_message(QMessageBox.Critical, "Error", "There is no dealership in that city.")
         elif dealer in get_array_items(search_line("unlocked_dealers:")):
-            show_message(QMessageBox.Critical, "Error", "This dealership already unlocked.")
+            show_message(QMessageBox.Information, "Info", "This dealership already unlocked.")
         else:
             add_array_value(search_line("unlocked_dealers:"), dealer)
             show_message(QMessageBox.Information, "Success", "Dealership in \"{}\" successfully unlocked."
@@ -245,7 +240,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         if agency not in self.agencies:
             show_message(QMessageBox.Critical, "Error", "There is no recruitment agency in that city.")
         elif agency in get_array_items(search_line("unlocked_recruitments:")):
-            show_message(QMessageBox.Critical, "Error", "Recruitment agency is already unlocked.")
+            show_message(QMessageBox.Information, "Info", "Recruitment agency is already unlocked.")
         else:
             add_array_value(search_line("unlocked_recruitments:"), agency)
             show_message(QMessageBox.Information, "Success", "Recruitment agency in \"{}\" successfully unlocked."

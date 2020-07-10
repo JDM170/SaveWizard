@@ -1,1 +1,1 @@
-pythonqt setup.py build
+python setup.py build

@@ -5,7 +5,10 @@ block_cipher = None
 a = Analysis(['__init__.py'],
              pathex=['.'],
              binaries=[],
-             datas=[],
+             datas=[
+                ('ats_configs', 'ats_configs'),
+                ('ets2_configs', 'ets2_configs')
+             ],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
