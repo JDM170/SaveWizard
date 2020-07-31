@@ -3,7 +3,6 @@
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog
-
 from .form import Ui_SecondWindow
 from util import *
 from dataIO import dataIO
@@ -16,7 +15,7 @@ garages_stat = {
 
 
 class SecondWindow(QDialog, Ui_SecondWindow):
-    def __init__(self, owns_list, parent=None):
+    def __init__(self, selected_game, owns_list, parent=None):
         # Setup UI
         QDialog.__init__(self, parent, flags=Qt.Window)
         Ui_SecondWindow.__init__(self)
@@ -26,30 +25,42 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         self.owns = owns_list  # From main window
 
         # Checking files
-        if dataIO.is_valid_json("dealers.json") is False:
+        cfg_path = "configs/{}".format(selected_game)
+        dealers_path = "{}/dealers.json".format(cfg_path)
+        agencies_path = "{}/agencies.json".format(cfg_path)
+        if dataIO.is_valid_json(dealers_path) is False:
             self.dealers = False
             self.ui.dealer_edit.setEnabled(False)
             self.ui.dealer_add.setEnabled(False)
             self.ui.dealer_add_all.setEnabled(False)
-            show_message(QMessageBox.Warning, "Warning", "'dealers.json' not found, dealers editing has been disabled")
+            show_message(QMessageBox.Warning, "Warning", "'dealers.json' from '{}' not found, dealers "
+                                                         "editing has been disabled".format(selected_game))
         else:
             self.dealers = []
-            self.dealers_file = dataIO.load_json("dealers.json")
+            self.dealers_file = dataIO.load_json(dealers_path)
 
-        if dataIO.is_valid_json("agencies.json") is False:
+        if dataIO.is_valid_json(agencies_path) is False:
             self.agencies = False
             self.ui.agency_edit.setEnabled(False)
             self.ui.agency_add.setEnabled(False)
             self.ui.agency_add_all.setEnabled(False)
-            show_message(QMessageBox.Warning, "Warning", "'agencies.json' not found, agencies editing has been "
-                                                         "disabled")
+            show_message(QMessageBox.Warning, "Warning", "'agencies.json' from '{}' not found, agencies "
+                                                         "editing has been disabled".format(selected_game))
         else:
             self.agencies = []
-            self.agencies_file = dataIO.load_json("agencies.json")
+            self.agencies_file = dataIO.load_json(agencies_path)
 
         self.ui.garage_size.addItem("Small")
         self.ui.garage_size.addItem("Medium")
         self.ui.garage_size.addItem("Big")
+
+        # Dealers and agencies properties
+        self.da_array = {
+            self.ui.dealer_add: [self.ui.dealer_edit, "unlocked_dealers:", "Dealership", self.dealers,
+                                 self.check_dealers],
+            self.ui.agency_add: [self.ui.agency_edit, "unlocked_recruitments:", "Recruitment agency",
+                                 self.agencies, self.check_agencies],
+        }
 
         # Connecting buttons
         self.ui.garages_analyze.clicked.connect(self.check_garages)
@@ -58,9 +69,9 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         self.ui.headquarter_change.clicked.connect(self.change_headquarter)
         self.ui.city_add.clicked.connect(self.add_city)
         self.ui.city_add_all.clicked.connect(self.add_all_cities)
-        self.ui.dealer_add.clicked.connect(self.add_dealer)
+        self.ui.dealer_add.clicked.connect(self.da_clicked)
         self.ui.dealer_add_all.clicked.connect(self.add_all_dealers)
-        self.ui.agency_add.clicked.connect(self.add_agency)
+        self.ui.agency_add.clicked.connect(self.da_clicked)
         self.ui.agency_add_all.clicked.connect(self.add_all_agencies)
 
         if self.owns:
@@ -197,22 +208,6 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         for dealer in visited_dealers:
             self.ui.dealerships_text.append(dealer)
 
-    def add_dealer(self):
-        dealer = self.ui.dealer_edit.text().lower()
-        if dealer is "":
-            show_message(QMessageBox.Critical, "Error", "Enter a name for the city.")
-            return
-        self.ui.dealer_edit.setText("")
-        if dealer not in self.dealers:
-            show_message(QMessageBox.Critical, "Error", "There is no dealership in that city.")
-        elif dealer in get_array_items(search_line("unlocked_dealers:")):
-            show_message(QMessageBox.Information, "Info", "This dealership already unlocked.")
-        else:
-            add_array_value(search_line("unlocked_dealers:"), dealer)
-            show_message(QMessageBox.Information, "Success", "Dealership in \"{}\" successfully unlocked."
-                                                             "".format(dealer))
-            self.check_dealers()
-
     def add_all_dealers(self):
         all_cities = self.all_cities()
         visited_dealers = get_array_items(search_line("unlocked_dealers:"))
@@ -231,22 +226,6 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         for agency in visited_agencies:
             self.ui.agencies_text.append(agency)
 
-    def add_agency(self):
-        agency = self.ui.agency_edit.text().lower()
-        if agency is "":
-            show_message(QMessageBox.Critical, "Error", "Enter a name for the city.")
-            return
-        self.ui.agency_edit.setText("")
-        if agency not in self.agencies:
-            show_message(QMessageBox.Critical, "Error", "There is no recruitment agency in that city.")
-        elif agency in get_array_items(search_line("unlocked_recruitments:")):
-            show_message(QMessageBox.Information, "Info", "Recruitment agency is already unlocked.")
-        else:
-            add_array_value(search_line("unlocked_recruitments:"), agency)
-            show_message(QMessageBox.Information, "Success", "Recruitment agency in \"{}\" successfully unlocked."
-                                                             "".format(agency))
-            self.check_agencies()
-
     def add_all_agencies(self):
         all_cities = self.all_cities()
         visited_agencies = get_array_items(search_line("unlocked_recruitments:"))
@@ -255,3 +234,23 @@ class SecondWindow(QDialog, Ui_SecondWindow):
                 add_array_value(search_line("unlocked_recruitments:"), agency)
         show_message(QMessageBox.Information, "Success", "All recruitment agencies unlocked.")
         self.check_agencies()
+
+    def da_clicked(self):
+        da_arr = self.da_array.get(self.sender())
+        if da_arr is None:
+            return
+        edit, file_var, message_var = da_arr[0], da_arr[1], da_arr[2]
+        city_element = edit.text().lower()
+        if not city_element:
+            show_message(QMessageBox.Critical, "Error", "Enter a name for the city.")
+            return
+        edit.setText("")
+        if city_element not in da_arr[3]:
+            show_message(QMessageBox.Critical, "Error", "There is no {} in that city.".format(message_var.lower()))
+        elif city_element in get_array_items(search_line(file_var)):
+            show_message(QMessageBox.Information, "Info", "{} is already unlocked.".format(message_var))
+        else:
+            add_array_value(search_line(file_var), city_element)
+            show_message(QMessageBox.Information, "Success", "{} in \"{}\" successfully unlocked."
+                                                             "".format(message_var, city_element))
+            da_arr[4]()

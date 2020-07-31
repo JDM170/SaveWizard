@@ -4,6 +4,8 @@
 from re import search, match, sub
 from PyQt5.QtWidgets import QMessageBox
 
+github_link = "https://raw.githubusercontent.com/JDM170/SaveWizard/master/"
+update_config_name = "update.cfg"
 lines = []
 
 

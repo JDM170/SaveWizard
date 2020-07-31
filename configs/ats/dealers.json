@@ -1,0 +1,49 @@
+{
+    "arizona" : [
+        "flagstaff",
+        "phoenix",
+        "tucson",
+        "yuma"
+    ],
+    "base" : [
+        "bakersfield",
+        "los_angeles",
+        "sacramento",
+        "santa_cruz",
+        "san_diego",
+        "san_francisco"
+    ],
+    "idaho" : [
+        "boise",
+        "idaho_falls",
+        "twin_falls"
+    ],
+    "new_mexico" : [
+        "alamogordo",
+        "albuquerque",
+        "farmington",
+        "hobbs"
+    ],
+    "oregon" : [
+        "eugene",
+        "medford",
+        "pendleton",
+        "portland",
+        "salem"
+    ],
+    "utah" : [
+        "ogden",
+        "price",
+        "provo",
+        "salina",
+        "salt_lake_city",
+        "vernal"
+    ],
+    "washington" : [
+        "bellingham",
+        "seattle",
+        "spokane",
+        "tacoma",
+        "yakima"
+    ]
+}

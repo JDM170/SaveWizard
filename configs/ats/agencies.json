@@ -1,0 +1,50 @@
+{
+    "arizona" : [
+        "phoenix",
+        "sierra_vista",
+        "tucson"
+    ],
+    "base" : [
+        "bakersfield",
+        "fresno",
+        "los_angeles",
+        "oxnard",
+        "redding",
+        "san_diego",
+        "san_rafael",
+        "santa_cruz",
+        "stockton",
+        "carson_city",
+        "las_vegas"
+    ],
+    "idaho" : [
+        "boise",
+        "coeur_dalene",
+        "idaho_falls",
+        "twin_falls"
+    ],
+    "new_mexico" : [
+        "carlsbad_nm",
+        "farmington",
+        "roswell",
+        "santa_fe"
+    ],
+    "oregon" : [
+        "bend",
+        "eugene",
+        "ontario",
+        "salem"
+    ],
+    "utah" : [
+        "moab",
+        "salt_lake_city",
+        "st_george"
+    ],
+    "washington" : [
+        "bellingham",
+        "olympia",
+        "seattle",
+        "wenatchee",
+        "yakima"
+    ]
+}

@@ -1,20 +1,40 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+from sys import platform
 from cx_Freeze import setup, Executable
 
-executables = [Executable('__init__.py', targetName='SaveWizard.exe', base='Win32GUI')]
-excludes = ['email', 'html', 'http', 'logging', 'pydoc_data', 'unittest', 'urllib', 'xml', 'tempfile', 'select', 'pwd',
-            'datetime', 'shlex', 'shutil', 'socket', 'platform', 'webbrowser', 'pydoc', 'selectors', 'tty', 'inspect',
-            'doctest', 'plistlib', 'calendar', 'subprocess', 'copy', 'bz2', 'stringprep', 'posixpath', '_strptime',
-            'dummy_threading']
-zip_include_packages = ['collections', 'encodings', 'importlib', 'json', 'hashlib', 'PyQt5', 'sip', 'main', 'second']
-include_files = ['SII_Decrypt.exe', 'ats_configs', 'ets2_configs']
+base = None
+if platform == 'win32':
+    base = 'Win32GUI'
+
+executables = [Executable('__init__.py', targetName='SaveWizard.exe', base=base)]
+
+excludes = ['html', 'pydoc_data', 'unittest', 'xml', 'pwd', 'shlex', 'platform', 'webbrowser', 'pydoc', 'tty',
+            'inspect', 'doctest', 'plistlib', 'subprocess', 'bz2', '_strptime', 'dummy_threading']
+
+includes = ['pkgutil', 'enum', 'queue', 'PyQt5.sip']
+
+zip_include_packages = [
+    # Stock modules
+    'collections', 'encodings', 'importlib', 'json', 'hashlib', 'selectors', 'select', 'http', 'email', 'datetime',
+    'calendar', 'urllib', 'posixpath', 'tempfile', 'shutil', 'copy', 'stringprep', 'socket', 'ast',
+    # PyQt5
+    'PyQt5',
+    # Modules for parsing cfg's
+    'requests', 'logging', 'certifi', 'chardet', 'idna', 'urllib3',
+    # Self-written modules
+    'parsing', 'choice', 'main', 'second'
+]
+
+include_files = ['dlls/imageformats', 'dlls/platforms', 'dlls/styles', 'SII_Decrypt.exe', 'configs']
+
 options = {
     'build_exe': {
         'excludes': excludes,
+        'includes': includes,
         'include_msvcr': True,
-        'build_exe': 'stable_build',
+        'build_exe': 'prog_build',
         'include_files': include_files,
         'zip_include_packages': zip_include_packages,
     }
@@ -22,9 +42,9 @@ options = {
 
 setup(
     name='SaveWizard',
-    version='1.1.1',
+    version='1.2',
     description='For editing ETS2 sii files',
     executables=executables,
     options=options,
-    requires=['PyQt5']
+    requires=['PyQt5', 'requests'],
 )

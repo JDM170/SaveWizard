@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 from json import decoder, load, dump
 from os import replace
 from os.path import splitext
@@ -11,7 +14,7 @@ class InvalidFileIO(Exception):
 class DataIO:
     @staticmethod
     def _read_json(filename):
-        with open(filename, encoding="utf-8", mode="r") as f:
+        with open(filename, encoding="utf-8") as f:
             data = load(f)
         return data
 

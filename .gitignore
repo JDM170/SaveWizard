@@ -3,13 +3,16 @@
 
 ## Ignoring Python complied files
 /__pycache__
+/parsing/__pycache__
+/choice/__pycache__
 /main/__pycache__
 /second/__pycache__
+/choice/form.py
 /main/form.py
 /second/form.py
 
 ## Ignoring build from cx_Freeze
-/stable_build
+/prog_build
 
 ## Ignoring build files from PyInstaller
 /build

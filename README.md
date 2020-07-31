@@ -6,10 +6,6 @@
 
 ***
 
-The program allows you to edit ETS2 and ATS saves, just place 'dlc.json', 'dealers.json' and 'agencies.json' files next to the executable SaveWizard.exe.
-
-***
-
 Features:
 1. Decrypt file, if save file crypted
 2. Check for DLC to the save file
@@ -22,8 +18,10 @@ Features:
 ***
 
 Requirments:
-* Python 3.5.4 or higher
-* PyQt 5.6.0 or higher
+* Python 3.7.7
+* PyQt5 5.15.0
+* requests 2.24.0
+* cx_Freeze 6.2
 
 ***
 

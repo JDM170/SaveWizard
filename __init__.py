@@ -3,10 +3,10 @@
 
 from sys import argv, exit
 from PyQt5.QtWidgets import QApplication
-from main.script import MainWindow
+from choice.script import ChoiceWindow
 
 if __name__ == '__main__':
     app = QApplication(argv)
-    win = MainWindow()
+    win = ChoiceWindow()
     win.show()
     exit(app.exec())

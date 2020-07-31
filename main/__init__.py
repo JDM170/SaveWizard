@@ -1,1 +1,1 @@
-# initialize module 'main' for compile program
+# initialize module 'main'

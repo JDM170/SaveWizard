@@ -4,18 +4,17 @@
 from os import system, remove
 from PyQt5.QtCore import Qt, QRegExp
 from PyQt5.QtGui import QRegExpValidator
-from PyQt5.QtWidgets import QMainWindow, QFileDialog
-
+from PyQt5.QtWidgets import QDialog, QFileDialog
 from .form import Ui_MainWindow
 from util import *
 from dataIO import dataIO
 from second.script import SecondWindow
 
 
-class MainWindow(QMainWindow, Ui_MainWindow):
-    def __init__(self, parent=None):
+class MainWindow(QDialog, Ui_MainWindow):
+    def __init__(self, selected_game, parent=None):
         # Setup UI
-        QMainWindow.__init__(self, parent, flags=Qt.Window)
+        QDialog.__init__(self, parent, flags=Qt.Window)
         Ui_MainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -23,13 +22,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.file_path = ""
         self.old_file = ""
 
-        # Checking DLC file
-        if dataIO.is_valid_json("dlc.json") is False:
-            self.owns = False
-            show_message(QMessageBox.Warning, "Warning", "'dlc.json' not found, functionality has been limited")
-        else:
-            self.owns = {}
-            self.dlc = dataIO.load_json("dlc.json")
+        self.selected_game = selected_game
+        self.owns = {}
+        self.dlc = {}
+
+        # Editing label to show what configs chosen
+        self.chosen_cfg_text = self.ui.chosen_cfgs.text()
+        self.ui.chosen_cfgs.setText("{} {}".format(self.chosen_cfg_text, selected_game.upper()))
 
         # Storing edits with his checkboxes and file-lines
         self.basic_edits = {
@@ -46,22 +45,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         }
 
         # Setting up validators for edits
-        basic_validator = QRegExpValidator(QRegExp("[0-9]{1,9}"))
+        basic_validator = QRegExpValidator(QRegExp("[0-9]{,9}"))
         for key in self.basic_edits.keys():
             key.setValidator(basic_validator)
             key.textEdited.connect(self.text_edited)
 
-        self.ui.adr_edit.textEdited.connect(self.text_edited)  # TODO: Validator for ADR
-        skills_validator = QRegExpValidator(QRegExp("[0-6]{1,1}"))
+        adr_validator_text = ""
+        for i in range(6):
+            adr_validator_text += r"\d[., ]?" if i != 5 else r"\d"
+        self.ui.adr_edit.textEdited.connect(self.text_edited)
+        self.ui.adr_edit.setValidator(QRegExpValidator(QRegExp(adr_validator_text)))
+        skills_validator = QRegExpValidator(QRegExp("[0-6]{,1}"))
         for key in self.skill_edits.keys():
             key.setValidator(skills_validator)
             key.textEdited.connect(self.text_edited)
 
         # Connecting buttons
         self.ui.path_button.clicked.connect(self.open_file_dialog)
-        self.ui.apply.clicked.connect(self.apply_changes)
+        self.ui.cfg_button.clicked.connect(self.change_configs)
         self.ui.backup.clicked.connect(self.recover_backup)
         self.ui.second_window.clicked.connect(self.open_second_win)
+        self.ui.apply.clicked.connect(self.apply_changes)
+
+        self.check_config()
+        self.clear_fields()
 
     def text_edited(self):
         sender = self.sender()
@@ -88,6 +95,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 adr_list.remove(i)
         return adr_list
 
+    def check_config(self):
+        cfg_path = "configs/{}/dlc.json".format(self.selected_game)
+        if dataIO.is_valid_json(cfg_path) is False:
+            self.owns = False
+            show_message(QMessageBox.Warning, "Warning", "'dlc.json' from '{}' not found, functionality "
+                                                         "has been limited".format(self.selected_game))
+        else:
+            self.owns = {}
+            self.dlc = dataIO.load_json(cfg_path)
+
     def clear_fields(self):
         self.file_path = ""
         self.old_file = ""
@@ -112,12 +129,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def get_file_data(self, file):
         try:
-            with open(file, "r") as f:
+            with open(file) as f:
                 self.old_file = f.read()
         except UnicodeDecodeError:
             try:
                 system("SII_Decrypt.exe --on_file -i \"{}\"".format(file))
-                with open(file, "r") as f:
+                with open(file) as f:
                     self.old_file = f.read()
                 show_message(QMessageBox.Information, "Success", "File successfully decrypted.")
             except UnicodeDecodeError:
@@ -127,13 +144,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         if self.owns is not False:
             self.owns["base"] = True
-            for i in get_array_items(search_line("companies:")):
-                for key, value in self.dlc.items():
-                    if value in i:
-                        self.owns[key] = True
+            companies = get_array_items(search_line("companies:"))
+            for key, value in self.dlc.items():
+                if value in companies:
+                    self.owns[key] = True
 
         for key, value in self.basic_edits.items():
-            key.setText(str(get_value(search_line(value[1]))))
+            key.setText(get_value(search_line(value[1])))
 
         adr = self.get_adr(get_value(search_line("adr:")))
         adr_list = ""
@@ -142,22 +159,50 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.ui.adr_edit.setText(adr_list)
 
         for key, value in self.skill_edits.items():
-            key.setText(str(get_value(search_line(value[1]))))
+            key.setText(get_value(search_line(value[1])))
 
         self.ui.apply.setEnabled(True)
         self.ui.backup.setEnabled(True)
         self.ui.second_window.setEnabled(True)
 
     def open_file_dialog(self):
-        file, _ = QFileDialog.getOpenFileName(parent=self,
-                                              caption=self.tr("Choose your save file..."),
-                                              filter=self.tr("game.sii"))
+        file_path, file_name = QFileDialog.getOpenFileName(parent=self,
+                                                           caption=self.tr("Choose your save file..."),
+                                                           filter=self.tr("game.sii"))
         self.clear_fields()
-        if file != "":
-            self.file_path = file
-            self.get_file_data(self.file_path)
+        if file_path != "":
+            self.file_path = file_path
+            self.get_file_data(file_path)
         else:
             return
+
+    def change_configs(self):
+        box = QMessageBox(QMessageBox.Warning, "Warning", "Do you really change configs? "
+                                                          "Your changes has been lost!")
+        box.addButton("Yes", QMessageBox.YesRole)
+        box.addButton("No", QMessageBox.NoRole)
+        if box.exec() == 0:
+            self.clear_fields()
+            self.selected_game = "ets2" if self.selected_game == "ats" else "ats"
+            self.ui.chosen_cfgs.setText("{} {}".format(self.chosen_cfg_text, self.selected_game.upper()))
+            self.check_config()
+
+    def recover_backup(self):
+        try:
+            backup = self.file_path + ".swbak"
+            f = open(backup)
+            with open(self.file_path, "w") as g:
+                g.write(f.read())
+            f.close()
+            remove(backup)
+            show_message(QMessageBox.Information, "Success", "Backup successfully recovered.")
+            self.get_file_data(self.file_path)
+        except IOError:
+            show_message(QMessageBox.Critical, "Error", "Backup not found.")
+
+    def open_second_win(self):
+        second_win = SecondWindow(self.selected_game, self.owns, self)
+        second_win.exec()
 
     def apply_changes(self):
         if not self.ui.dont_change_all_inf.isChecked():
@@ -185,22 +230,3 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             f.write("\n".join(get_lines()))
         show_message(QMessageBox.Information, "Success", "Changes successfully applied!")
         self.get_file_data(self.file_path)
-        return
-
-    def recover_backup(self):
-        try:
-            backup = self.file_path + ".swbak"
-            f = open(backup, "r")
-            with open(self.file_path, "w") as g:
-                g.write(f.read())
-            f.close()
-            remove(backup)
-            show_message(QMessageBox.Information, "Success", "Backup successfully recovered.")
-            self.get_file_data(self.file_path)
-        except IOError:
-            show_message(QMessageBox.Critical, "Error", "Backup not found.")
-            return
-
-    def open_second_win(self):
-        second_win = SecondWindow(self.owns, self)
-        second_win.show()

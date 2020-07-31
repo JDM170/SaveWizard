@@ -1,1 +1,1 @@
-# initialize module 'second' for compile program
+# initialize module 'second'
