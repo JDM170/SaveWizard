@@ -34,7 +34,7 @@ class ChoiceWindow(QDialog, Ui_Choice):
             answer = remember_data.get("answer_updates")
             if answer:
                 box = QMessageBox(QMessageBox.Information, "Info",
-                                  "Some configs get updated, do you want update your local configs?")
+                                  "Some configs have been updated. Do you want to update the local configs?")
                 box.addButton("Yes", QMessageBox.YesRole)  # 0
                 box.addButton("Yes, remember that", QMessageBox.YesRole)  # 1
                 box.addButton("No", QMessageBox.NoRole)  # 2

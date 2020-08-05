@@ -99,8 +99,8 @@ class MainWindow(QDialog, Ui_MainWindow):
         cfg_path = "configs/{}/dlc.json".format(self.selected_game)
         if dataIO.is_valid_json(cfg_path) is False:
             self.owns = False
-            show_message(QMessageBox.Warning, "Warning", "'dlc.json' from '{}' not found, functionality "
-                                                         "has been limited".format(self.selected_game))
+            show_message(QMessageBox.Warning, "Warning", "'dlc.json' from '{}' have errors or not found, "
+                                                         "functionality has been limited".format(self.selected_game))
         else:
             self.owns = {}
             self.dlc = dataIO.load_json(cfg_path)
@@ -138,7 +138,10 @@ class MainWindow(QDialog, Ui_MainWindow):
                     self.old_file = f.read()
                 show_message(QMessageBox.Information, "Success", "File successfully decrypted.")
             except UnicodeDecodeError:
-                show_message(QMessageBox.Critical, "Error", "Error to decrypt and open file. Try again.")
+                show_message(QMessageBox.Critical, "Error", "Error to decrypt and open file. "
+                                                            "Try again.\nIf you still get error on this step,"
+                                                            "try to change \"uset g_save_format\" to 2, resave game "
+                                                            "and try again.")
                 return
         set_lines(self.old_file.split("\n"))
 
@@ -177,8 +180,8 @@ class MainWindow(QDialog, Ui_MainWindow):
             return
 
     def change_configs(self):
-        box = QMessageBox(QMessageBox.Warning, "Warning", "Do you really change configs? "
-                                                          "Your changes has been lost!")
+        box = QMessageBox(QMessageBox.Warning, "Warning", "Do you really want to load other configs?\n"
+                                                          "Your current changes won't be saved.")
         box.addButton("Yes", QMessageBox.YesRole)
         box.addButton("No", QMessageBox.NoRole)
         if box.exec() == 0:

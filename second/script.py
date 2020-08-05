@@ -33,7 +33,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             self.ui.dealer_edit.setEnabled(False)
             self.ui.dealer_add.setEnabled(False)
             self.ui.dealer_add_all.setEnabled(False)
-            show_message(QMessageBox.Warning, "Warning", "'dealers.json' from '{}' not found, dealers "
+            show_message(QMessageBox.Warning, "Warning", "'dealers.json' from '{}' have errors or not found, dealers "
                                                          "editing has been disabled".format(selected_game))
         else:
             self.dealers = []
@@ -44,7 +44,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             self.ui.agency_edit.setEnabled(False)
             self.ui.agency_add.setEnabled(False)
             self.ui.agency_add_all.setEnabled(False)
-            show_message(QMessageBox.Warning, "Warning", "'agencies.json' from '{}' not found, agencies "
+            show_message(QMessageBox.Warning, "Warning", "'agencies.json' from '{}' have errors or not found, agencies "
                                                          "editing has been disabled".format(selected_game))
         else:
             self.agencies = []
@@ -121,7 +121,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
     def add_garage(self):
         garage = self.ui.garage_edit.text().lower()
         if garage is "":
-            show_message(QMessageBox.Critical, "Error", "Enter a name for the city.")
+            show_message(QMessageBox.Critical, "Error", "Enter city name!")
             return
         self.ui.garage_edit.setText("")
         reg_garage = "garage." + garage
@@ -156,12 +156,12 @@ class SecondWindow(QDialog, Ui_SecondWindow):
     def change_headquarter(self):
         hq = self.ui.headquarter_edit.text().lower()
         if hq is "":
-            show_message(QMessageBox.Critical, "Error", "Enter a name for the city.")
+            show_message(QMessageBox.Critical, "Error", "Enter city name!")
             return
         if get_value(search_line("hq_city:")) == hq:
-            show_message(QMessageBox.Information, "Info", "Your headquarter is already in this city")
+            show_message(QMessageBox.Information, "Info", "Your headquarter is already in this city.")
         elif hq not in self.purchased_garages():
-            show_message(QMessageBox.Critical, "Error", "You need to own the garage in this city.")
+            show_message(QMessageBox.Critical, "Error", "You need a garage in \"{}\" to set headquarter.".format(hq))
         else:
             set_value(search_line("hq_city:"), hq)
             show_message(QMessageBox.Information, "Success", "Headquarter successfully set to \"{}\".".format(hq))
@@ -179,7 +179,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
     def add_city(self):
         city = self.ui.city_edit.text().lower()
         if city is "":
-            show_message(QMessageBox.Critical, "Error", "Enter a name for the city.")
+            show_message(QMessageBox.Critical, "Error", "Enter city name!")
             return
         self.ui.city_edit.setText("")
         if city not in get_array_items(search_line("visited_cities:")):
@@ -188,7 +188,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             show_message(QMessageBox.Information, "Success", "City \"{}\" successfully visited.".format(city))
             self.check_cities()
         else:
-            show_message(QMessageBox.Critical, "Error", "You already visited \"{}\".".format(city))
+            show_message(QMessageBox.Critical, "Error", "You've already visited \"{}\".".format(city))
 
     def add_all_cities(self):
         visited_cities = get_array_items(search_line("visited_cities:"))
@@ -242,15 +242,16 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         edit, file_var, message_var = da_arr[0], da_arr[1], da_arr[2]
         city_element = edit.text().lower()
         if not city_element:
-            show_message(QMessageBox.Critical, "Error", "Enter a name for the city.")
+            show_message(QMessageBox.Critical, "Error", "Enter city name!")
             return
         edit.setText("")
         if city_element not in da_arr[3]:
             show_message(QMessageBox.Critical, "Error", "There is no {} in that city.".format(message_var.lower()))
         elif city_element in get_array_items(search_line(file_var)):
-            show_message(QMessageBox.Information, "Info", "{} is already unlocked.".format(message_var))
+            show_message(QMessageBox.Information, "Info",
+                         "{} in \"{}\" is already unlocked.".format(message_var, city_element))
         else:
             add_array_value(search_line(file_var), city_element)
-            show_message(QMessageBox.Information, "Success", "{} in \"{}\" successfully unlocked."
-                                                             "".format(message_var, city_element))
+            show_message(QMessageBox.Information, "Success",
+                         "{} in \"{}\" successfully unlocked.".format(message_var, city_element))
             da_arr[4]()

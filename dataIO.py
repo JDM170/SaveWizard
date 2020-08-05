@@ -7,21 +7,11 @@ from os.path import splitext
 from random import randint
 
 
-class InvalidFileIO(Exception):
-    pass
-
-
 class DataIO:
     @staticmethod
     def _read_json(filename):
         with open(filename, encoding="utf-8") as f:
             data = load(f)
-        return data
-
-    @staticmethod
-    def _save_json(filename, data):
-        with open(filename, encoding="utf-8", mode="w") as f:
-            dump(data, f, indent=4, sort_keys=True, separators=(",", " : "))
         return data
 
     def is_valid_json(self, filename):
@@ -43,7 +33,10 @@ class DataIO:
         rnd = randint(1000, 9999)
         path, ext = splitext(filename)
         tmp_file = "{}-{}.tmp".format(path, rnd)
-        self._save_json(tmp_file, data)
+        # self._save_json(filename, data)
+        with open(filename, encoding="utf-8", mode="w") as f:
+            dump(data, f, indent=4, sort_keys=True, separators=(",", " : "))
+        # return data (?)
         try:
             self._read_json(tmp_file)
         except decoder.JSONDecodeError:

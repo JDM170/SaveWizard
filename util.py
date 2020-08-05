@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from re import search, match, sub
+# from re import search, match, sub
+from re import search, match
 from PyQt5.QtWidgets import QMessageBox
 
 github_link = "https://raw.githubusercontent.com/JDM170/SaveWizard/master/"
@@ -71,9 +72,9 @@ def set_value(line, value):
     lines[line] = name + ": " + value
 
 
-def get_unit_name(line):
-    global lines
-    return search(r" : (.+) {$", lines[line]).group(1)
+# def get_unit_name(line):
+#     global lines
+#     return search(r" : (.+) {$", lines[line]).group(1)
 
 
 def get_array_length(line):
@@ -81,19 +82,19 @@ def get_array_length(line):
     return int(search(r": ([0-9]+)$", lines[line]).group(1))
 
 
-def get_array_value_by_index(line, index):
-    global lines
-    return search(r": (.+)$", lines[line + index + 1]).group(1)
-
-
-def get_array_index_by_value(line, value):
-    global lines
-    count = 0
-    for i in range(get_array_length(line)):
-        if get_value(line + count + 1) == value:
-            return count
-        count += 1
-    return None
+# def get_array_value_by_index(line, index):
+#     global lines
+#     return search(r": (.+)$", lines[line + index + 1]).group(1)
+#
+#
+# def get_array_index_by_value(line, value):
+#     global lines
+#     count = 0
+#     for i in range(get_array_length(line)):
+#         if get_value(line + count + 1) == value:
+#             return count
+#         count += 1
+#     return None
 
 
 def get_array_items(line):
@@ -114,17 +115,17 @@ def add_array_value(line, value):
     lines.insert(line + count + 1, name + "[" + str(count) + "]: " + value)
 
 
-def remove_array_value(line, value):
-    global lines
-    name = match(r"(.+):", lines[line]).group(1)
-    del lines[line + 1 + get_array_index_by_value(line, value)]
-    count = get_array_length(line)
-    lines[line] = name + ": " + str(count - 1)
-    for i in range(count):
-        lines[line + i + 1] = sub(r"\[[0-9]+\]", "[" + str(i) + "]", lines[line + i + 1])
-
-
-def change_array_value(line, index, value):
-    global lines
-    line += index + 1
-    set_value(line, value)
+# def remove_array_value(line, value):
+#     global lines
+#     name = match(r"(.+):", lines[line]).group(1)
+#     del lines[line + 1 + get_array_index_by_value(line, value)]
+#     count = get_array_length(line)
+#     lines[line] = name + ": " + str(count - 1)
+#     for i in range(count):
+#         lines[line + i + 1] = sub(r"\[[0-9]+]", "[" + str(i) + "]", lines[line + i + 1])
+#
+#
+# def change_array_value(line, index, value):
+#     global lines
+#     line += index + 1
+#     set_value(line, value)
