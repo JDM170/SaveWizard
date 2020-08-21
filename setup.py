@@ -8,7 +8,9 @@ base = None
 if platform == 'win32':
     base = 'Win32GUI'
 
-executables = [Executable('__init__.py', targetName='SaveWizard.exe', base=base)]
+executables = [
+    Executable('init_main_program.py', targetName='SaveWizard.exe', base=base)
+]
 
 excludes = ['html', 'pydoc_data', 'unittest', 'xml', 'pwd', 'shlex', 'platform', 'webbrowser', 'pydoc', 'tty',
             'inspect', 'doctest', 'plistlib', 'subprocess', 'bz2', '_strptime', 'dummy_threading']
@@ -27,7 +29,14 @@ zip_include_packages = [
     'parsing', 'choice', 'main', 'second'
 ]
 
-include_files = ['dlls/imageformats', 'dlls/platforms', 'dlls/styles', 'SII_Decrypt.exe', 'configs']
+include_files = [
+    'dlls/imageformats',
+    'dlls/platforms',
+    'dlls/styles',
+    'SII_Decrypt.exe',
+    ('configs/ats', 'configs/ats'),
+    ('configs/ets2', 'configs/ets2')
+]
 
 options = {
     'build_exe': {
@@ -42,7 +51,7 @@ options = {
 
 setup(
     name='SaveWizard',
-    version='1.2',
+    version='1.2.1',
     description='For editing ETS2 sii files',
     executables=executables,
     options=options,

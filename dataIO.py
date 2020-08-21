@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from json import decoder, load, dump
-from os import replace
-from os.path import splitext
-from random import randint
 
 
 class DataIO:
@@ -30,18 +27,12 @@ class DataIO:
 
     def save_json(self, filename, data):
         """Atomically saves json file"""
-        rnd = randint(1000, 9999)
-        path, ext = splitext(filename)
-        tmp_file = "{}-{}.tmp".format(path, rnd)
-        # self._save_json(filename, data)
         with open(filename, encoding="utf-8", mode="w") as f:
-            dump(data, f, indent=4, sort_keys=True, separators=(",", " : "))
-        # return data (?)
+            dump(data, f, indent=4, separators=(",", " : "))
         try:
-            self._read_json(tmp_file)
+            self._read_json(filename)
         except decoder.JSONDecodeError:
             return False
-        replace(tmp_file, filename)
         return True
 
 

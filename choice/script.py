@@ -7,7 +7,7 @@ from ast import literal_eval
 from .form import Ui_Choice
 from main.script import MainWindow
 from parsing.script import check_remote_hashes, update_configs
-from util import update_config_name
+from statics import update_config_name
 
 
 class ChoiceWindow(QDialog, Ui_Choice):

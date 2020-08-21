@@ -115,8 +115,10 @@ class SecondWindow(QDialog, Ui_SecondWindow):
 
     def check_garages(self):
         self.ui.garages_text.clear()
-        for garage in self.purchased_garages():
+        garages = self.purchased_garages()
+        for garage in garages:
             self.ui.garages_text.append(garage)
+        self.ui.garages_text.scrollToAnchor(garages[0])
 
     def add_garage(self):
         garage = self.ui.garage_edit.text().lower()
@@ -175,6 +177,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             return
         for city in visited_cities:
             self.ui.cities_text.append(city)
+        self.ui.cities_text.scrollToAnchor(visited_cities[0])
 
     def add_city(self):
         city = self.ui.city_edit.text().lower()
@@ -207,6 +210,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             return
         for dealer in visited_dealers:
             self.ui.dealerships_text.append(dealer)
+        self.ui.dealerships_text.scrollToAnchor(visited_dealers[0])
 
     def add_all_dealers(self):
         all_cities = self.all_cities()
@@ -225,6 +229,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             return
         for agency in visited_agencies:
             self.ui.agencies_text.append(agency)
+        self.ui.agencies_text.scrollToAnchor(visited_agencies[0])
 
     def add_all_agencies(self):
         all_cities = self.all_cities()

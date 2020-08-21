@@ -5,11 +5,14 @@
 /__pycache__
 /parsing/__pycache__
 /choice/__pycache__
-/main/__pycache__
-/second/__pycache__
 /choice/form.py
+/main/__pycache__
 /main/form.py
+/second/__pycache__
 /second/form.py
+
+## Ignoring UPX
+/upx
 
 ## Ignoring build from cx_Freeze
 /prog_build

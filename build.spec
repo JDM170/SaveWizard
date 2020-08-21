@@ -1,38 +1,33 @@
 # -*- mode: python ; coding: utf-8 -*-
 
-block_cipher = None
+app = Analysis(
+    ['init_main_program.py'],
+    pathex=['.'],
+    datas=[
+        ('configs/ats', 'configs/ats'),
+        ('configs/ets2', 'configs/ets2')
+    ]
+)
 
-a = Analysis(['__init__.py'],
-             pathex=['.'],
-             binaries=[],
-             datas=[
-                ('ats_configs', 'ats_configs'),
-                ('ets2_configs', 'ets2_configs')
-             ],
-             hiddenimports=[],
-             hookspath=[],
-             runtime_hooks=[],
-             excludes=[],
-             win_no_prefer_redirects=False,
-             win_private_assemblies=False,
-             cipher=block_cipher,
-             noarchive=False)
-pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
-exe = EXE(pyz,
-          a.scripts,
-          [],
-          exclude_binaries=True,
-          name='SaveWizard',
-          debug=False,
-          bootloader_ignore_signals=False,
-          strip=False,
-          upx=True,
-          console=False )
-coll = COLLECT(exe,
-               a.binaries,
-               a.zipfiles,
-               a.datas,
-               strip=False,
-               upx=True,
-               upx_exclude=[],
-               name='build')
+app_pyz = PYZ(app.pure, app.zipped_data)
+
+app_exe = EXE(
+    app_pyz,
+    app.scripts,
+    [],
+    exclude_binaries=True,
+    name='SaveWizard',
+    debug=False,
+    bootloader_ignore_signals=False,
+    strip=False,
+    console=False
+)
+app_coll = COLLECT(
+    app_exe,
+    app.binaries,
+    app.zipfiles,
+    app.datas,
+    strip=False,
+    name='app_build'
+)
+

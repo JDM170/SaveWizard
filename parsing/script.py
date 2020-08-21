@@ -2,61 +2,49 @@
 # -*- coding: utf-8 -*-
 
 from requests import get
-from hashlib import md5
 from ast import literal_eval
 import os
+from statics import github_link, update_config_name
 from dataIO import dataIO
-from util import github_link, update_config_name
+from util import generate_md5
 
 
-def send_response(txt):
-    response = get(txt)
-    return response if response.status_code == 200 else False
+def get_response_result(url):
+    response = get(url)
+    return response.status_code == 200, response
 
 
-def generate_md5(fn):
-    hash_md5 = md5()
-    try:
-        with open(fn, "rb") as f:
-            for chunk in iter(lambda: f.read(4096), b""):
-                hash_md5.update(chunk)
-        return hash_md5.hexdigest()
-    except FileNotFoundError:
-        return False
-
-
-def check_files(path):
-    temp = os.getcwd()
+def check_path(path):
+    current_path = os.getcwd()
     for item in path.split("/"):
-        temp = os.path.join(temp, item)
-        if not os.path.exists(temp):
+        current_path = os.path.join(current_path, item)
+        if not os.path.exists(current_path):
             if item.find(".json") > 0:
-                f = open(temp, "w")
-                f.close()
+                open(current_path, "w").close()
             else:
-                os.mkdir(temp)
+                os.mkdir(current_path)
 
 
 def check_remote_hashes():
-    response = send_response(github_link + "configs/version.cfg")
-    if response is not False:
+    response_status, response = get_response_result(github_link + "configs/version.cfg")
+    if response_status:
         remote_cfg = literal_eval(response.text)
-        need_to_be_updated = []
+        need_update = []
         for key, value in remote_cfg.items():
             path = key.split("_")
             path = "configs/{}/{}.json".format(path[0], path[1])
             if generate_md5(path) != value:
-                need_to_be_updated.append(path)
-        return need_to_be_updated
+                need_update.append(path)
+        return need_update
     return False
 
 
 def update_configs(is_save, cfg_list):
     if is_save in (0, 1):
         for cfg in cfg_list:
-            check_files(cfg)
-            response = send_response(github_link + cfg)
-            if response is not False:
+            check_path(cfg)
+            response_status, response = get_response_result(github_link + cfg)
+            if response_status:
                 remote_cfg = literal_eval(response.text)
                 if dataIO.is_valid_json(cfg) or os.path.exists(cfg):
                     dataIO.save_json(cfg, remote_cfg)

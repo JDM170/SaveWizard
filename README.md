@@ -17,11 +17,11 @@ Features:
 
 ***
 
-Requirments:
-* Python 3.7.7
-* PyQt5 5.15.0
-* requests 2.24.0
-* cx_Freeze 6.2
+Requirments to build project:
+* Python >=3.5.4
+* PyQt5 >=5.6.0
+* requests >=2.24.0
+* cx_Freeze >=6.0 (or PyInstaller >=3.6)
 
 ***
 

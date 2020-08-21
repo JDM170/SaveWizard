@@ -4,9 +4,9 @@
 # from re import search, match, sub
 from re import search, match
 from PyQt5.QtWidgets import QMessageBox
+from hashlib import md5
+from statics import hash_chunk_size
 
-github_link = "https://raw.githubusercontent.com/JDM170/SaveWizard/master/"
-update_config_name = "update.cfg"
 lines = []
 
 
@@ -26,6 +26,17 @@ def get_lines(index=None):
 def show_message(icon, title, text):
     box = QMessageBox(icon, title, text, QMessageBox.Ok)
     box.exec()
+
+
+def generate_md5(fn):
+    try:
+        hash_md5 = md5()
+        with open(fn, "rb") as f:
+            for chunk in iter(lambda: f.read(hash_chunk_size), b""):
+                hash_md5.update(chunk)
+        return hash_md5.hexdigest()
+    except FileNotFoundError:
+        return False
 
 
 # Stock functions
