@@ -10,6 +10,8 @@
 /main/form.py
 /second/__pycache__
 /second/form.py
+/config_editor/__pycache__
+/config_editor/form.py
 
 ## Ignoring UPX
 /upx

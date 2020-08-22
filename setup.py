@@ -9,7 +9,8 @@ if platform == 'win32':
     base = 'Win32GUI'
 
 executables = [
-    Executable('init_main_program.py', targetName='SaveWizard.exe', base=base)
+    Executable('init_main_program.py', targetName='SaveWizard.exe', base=base),
+    Executable('init_config_editor.py', targetName='SaveWizard_Config_Editor.exe', base=base)
 ]
 
 excludes = ['html', 'pydoc_data', 'unittest', 'xml', 'pwd', 'shlex', 'platform', 'webbrowser', 'pydoc', 'tty',
@@ -26,7 +27,7 @@ zip_include_packages = [
     # Modules for parsing cfg's
     'requests', 'logging', 'certifi', 'chardet', 'idna', 'urllib3',
     # Self-written modules
-    'parsing', 'choice', 'main', 'second'
+    'parsing', 'choice', 'main', 'second', 'config_editor'
 ]
 
 include_files = [
@@ -51,7 +52,7 @@ options = {
 
 setup(
     name='SaveWizard',
-    version='1.2.1',
+    version='1.3',
     description='For editing ETS2 sii files',
     executables=executables,
     options=options,
