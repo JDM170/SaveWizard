@@ -1,9 +1,4 @@
 {
-    "arizona" : [
-        "phoenix",
-        "sierra_vista",
-        "tucson"
-    ],
     "base" : [
         "bakersfield",
         "fresno",
@@ -17,11 +12,10 @@
         "carson_city",
         "las_vegas"
     ],
-    "idaho" : [
-        "boise",
-        "coeur_dalene",
-        "idaho_falls",
-        "twin_falls"
+    "arizona" : [
+        "phoenix",
+        "sierra_vista",
+        "tucson"
     ],
     "new_mexico" : [
         "carlsbad_nm",
@@ -35,16 +29,27 @@
         "ontario",
         "salem"
     ],
-    "utah" : [
-        "moab",
-        "salt_lake_city",
-        "st_george"
-    ],
     "washington" : [
         "bellingham",
         "olympia",
         "seattle",
         "wenatchee",
         "yakima"
+    ],
+    "utah" : [
+        "moab",
+        "salt_lake_city",
+        "st_george"
+    ],
+    "idaho" : [
+        "boise",
+        "coeur_dalene",
+        "idaho_falls",
+        "twin_falls"
+    ],
+    "colorado" : [
+        "alamosa",
+        "denver",
+        "fort_collins"
     ]
 }

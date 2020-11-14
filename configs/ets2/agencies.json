@@ -1,20 +1,4 @@
 {
-    "balticsea" : [
-        "daugavpils",
-        "helsinki",
-        "kaliningrad",
-        "kaunas",
-        "klaipeda",
-        "kouvola",
-        "lahti",
-        "parnu",
-        "pori",
-        "pskov",
-        "riga",
-        "tallinn",
-        "turku",
-        "vilnius"
-    ],
     "base" : [
         "aberdeen",
         "berlin",
@@ -65,20 +49,23 @@
         "wien",
         "zurich"
     ],
-    "blacksea" : [
-        "bucuresti",
-        "cluj_napoca",
-        "iasi",
-        "istanbul",
-        "plovdiv",
-        "sofia"
-    ],
     "east" : [
         "budapest",
         "gdansk",
         "krakow",
         "szeged",
         "warszava"
+    ],
+    "scandinavia" : [
+        "aalborg",
+        "bergen",
+        "helsingborg",
+        "kobenhavn",
+        "malmo",
+        "odense",
+        "oslo",
+        "stavanger",
+        "stockholm"
     ],
     "france" : [
         "bordeaux",
@@ -103,15 +90,28 @@
         "taranto",
         "venezia"
     ],
-    "scandinavia" : [
-        "aalborg",
-        "bergen",
-        "helsingborg",
-        "kobenhavn",
-        "malmo",
-        "odense",
-        "oslo",
-        "stavanger",
-        "stockholm"
+    "baltic_sea" : [
+        "daugavpils",
+        "helsinki",
+        "kaliningrad",
+        "kaunas",
+        "klaipeda",
+        "kouvola",
+        "lahti",
+        "parnu",
+        "pori",
+        "pskov",
+        "riga",
+        "tallinn",
+        "turku",
+        "vilnius"
+    ],
+    "black_sea" : [
+        "bucuresti",
+        "cluj_napoca",
+        "iasi",
+        "istanbul",
+        "plovdiv",
+        "sofia"
     ]
 }

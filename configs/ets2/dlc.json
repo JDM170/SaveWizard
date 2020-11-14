@@ -1,8 +1,8 @@
 {
-    "balticsea" : "company.volatile.polarislines.tallinn",
-    "blacksea" : "company.volatile.bhv.galati",
     "east" : "company.volatile.quarry.katowice",
+    "scandinavia" : "company.volatile.sag_tre.oslo",
     "france" : "company.volatile.lisette_log.roscoff",
     "italy" : "company.volatile.marina_it.ancona",
-    "scandinavia" : "company.volatile.sag_tre.oslo"
+    "baltic_sea" : "company.volatile.polarislines.tallinn",
+    "black_sea" : "company.volatile.bhv.galati"
 }
