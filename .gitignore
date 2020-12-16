@@ -3,15 +3,15 @@
 
 ## Ignoring Python complied files
 /__pycache__
-/parsing/__pycache__
-/choice/__pycache__
-/choice/form.py
-/main/__pycache__
-/main/form.py
-/second/__pycache__
-/second/form.py
-/config_editor/__pycache__
-/config_editor/form.py
+/module_parsing/__pycache__
+/module_choice/__pycache__
+/module_choice/form.py
+/module_main/__pycache__
+/module_main/form.py
+/module_second/__pycache__
+/module_second/form.py
+/module_config_editor/__pycache__
+/module_config_editor/form.py
 
 ## Ignoring UPX
 /upx

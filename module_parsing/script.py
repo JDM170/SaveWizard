@@ -6,7 +6,7 @@ from ast import literal_eval
 import os
 from statics import github_link, update_config_name
 from dataIO import dataIO
-from util import generate_md5
+from util import util
 
 
 def get_response_result(url):
@@ -33,7 +33,7 @@ def check_remote_hashes():
         for key, value in remote_cfg.items():
             path = key.split("_")
             path = "configs/{}/{}.json".format(path[0], path[1])
-            if generate_md5(path) != value:
+            if util.generate_md5(path) != value:
                 need_update.append(path)
         return need_update
     return False

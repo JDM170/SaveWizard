@@ -3,7 +3,7 @@
 
 from sys import argv, exit
 from PyQt5.QtWidgets import QApplication
-from choice.script import ChoiceWindow
+from module_choice.script import ChoiceWindow
 
 if __name__ == '__main__':
     app = QApplication(argv)

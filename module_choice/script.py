@@ -5,8 +5,8 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from ast import literal_eval
 from .form import Ui_Choice
-from main.script import MainWindow
-from parsing.script import check_remote_hashes, update_configs
+from module_main.script import MainWindow
+from module_parsing.script import check_remote_hashes, update_configs
 from statics import update_config_name
 
 

@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QDialog, QFileDialog
 from .form import Ui_MainWindow
 from util import *
 from dataIO import dataIO
-from second.script import SecondWindow
+from module_second.script import SecondWindow
 
 
 class MainWindow(QDialog, Ui_MainWindow):
@@ -68,7 +68,7 @@ class MainWindow(QDialog, Ui_MainWindow):
         self.ui.apply.clicked.connect(self.apply_changes)
 
         self.check_config()
-        self.clear_fields()
+        self.clear_form_data()
 
     def text_edited(self):
         sender = self.sender()
@@ -99,16 +99,16 @@ class MainWindow(QDialog, Ui_MainWindow):
         cfg_path = "configs/{}/dlc.json".format(self.selected_game)
         if dataIO.is_valid_json(cfg_path) is False:
             self.owns = False
-            show_message(QMessageBox.Warning, "Warning", "'dlc.json' from '{}' have errors or not found, "
-                                                         "functionality has been limited".format(self.selected_game))
+            QMessageBox.warning(self, "Warning", "'dlc.json' from '{}' have errors or not found, "
+                                                 "functionality has been limited".format(self.selected_game))
         else:
             self.owns = {}
             self.dlc = dataIO.load_json(cfg_path)
 
-    def clear_fields(self):
+    def clear_form_data(self):
         self.file_path = ""
         self.old_file = ""
-        set_lines([])
+        util.set_lines([])
 
         if self.owns is not False:
             self.owns = {}
@@ -136,33 +136,33 @@ class MainWindow(QDialog, Ui_MainWindow):
                 system("SII_Decrypt.exe --on_file -i \"{}\"".format(file))
                 with open(file) as f:
                     self.old_file = f.read()
-                show_message(QMessageBox.Information, "Success", "File successfully decrypted.")
+                QMessageBox.information(self, "Success", "File successfully decrypted.")
             except UnicodeDecodeError:
-                show_message(QMessageBox.Critical, "Error", "Error to decrypt and open file. "
-                                                            "Try again.\nIf you still get error on this step,"
-                                                            "try to change \"uset g_save_format\" to 2, resave game "
-                                                            "and try again.")
+                QMessageBox.critical(self, "Error", "Error to decrypt and open file. "
+                                                    "Try again.\nIf you still get error on this step, "
+                                                    "try to change \"uset g_save_format\" to 2, resave "
+                                                    "game and try again.")
                 return
-        set_lines(self.old_file.split("\n"))
+        util.set_lines(self.old_file.split("\n"))
 
         if self.owns is not False:
             self.owns["base"] = True
-            companies = get_array_items(search_line("companies:"))
+            companies = util.get_array_items(util.search_line("companies:"))
             for key, value in self.dlc.items():
                 if value in companies:
                     self.owns[key] = True
 
         for key, value in self.basic_edits.items():
-            key.setText(get_value(search_line(value[1])))
+            key.setText(util.get_value(util.search_line(value[1])))
 
-        adr = self.get_adr(get_value(search_line("adr:")))
+        adr = self.get_adr(util.get_value(util.search_line("adr:")))
         adr_list = ""
         for i in range(6):
             adr_list += adr[i] + "," if i != 5 else adr[i]
         self.ui.adr_edit.setText(adr_list)
 
         for key, value in self.skill_edits.items():
-            key.setText(get_value(search_line(value[1])))
+            key.setText(util.get_value(util.search_line(value[1])))
 
         self.ui.apply.setEnabled(True)
         self.ui.backup.setEnabled(True)
@@ -172,7 +172,7 @@ class MainWindow(QDialog, Ui_MainWindow):
         file_path, file_name = QFileDialog.getOpenFileName(parent=self,
                                                            caption=self.tr("Choose your save file..."),
                                                            filter=self.tr("game.sii"))
-        self.clear_fields()
+        self.clear_form_data()
         if file_path != "":
             self.file_path = file_path
             self.get_file_data(file_path)
@@ -185,23 +185,22 @@ class MainWindow(QDialog, Ui_MainWindow):
         box.addButton("Yes", QMessageBox.YesRole)
         box.addButton("No", QMessageBox.NoRole)
         if box.exec() == 0:
-            self.clear_fields()
+            self.clear_form_data()
             self.selected_game = "ets2" if self.selected_game == "ats" else "ats"
             self.ui.chosen_cfgs.setText("{} {}".format(self.chosen_cfg_text, self.selected_game.upper()))
             self.check_config()
 
     def recover_backup(self):
         try:
-            backup = self.file_path + ".swbak"
-            f = open(backup)
-            with open(self.file_path, "w") as g:
-                g.write(f.read())
-            f.close()
-            remove(backup)
-            show_message(QMessageBox.Information, "Success", "Backup successfully recovered.")
+            backup_path = self.file_path + ".swbak"
+            with open(self.file_path, "w") as current:
+                with open(backup_path) as backup:
+                    current.write(backup.read())
+            remove(backup_path)
+            QMessageBox.information(self, "Success", "Backup successfully recovered.")
             self.get_file_data(self.file_path)
         except IOError:
-            show_message(QMessageBox.Critical, "Error", "Backup not found.")
+            QMessageBox.critical(self, "Error", "Backup not found.")
 
     def open_second_win(self):
         second_win = SecondWindow(self.selected_game, self.owns, self)
@@ -211,25 +210,25 @@ class MainWindow(QDialog, Ui_MainWindow):
         if not self.ui.dont_change_all_inf.isChecked():
             for key, value in self.basic_edits.items():
                 if value[0].isChecked() is False:
-                    set_value(search_line(value[1]), key.text())
+                    util.set_value(util.search_line(value[1]), key.text())
                     value[0].setChecked(True)
             if self.ui.adr_dont_change.isChecked() is False:
                 adr_set = self.get_adr_from_line()
                 if len(adr_set) < 6:
-                    show_message(QMessageBox.Critical, "Error", "ADR can't have less than 6 elements.")
+                    QMessageBox.critical(self, "Error", "ADR can't have less than 6 elements.")
                 elif len(adr_set) > 6:
-                    show_message(QMessageBox.Critical, "Error", "ADR can't have more than 6 elements.")
+                    QMessageBox.critical(self, "Error", "ADR can't have more than 6 elements.")
                 else:
                     adr_new = int("".join(adr_set), 2)
-                    set_value(search_line("adr:"), str(adr_new))
+                    util.set_value(util.search_line("adr:"), str(adr_new))
             for key, value in self.skill_edits.items():
                 if value[0].isChecked() is False:
-                    set_value(search_line(value[1]), key.text())
+                    util.set_value(util.search_line(value[1]), key.text())
                     value[0].setChecked(True)
         backup = self.file_path + ".swbak"
         with open(backup, "w") as f:
             f.write(self.old_file)
         with open(self.file_path, "w") as f:
-            f.write("\n".join(get_lines()))
-        show_message(QMessageBox.Information, "Success", "Changes successfully applied!")
+            f.write("\n".join(util.get_lines()))
+        QMessageBox.information(self, "Success", "Changes successfully applied!")
         self.get_file_data(self.file_path)

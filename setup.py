@@ -16,7 +16,7 @@ executables = [
 excludes = ['html', 'pydoc_data', 'unittest', 'xml', 'pwd', 'shlex', 'platform', 'webbrowser', 'pydoc', 'tty',
             'inspect', 'doctest', 'plistlib', 'subprocess', 'bz2', '_strptime', 'dummy_threading']
 
-includes = ['pkgutil', 'enum', 'queue', 'PyQt5.sip']
+includes = ['pkgutil', 'enum', 'queue']
 
 zip_include_packages = [
     # Stock modules
@@ -27,7 +27,7 @@ zip_include_packages = [
     # Modules for parsing cfg's
     'requests', 'logging', 'certifi', 'chardet', 'idna', 'urllib3',
     # Self-written modules
-    'parsing', 'choice', 'main', 'second', 'config_editor'
+    'module_parsing', 'module_choice', 'module_main', 'module_second', 'module_config_editor'
 ]
 
 include_files = [
