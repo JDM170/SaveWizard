@@ -4,5 +4,6 @@
     "france" : "company.volatile.lisette_log.roscoff",
     "italy" : "company.volatile.marina_it.ancona",
     "baltic_sea" : "company.volatile.polarislines.tallinn",
-    "black_sea" : "company.volatile.bhv.galati"
+    "black_sea" : "company.volatile.bhv.galati",
+    "iberia" : "company.volatile.tdc_auto.vigo"
 }

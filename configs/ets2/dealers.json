@@ -60,6 +60,8 @@
         "stockholm"
     ],
     "france" : [
+        "ajaccio",
+        "bayonne",
         "bordeaux",
         "bourges",
         "brest",
@@ -74,12 +76,14 @@
     ],
     "italy" : [
         "bologna",
+        "cagliari",
         "catania",
         "firenze",
         "milano",
         "napoli",
         "palermo",
         "roma",
+        "sassari",
         "taranto",
         "torino",
         "verona"
@@ -110,5 +114,22 @@
         "plovdiv",
         "sofia",
         "veliko_tarnovo"
+    ],
+    "iberia" : [
+        "albacete",
+        "almeria",
+        "badajoz",
+        "barcelona",
+        "burgos",
+        "cordoba",
+        "gijon",
+        "leon",
+        "lisboa",
+        "madrid",
+        "malaga",
+        "porto",
+        "sevilla",
+        "valladolid",
+        "zaragoza"
     ]
 }
