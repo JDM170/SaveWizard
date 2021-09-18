@@ -1,11 +1,16 @@
 {
     "base" : [
         "bakersfield",
+        "elko",
+        "las_vegas",
         "los_angeles",
+        "oxnard",
+        "reno",
         "sacramento",
-        "santa_cruz",
         "san_diego",
-        "san_francisco"
+        "san_francisc",
+        "santa_cruz",
+        "stockton"
     ],
     "arizona" : [
         "flagstaff",
@@ -38,20 +43,29 @@
         "price",
         "provo",
         "salina",
-        "salt_lake_city",
+        "salt_lake",
+        "st_george",
         "vernal"
     ],
     "idaho" : [
         "boise",
         "idaho_falls",
+        "lewiston",
         "twin_falls"
     ],
     "colorado" : [
         "alamosa",
-        "colorado_springs",
+        "colorado_spr",
         "denver",
-        "grand_junction",
+        "fort_collins",
+        "grand_juncti",
         "montrose",
         "pueblo"
+    ],
+    "wyoming" : [
+        "casper",
+        "cheyenne",
+        "gillette",
+        "rock_springs"
     ]
 }

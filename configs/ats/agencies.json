@@ -1,16 +1,16 @@
 {
     "base" : [
         "bakersfield",
+        "carson_city",
         "fresno",
+        "las_vegas",
         "los_angeles",
         "oxnard",
         "redding",
         "san_diego",
         "san_rafael",
         "santa_cruz",
-        "stockton",
-        "carson_city",
-        "las_vegas"
+        "stockton"
     ],
     "arizona" : [
         "phoenix",
@@ -38,7 +38,8 @@
     ],
     "utah" : [
         "moab",
-        "salt_lake_city",
+        "price",
+        "salt_lake",
         "st_george"
     ],
     "idaho" : [
@@ -51,5 +52,11 @@
         "alamosa",
         "denver",
         "fort_collins"
+    ],
+    "wyoming" : [
+        "casper",
+        "cheyenne",
+        "rock_springs",
+        "sheridan"
     ]
 }

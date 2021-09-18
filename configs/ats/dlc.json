@@ -5,5 +5,6 @@
     "washington" : "company.volatile.port_sea.seattle",
     "utah" : "company.volatile.gal_oil_sit.price",
     "idaho" : "company.volatile.du_farm.nampa",
-    "colorado" : "company.volatile.aport_den.denver"
+    "colorado" : "company.volatile.aport_den.denver",
+    "wyoming" : "company.volatile.aml_rail_str.cheyenne"
 }
