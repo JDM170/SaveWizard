@@ -1,24 +1,24 @@
-## Ignoring PyCharm settings
+## Ignore PyCharm settings
 /.idea
 
-## Ignoring Python complied files
-/__pycache__
-/module_parsing/__pycache__
-/module_choice/__pycache__
-/module_choice/form.py
-/module_main/__pycache__
-/module_main/form.py
-/module_second/__pycache__
-/module_second/form.py
-/module_config_editor/__pycache__
-/module_config_editor/form.py
+## Ignore virtual enviroment
+/venv
 
-## Ignoring UPX
+## Ignore Python complied files
+*/__pycache__
+
+## Ignore ui -> py transform
+*/form.py 
+
+## Ignore UPX
 /upx
 
-## Ignoring build from cx_Freeze
+## Ignore build from cx_Freeze
 /prog_build
 
-## Ignoring build files from PyInstaller
+## Ignore build files from PyInstaller
 /build
 /dist
+
+## Ignore .bak files
+*.bak
