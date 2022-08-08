@@ -5,7 +5,7 @@
 /venv
 
 ## Ignore Python complied files
-*/__pycache__
+*__pycache__
 
 ## Ignore ui -> py transform
 */form.py 
