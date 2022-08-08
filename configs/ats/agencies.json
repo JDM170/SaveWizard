@@ -58,5 +58,11 @@
         "cheyenne",
         "rock_springs",
         "sheridan"
+    ],
+    "montana" : [
+        "great_falls",
+        "havre",
+        "helena",
+        "kalispell"
     ]
 }

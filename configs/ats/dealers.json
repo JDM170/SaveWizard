@@ -67,5 +67,12 @@
         "cheyenne",
         "gillette",
         "rock_springs"
+    ],
+    "montana" : [
+        "billings",
+        "great_falls",
+        "helena",
+        "kalispell",
+        "missoula"
     ]
 }
