@@ -64,5 +64,14 @@
         "havre",
         "helena",
         "kalispell"
+    ],
+    "texas" : [
+        "corpus_christi",
+        "dallas",
+        "el_paso",
+        "houston",
+        "huntsville",
+        "laredo",
+        "san_antonio"
     ]
 }

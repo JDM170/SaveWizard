@@ -7,5 +7,6 @@
     "idaho" : "company.volatile.du_farm.nampa",
     "colorado" : "company.volatile.aport_den.denver",
     "wyoming" : "company.volatile.aml_rail_str.cheyenne",
-    "montana" : "company.volatile.aport_gtf.great_falls"
+    "montana" : "company.volatile.aport_gtf.great_falls",
+    "texas" : "company.volatile.ali_car_dlr.austin"
 }

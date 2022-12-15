@@ -74,5 +74,23 @@
         "helena",
         "kalispell",
         "missoula"
+    ],
+    "texas" : [
+        "abilene",
+        "amarillo",
+        "austin",
+        "corpus_christi",
+        "dallas",
+        "el_paso",
+        "fort_worth",
+        "houston",
+        "laredo",
+        "longview_tx",
+        "lubbock",
+        "mcallen",
+        "odessa",
+        "san_angelo",
+        "san_antonio",
+        "waco"
     ]
 }
