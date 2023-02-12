@@ -1,5 +1,12 @@
 # SaveWizard
 
+***
+
+At the moment, the development of the program is suspended indefinitely.
+Updates to the add-on files will be released as soon as possible.
+
+***
+
 * Author of original "SaveWizard" script: DrEGZo
 * Original script is taken from here: <https://forum.truckersmp.com/index.php?/topic/55773-savewizard/> (access to the topic has been closed)
 * Utility to decrypt file: <https://github.com/TheLazyTomcat/SII_Decrypt>
@@ -18,10 +25,10 @@ Features:
 ***
 
 Requirments to build project:
-* Python >=3.5.4
-* PyQt5 >=5.6.0
-* requests >=2.24.0
-* cx_Freeze >=6.0 (or PyInstaller >=3.6)
+* Python >= 3.5.4
+* PyQt5 >= 5.6.0
+* requests >= 2.24.0
+* cx_Freeze >= 6.0 (or PyInstaller >= 3.6)
 
 ***
 
