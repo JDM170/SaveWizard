@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from os import system, remove
+from os import remove
 from PyQt5.QtCore import Qt, QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QDialog, QFileDialog
+from ctypes import WinDLL
+from os import getcwd
 from .form import Ui_MainWindow
 from util import *
 from dataIO import dataIO
@@ -127,22 +129,16 @@ class MainWindow(QDialog, Ui_MainWindow):
         self.ui.backup.setEnabled(False)
         self.ui.second_window.setEnabled(False)
 
-    def get_file_data(self, file):
-        try:
-            with open(file) as f:
-                self.old_file = f.read()
-        except UnicodeDecodeError:
-            try:
-                system("SII_Decrypt.exe --on_file -i \"{}\"".format(file))
-                with open(file) as f:
-                    self.old_file = f.read()
-                QMessageBox.information(self, "Success", "File successfully decrypted.")
-            except UnicodeDecodeError:
-                QMessageBox.critical(self, "Error", "Error to decrypt and open file. "
-                                                    "Try again.\nIf you still get error on this step, "
-                                                    "try to change \"uset g_save_format\" to 2, resave "
-                                                    "game and try again.")
+    def get_file_data(self, file_path):
+        sii_lib = WinDLL("{}\SII_Decrypt.dll".format(os.getcwd()))
+        bytes_file_path = file_path.replace("/", "\\").encode("utf-8")
+        if sii_lib.GetFileFormat(bytes_file_path) == 2:
+            if sii_lib.DecryptAndDecodeFile(bytes_file_path, bytes_file_path) != 0:
+                QMessageBox.critical(self, "Error", "Something went wrong with decrypting file. Try again.")
                 return
+
+        with open(file_path) as f:
+            self.old_file = f.read()
         util.set_lines(self.old_file.split("\n"))
 
         if self.owns is not False:
