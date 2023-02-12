@@ -4,6 +4,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from ast import literal_eval
+# from os.path import exists
+from os.path import isfile
 from .form import Ui_Choice
 from module_main.script import MainWindow
 from module_parsing.script import check_remote_hashes, update_configs
@@ -22,28 +24,24 @@ class ChoiceWindow(QDialog, Ui_Choice):
         self.ui.ets2_button.clicked.connect(self.button_clicked)
 
         remember_data = {"answer_updates": True, "update_on_start": False}
-        try:
-            with open(update_config_name) as f:
+        # if exists(update_config_name):
+        if isfile(update_config_name):
+            with open(update_config_name, "r") as f:
                 remember_data = literal_eval(f.read())
-        except FileNotFoundError:
-            with open(update_config_name, "w") as f:
-                f.write(str(remember_data))
 
         upd_list = check_remote_hashes()
         if upd_list and len(upd_list) > 0:
-            answer = remember_data.get("answer_updates")
-            if answer:
+            if remember_data.get("update_on_start"):
+                update_configs(upd_list)
+                return
+            if remember_data.get("answer_updates"):
                 box = QMessageBox(QMessageBox.Information, "Info",
                                   "Some configs have been updated. Do you want to update the local configs?")
                 box.addButton("Yes", QMessageBox.YesRole)  # 0
                 box.addButton("Yes, remember that", QMessageBox.YesRole)  # 1
                 box.addButton("No", QMessageBox.NoRole)  # 2
                 box.addButton("No, remember that", QMessageBox.NoRole)  # 3
-                update_configs(box.exec(), upd_list)
-                return
-            upd_on_start = remember_data.get("update_on_start")
-            if upd_on_start:
-                update_configs(1, upd_list)
+                update_configs(upd_list, box.exec())
 
     def button_clicked(self):
         sender = self.sender()
