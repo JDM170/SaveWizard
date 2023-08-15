@@ -92,5 +92,10 @@
         "san_angelo",
         "san_antonio",
         "waco"
+    ],
+    "oklahoma" : [
+        "ardmore",
+        "enid",
+        "oklahoma_city"
     ]
 }

@@ -73,5 +73,9 @@
         "huntsville",
         "laredo",
         "san_antonio"
+    ],
+    "oklahoma" : [
+        "ardmore",
+        "enid"
     ]
 }
