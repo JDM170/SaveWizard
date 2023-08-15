@@ -1,9 +1,9 @@
 {
     "east" : "company.volatile.quarry.katowice",
     "scandinavia" : "company.volatile.sag_tre.oslo",
-    "france" : "company.volatile.lisette_log.roscoff",
-    "italy" : "company.volatile.marina_it.ancona",
-    "baltic_sea" : "company.volatile.polarislines.tallinn",
-    "black_sea" : "company.volatile.bhv.galati",
+    "france" : "company.volatile.batisse_base.calvi",
+    "italy" : "company.volatile.c_navale.ancona",
+    "baltic_sea" : "company.volatile.aerobalt.helsinki",
+    "black_sea" : "company.volatile.balkan_loco.craiova",
     "iberia" : "company.volatile.tdc_auto.vigo"
 }
