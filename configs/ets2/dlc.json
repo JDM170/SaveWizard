@@ -5,5 +5,6 @@
     "italy" : "company.volatile.c_navale.ancona",
     "baltic_sea" : "company.volatile.aerobalt.helsinki",
     "black_sea" : "company.volatile.balkan_loco.craiova",
-    "iberia" : "company.volatile.tdc_auto.vigo"
+    "iberia" : "company.volatile.tdc_auto.vigo",
+    "west_balkans" : "company.volatile.adrica.rijeka"
 }

@@ -46,6 +46,7 @@
         "stuttgart",
         "swansea",
         "szczecin",
+        "travemunde",
         "wien",
         "zurich"
     ],
@@ -77,7 +78,6 @@
         "marseille",
         "metz",
         "paris",
-        "reims",
         "rennes",
         "toulouse"
     ],
@@ -126,5 +126,14 @@
         "porto",
         "valencia",
         "zaragoza"
+    ],
+    "west_balkans" : [
+        "beograd",
+        "ljubljana",
+        "maribor",
+        "sarajevo",
+        "skopje",
+        "tirana",
+        "zagreb"
     ]
 }

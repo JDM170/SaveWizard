@@ -11,7 +11,6 @@
         "calais",
         "cardiff",
         "dortmund",
-        "dortmund",
         "dresden",
         "dusseldorf",
         "edinburgh",
@@ -131,5 +130,20 @@
         "sevilla",
         "valladolid",
         "zaragoza"
+    ],
+    "west_balkans" : [
+        "banja_luka",
+        "beograd",
+        "kragujevac",
+        "ljubljana",
+        "maribor",
+        "podgorica",
+        "pristina",
+        "rijeka",
+        "skopje",
+        "split",
+        "tirana",
+        "tuzla",
+        "zagreb"
     ]
 }
