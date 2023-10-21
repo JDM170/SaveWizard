@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+from os.path import isfile
 from re import search, match
 # from re import search, match, sub
 from PyQt5.QtWidgets import QMessageBox
@@ -23,14 +24,13 @@ class CustomFuncs:
 
     @staticmethod
     def generate_md5(fn):
-        try:
-            hash_md5 = md5()
-            with open(fn, "rb") as f:
-                for chunk in iter(lambda: f.read(hash_chunk_size), b""):
-                    hash_md5.update(chunk)
-            return hash_md5.hexdigest()
-        except FileNotFoundError:
+        if not isfile(fn):
             return False
+        hash_md5 = md5()
+        with open(fn, "rb") as f:
+            for chunk in iter(lambda: f.read(hash_chunk_size), b""):
+                hash_md5.update(chunk)
+        return hash_md5.hexdigest()
 
     # Stock functions
     def search_line(self, term, start=0, cancel=r"this_string_must_not_exist"):
