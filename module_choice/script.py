@@ -4,7 +4,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog, QMessageBox
 from ast import literal_eval
-# from os.path import exists
 from os.path import isfile
 from .form import Ui_Choice
 from module_main.script import MainWindow
@@ -24,7 +23,6 @@ class ChoiceWindow(QDialog, Ui_Choice):
         self.ui.ets2_button.clicked.connect(self.button_clicked)
 
         remember_data = {"answer_updates": True, "update_on_start": False}
-        # if exists(update_config_name):
         if isfile(update_config_name):
             with open(update_config_name, "r") as f:
                 remember_data = literal_eval(f.read())
