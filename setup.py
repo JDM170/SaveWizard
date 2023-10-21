@@ -9,8 +9,8 @@ if platform == 'win32':
     base = 'Win32GUI'
 
 executables = [
-    Executable('init_main_program.py', targetName='SaveWizard.exe', base=base),
-    Executable('init_config_editor.py', targetName='SaveWizard_Config_Editor.exe', base=base)
+    Executable('init_main_program.py', target_name='SaveWizard.exe', base=base),
+    Executable('init_config_editor.py', target_name='SaveWizard_Config_Editor.exe', base=base)
 ]
 
 excludes = ['html', 'pydoc_data', 'unittest', 'xml', 'pwd', 'shlex', 'platform', 'webbrowser', 'pydoc', 'tty',
@@ -21,7 +21,7 @@ includes = ['pkgutil', 'enum', 'queue']
 zip_include_packages = [
     # Stock modules
     'collections', 'encodings', 'importlib', 'json', 'hashlib', 'selectors', 'select', 'http', 'email', 'datetime',
-    'calendar', 'urllib', 'posixpath', 'tempfile', 'shutil', 'copy', 'stringprep', 'socket', 'ast',
+    'calendar', 'urllib', 'posixpath', 'tempfile', 'shutil', 'copy', 'stringprep', 'socket', 'ast', 'ssl', 'ctypes',
     # PyQt5
     'PyQt5',
     # Modules for parsing cfg's
@@ -31,10 +31,10 @@ zip_include_packages = [
 ]
 
 include_files = [
-    'dlls/imageformats',
-    'dlls/platforms',
-    'dlls/styles',
-    'SII_Decrypt.exe',
+    # 'dlls/imageformats',
+    # 'dlls/platforms',
+    # 'dlls/styles',
+    'SII_Decrypt.dll',
     ('configs/ats', 'configs/ats'),
     ('configs/ets2', 'configs/ets2')
 ]
@@ -52,7 +52,7 @@ options = {
 
 setup(
     name='SaveWizard',
-    version='1.3',
+    version='1.4',
     description='For editing ETS2 sii files',
     executables=executables,
     options=options,
