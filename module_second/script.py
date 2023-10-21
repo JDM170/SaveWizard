@@ -102,12 +102,29 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         self.ui.agency_add_all.clicked.connect(self.add_all_da_clicked)
 
         if self.owns:
-            self.fill_list(self.dealers, self.dealers_file)
-            self.fill_list(self.agencies, self.agencies_file)
+            self.fill_list(self.owns, self.dealers, self.dealers_file)
+            self.fill_list(self.owns, self.agencies, self.agencies_file)
         # Checking save-file
         self.check_cities()
         self.check_dealers()
         self.check_agencies()
+
+    @staticmethod
+    def all_cities():
+        cities = []
+        for line in util.get_array_items(util.search_line("companies:")):
+            city = match(r"company.volatile.[a-z0-9_]+[.]([a-z_]+)", line).group(1)
+            if city not in cities:
+                cities.append(city)
+        return cities
+
+    @staticmethod
+    def add_vehicles_and_drivers(start_line, garage_size):
+        vehicles_array = util.search_line("vehicles:", start=start_line)
+        drivers_array = util.search_line("drivers:", start=start_line)
+        for i in range(1, garage_size + 1):
+            util.add_array_value(vehicles_array, "null")
+            util.add_array_value(drivers_array + i, "null")
 
     @staticmethod
     def purchased_garages():
@@ -119,28 +136,10 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         return garages
 
     @staticmethod
-    def add_vehicles_and_drivers(start_line, garage_size):
-        # vehicles_array = util.search_line_in_unit("vehicles:", start_line)
-        # drivers_array = util.search_line_in_unit("drivers:", start_line)
-        vehicles_array = util.search_line("vehicles:", start=start_line)
-        drivers_array = util.search_line("drivers:", start=start_line)
-        for i in range(1, garage_size + 1):
-            util.add_array_value(vehicles_array, "null")
-            util.add_array_value(drivers_array + i, "null")
-
-    @staticmethod
-    def all_cities():
-        cities = []
-        for line in util.get_array_items(util.search_line("companies:")):
-            city = match(r"company.volatile.[a-z0-9_]+[.]([a-z_]+)", line).group(1)
-            if city not in cities:
-                cities.append(city)
-        return cities
-
-    def fill_list(self, array, file):
+    def fill_list(owns, array, file):
         if array is False:
             return
-        for key in self.owns.keys():
+        for key in owns.keys():
             if key not in file:
                 continue
             for value in file[key]:
@@ -163,17 +162,15 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             QMessageBox.critical(self, "Error", "Enter city name!")
             return
         self.ui.garage_edit.setText("")
-        reg_garage = "garage." + garage
-        current_status = util.search_line_in_unit("status:", reg_garage)
+        current_garage = util.search_line("garage : garage." + garage + " {")
+        if current_garage is None:
+            QMessageBox.critical(self, "Error", "Garage in \"{}\" not found.".format(garage))
+            return
+        current_status = util.search_line_in_unit("status:", "garage." + garage)
         if util.get_value(current_status) == "0":
             new_status, size = self.check_garage_size()
             util.set_value(current_status, new_status)
-            # vehicles_array = util.search_line_in_unit("vehicles:", reg_garage)
-            # drivers_array = util.search_line_in_unit("drivers:", reg_garage)
-            # for i in range(1, size + 1):
-            #     util.add_array_value(vehicles_array, "null")
-            #     util.add_array_value(drivers_array + i, "null")
-            self.add_vehicles_and_drivers(reg_garage, size)
+            self.add_vehicles_and_drivers(current_garage, size)
             QMessageBox.information(self, "Success", "Garage in \"{}\" successfully unlocked.".format(garage))
         else:
             QMessageBox.critical(self, "Error", "Garage in \"{}\" already unlocked.".format(garage))
@@ -182,15 +179,10 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         new_status, size = self.check_garage_size()
         for item in util.get_array_items(util.search_line("garages:")):
             item = match(r"garage.(.+)$", item).group(1)
-            current_garage = util.search_line("garage : garage."+item+" {")
+            current_garage = util.search_line("garage : garage." + item + " {")
             current_status = util.search_line("status:", start=current_garage)
             if util.get_value(current_status) == "0":
                 util.set_value(current_status, new_status)
-                # vehicles_array = util.search_line("vehicles:", start=current_garage)
-                # drivers_array = util.search_line("drivers:", start=current_garage)
-                # for i in range(1, size + 1):
-                #     util.add_array_value(vehicles_array, "null")
-                #     util.add_array_value(drivers_array + i, "null")
                 self.add_vehicles_and_drivers(current_garage, size)
         QMessageBox.information(self, "Success", "All garages successfully unlocked.")
 
