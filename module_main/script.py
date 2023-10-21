@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from os import remove
+from os import getcwd, remove
+from os.path import isfile
+from ctypes import WinDLL
 from PyQt5.QtCore import Qt, QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QDialog, QFileDialog
-from ctypes import WinDLL
-from os import getcwd
 from .form import Ui_MainWindow
 from util import *
 from dataIO import dataIO
@@ -130,7 +130,7 @@ class MainWindow(QDialog, Ui_MainWindow):
         self.ui.second_window.setEnabled(False)
 
     def get_file_data(self, file_path):
-        sii_lib = WinDLL("{}\SII_Decrypt.dll".format(os.getcwd()))
+        sii_lib = WinDLL("{}\SII_Decrypt.dll".format(getcwd()))
         bytes_file_path = file_path.replace("/", "\\").encode("utf-8")
         if sii_lib.GetFileFormat(bytes_file_path) == 2:
             if sii_lib.DecryptAndDecodeFile(bytes_file_path, bytes_file_path) != 0:
@@ -187,16 +187,16 @@ class MainWindow(QDialog, Ui_MainWindow):
             self.check_config()
 
     def recover_backup(self):
-        try:
-            backup_path = self.file_path + ".swbak"
-            with open(self.file_path, "w") as current:
-                with open(backup_path) as backup:
-                    current.write(backup.read())
-            remove(backup_path)
-            QMessageBox.information(self, "Success", "Backup successfully recovered.")
-            self.get_file_data(self.file_path)
-        except IOError:
+        backup_path = self.file_path + ".swbak"
+        if not isfile(backup_path):
             QMessageBox.critical(self, "Error", "Backup not found.")
+            return
+        with open(self.file_path, "w") as current:
+            with open(backup_path) as backup:
+                current.write(backup.read())
+        remove(backup_path)
+        QMessageBox.information(self, "Success", "Backup successfully recovered.")
+        self.get_file_data(self.file_path)
 
     def open_second_win(self):
         second_win = SecondWindow(self.selected_game, self.owns, self)
