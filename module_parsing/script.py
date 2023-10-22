@@ -35,16 +35,15 @@ def check_path(path):
 
 
 def check_remote_hashes():
-    # response_status, response = get_response_result(github_link + "configs/version.cfg")
-    response_status, response = get_response_result(github_link + "configs/version_new.cfg")
+    response_status, response = get_response_result(github_link + "configs/version.cfg")
     if response_status:
         remote_cfg = literal_eval(response.text)
         need_update = []
-        for game, cfg in remote_cfg.items():
-            for f_name, f_hash in cfg.items():
-                path = "configs/{}/{}.json".format(game, f_name)
-                if util.generate_md5(path) != f_hash:
-                    need_update.append(path)
+        for key, value in remote_cfg.items():
+            path = key.split("_")
+            path = "configs/{}/{}.json".format(path[0], path[1])
+            if util.generate_md5(path) != value:
+                need_update.append(path)
         return need_update
     return False
 
