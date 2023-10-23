@@ -14,7 +14,7 @@ from module_second.script import SecondWindow
 
 
 class MainWindow(QDialog, Ui_MainWindow):
-    def __init__(self, selected_game, parent=None):
+    def __init__(self, parent=None):
         # Setup UI
         QDialog.__init__(self, parent, flags=Qt.Window)
         Ui_MainWindow.__init__(self)
@@ -24,13 +24,9 @@ class MainWindow(QDialog, Ui_MainWindow):
         self.file_path = ""
         self.old_file = ""
 
-        self.selected_game = selected_game
+        self.selected_game = ""
         self.owns = {}
         self.dlc = {}
-
-        # Editing label to show what configs chosen
-        self.chosen_cfg_text = self.ui.chosen_cfgs.text()
-        self.ui.chosen_cfgs.setText("{} {}".format(self.chosen_cfg_text, selected_game.upper()))
 
         # Storing edits with his checkboxes and file-lines
         self.basic_edits = {
@@ -64,12 +60,10 @@ class MainWindow(QDialog, Ui_MainWindow):
 
         # Connecting buttons
         self.ui.path_button.clicked.connect(self.open_file_dialog)
-        self.ui.cfg_button.clicked.connect(self.change_configs)
         self.ui.backup.clicked.connect(self.recover_backup)
         self.ui.second_window.clicked.connect(self.open_second_win)
         self.ui.apply.clicked.connect(self.apply_changes)
 
-        self.check_config()
         self.clear_form_data()
 
     def text_edited(self):
@@ -112,9 +106,6 @@ class MainWindow(QDialog, Ui_MainWindow):
         self.old_file = ""
         util.set_lines([])
 
-        if self.owns is not False:
-            self.owns = {}
-
         for key, value in self.basic_edits.items():
             key.setText("")
             value[0].setChecked(True)
@@ -140,6 +131,12 @@ class MainWindow(QDialog, Ui_MainWindow):
         with open(file_path) as f:
             self.old_file = f.read()
         util.set_lines(self.old_file.split("\n"))
+
+        if util.search_line("company.volatile.eurogoodies.magdeburg"):
+            self.selected_game = "ets2"
+        else:
+            self.selected_game = "ats"
+        self.check_config()
 
         if self.owns is not False:
             self.owns["base"] = True
@@ -174,17 +171,6 @@ class MainWindow(QDialog, Ui_MainWindow):
             self.get_file_data(file_path)
         else:
             return
-
-    def change_configs(self):
-        box = QMessageBox(QMessageBox.Warning, "Warning", "Do you really want to load other configs?\n"
-                                                          "Your current changes won't be saved.")
-        box.addButton("Yes", QMessageBox.YesRole)
-        box.addButton("No", QMessageBox.NoRole)
-        if box.exec() == 0:
-            self.clear_form_data()
-            self.selected_game = "ets2" if self.selected_game == "ats" else "ats"
-            self.ui.chosen_cfgs.setText("{} {}".format(self.chosen_cfg_text, self.selected_game.upper()))
-            self.check_config()
 
     def recover_backup(self):
         backup_path = self.file_path + ".swbak"
