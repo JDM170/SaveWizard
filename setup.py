@@ -27,13 +27,10 @@ zip_include_packages = [
     # Modules for parsing cfg's
     'requests', 'logging', 'certifi', 'chardet', 'idna', 'urllib3',
     # Self-written modules
-    'module_parsing', 'module_choice', 'module_main', 'module_second', 'module_config_editor'
+    'module_parsing', 'module_main', 'module_second', 'module_config_editor'
 ]
 
 include_files = [
-    # 'dlls/imageformats',
-    # 'dlls/platforms',
-    # 'dlls/styles',
     'SII_Decrypt.dll',
     ('configs/ats', 'configs/ats'),
     ('configs/ets2', 'configs/ets2')
