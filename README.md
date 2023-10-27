@@ -8,20 +8,14 @@
 
 Features:
 1. Decrypt file, if save file crypted
-2. Check for DLC to the save file
+2. Check for DLC to the save file (available DLC listed at [DLC_TABLE.md]<https://github.com/JDM170/SaveWizard/blob/dev/DLC_TABLE.md>)
 3. Edit money, experience and loan limit
 4. Edit skills
-5. Unlock garages, visit cities, unlock dealers and agencies
-
-**This functionality of the program isn't final!**
+5. Visit cities, unlock garages, dealers and agencies
 
 ***
 
-Requirments to build project:
-* Python >=3.5.4
-* PyQt5 >=5.6.0
-* requests >=2.24.0
-* cx_Freeze >=6.0 (or PyInstaller >=3.6)
+Requirements to build project available in [requirements.txt]<https://github.com/JDM170/SaveWizard/blob/dev/requirements.txt>
 
 ***
 
