@@ -4,6 +4,7 @@ app = Analysis(
     ['init_main_program.py'],
     pathex=['.'],
     datas=[
+        ('SII_Decrypt.dll', '.'),
         ('configs/ats', 'configs/ats'),
         ('configs/ets2', 'configs/ets2')
     ]
@@ -32,15 +33,6 @@ app_exe = EXE(
     strip=False,
     console=False
 )
-app_coll = COLLECT(
-    app_exe,
-    app.binaries,
-    app.zipfiles,
-    app.datas,
-    strip=False,
-    name='app_build'
-)
-
 cfg_exe = EXE(
     cfg_pyz,
     cfg.scripts,
@@ -52,11 +44,16 @@ cfg_exe = EXE(
     strip=False,
     console=False
 )
-cfg_coll = COLLECT(
+
+coll = COLLECT(
+    app_exe,
+    app.binaries,
+    app.zipfiles,
+    app.datas,
     cfg_exe,
     cfg.binaries,
     cfg.zipfiles,
     cfg.datas,
     strip=False,
-    name='cfg_build'
+    name='app_build'
 )
