@@ -3,7 +3,7 @@
 
 from os import getcwd, remove
 from os.path import isfile
-from ctypes import WinDLL
+from ctypes import CDLL
 from PyQt5.QtCore import Qt, QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QDialog, QFileDialog
@@ -11,6 +11,9 @@ from .form import Ui_MainWindow
 from util import *
 from dataIO import dataIO
 from module_second.script import SecondWindow
+
+
+libdecrypt = CDLL("{}\SII_Decrypt.dll".format(getcwd()))
 
 
 class MainWindow(QDialog, Ui_MainWindow):
@@ -121,10 +124,9 @@ class MainWindow(QDialog, Ui_MainWindow):
         self.ui.second_window.setEnabled(False)
 
     def get_file_data(self, file_path):
-        sii_lib = WinDLL("{}\SII_Decrypt.dll".format(getcwd()))
         bytes_file_path = file_path.replace("/", "\\").encode("utf-8")
-        if sii_lib.GetFileFormat(bytes_file_path) == 2:
-            if sii_lib.DecryptAndDecodeFile(bytes_file_path, bytes_file_path) != 0:
+        if libdecrypt.GetFileFormat(bytes_file_path) == 2:
+            if libdecrypt.DecryptAndDecodeFile(bytes_file_path, bytes_file_path) != 0:
                 QMessageBox.critical(self, "Error", "Something went wrong with decrypting file. Try again.")
                 return
 
