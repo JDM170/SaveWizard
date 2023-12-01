@@ -3,11 +3,11 @@
     "new_mexico" : "company.volatile.aport_abq.albuquerque",
     "oregon" : "company.volatile.aport_pcc.portland",
     "washington" : "company.volatile.port_sea.seattle",
-    "utah" : "company.volatile.cm_min_qryp.moab",
+    "utah" : "company.volatile.gal_oil_sit.price",
     "idaho" : "company.volatile.du_farm.nampa",
     "colorado" : "company.volatile.aport_den.denver",
     "wyoming" : "company.volatile.aml_rail_str.cheyenne",
     "montana" : "company.volatile.aport_gtf.great_falls",
-    "texas" : "company.volatile.aport_dfw.fort_worth",
-    "oklahoma" : "company.volatile.aport_tul.tulsa"
+    "texas" : "company.volatile.ali_car_dlr.austin",
+    "kansas" : "company.volatile.ai_car_whs.junction_cty"
 }
