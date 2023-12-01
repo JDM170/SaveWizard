@@ -98,5 +98,14 @@
         "ardmore",
         "enid",
         "oklahoma_cit"
+    ],
+    "kansas" : [
+        "dodge_city",
+        "emporia",
+        "garden_city",
+        "hays",
+        "kansas_ci_ks",
+        "salina_ks",
+        "wichita"
     ]
 }

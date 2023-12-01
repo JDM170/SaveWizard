@@ -9,5 +9,6 @@
     "wyoming" : "company.volatile.aml_rail_str.cheyenne",
     "montana" : "company.volatile.aport_gtf.great_falls",
     "texas" : "company.volatile.aport_dfw.fort_worth",
-    "oklahoma" : "company.volatile.aport_tul.tulsa"
+    "oklahoma" : "company.volatile.aport_tul.tulsa",
+    "kansas" : "company.volatile.ai_car_whs.junction_cty"
 }
