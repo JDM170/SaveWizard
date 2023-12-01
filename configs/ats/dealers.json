@@ -5,6 +5,7 @@
         "las_vegas",
         "los_angeles",
         "oxnard",
+        "redding",
         "reno",
         "sacramento",
         "san_diego",
@@ -79,7 +80,7 @@
         "abilene",
         "amarillo",
         "austin",
-        "corpus_christi",
+        "corpus_chris",
         "dallas",
         "el_paso",
         "fort_worth",
@@ -92,5 +93,19 @@
         "san_angelo",
         "san_antonio",
         "waco"
+    ],
+    "oklahoma" : [
+        "ardmore",
+        "enid",
+        "oklahoma_cit"
+    ],
+    "kansas" : [
+        "dodge_city",
+        "emporia",
+        "garden_city",
+        "hays",
+        "kansas_ci_ks",
+        "salina_ks",
+        "wichita"
     ]
 }

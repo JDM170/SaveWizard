@@ -66,12 +66,23 @@
         "kalispell"
     ],
     "texas" : [
-        "corpus_christi",
+        "corpus_chris",
         "dallas",
         "el_paso",
         "houston",
         "huntsville",
         "laredo",
         "san_antonio"
+    ],
+    "oklahoma" : [
+        "ardmore",
+        "enid"
+    ],
+    "kansas" : [
+        "hays",
+        "kansas_ci_ks",
+        "salina_ks",
+        "topeka",
+        "wichita"
     ]
 }
