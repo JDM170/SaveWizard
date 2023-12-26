@@ -9,8 +9,8 @@ if platform == 'win32':
     base = 'Win32GUI'
 
 executables = [
-    Executable('init_main_program.py', targetName='SaveWizard.exe', base=base),
-    Executable('init_config_editor.py', targetName='SaveWizard_Config_Editor.exe', base=base)
+    Executable('init_main_program.py', target_name='SaveWizard.exe', base=base),
+    Executable('init_config_editor.py', target_name='SaveWizard_Config_Editor.exe', base=base)
 ]
 
 excludes = ['html', 'pydoc_data', 'unittest', 'xml', 'pwd', 'shlex', 'platform', 'webbrowser', 'pydoc', 'tty',
