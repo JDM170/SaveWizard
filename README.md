@@ -15,7 +15,12 @@ Features:
 
 ***
 
-Requirements to build project available in [requirements.txt](https://github.com/JDM170/SaveWizard/blob/dev/requirements.txt)
+To build project You need Python 3.10.7 and installed requirements from [requirements.txt](https://github.com/JDM170/SaveWizard/blob/dev/requirements.txt)
+
+Command to convert .ui to .py: ```pyuic5 -x input.ui -o output.py```
+Commands to build project:
+- cx_Freeze: ```python setup.py build```
+- PyInstaller: ```pyinstaller build.spec --clean```
 
 ***
 
