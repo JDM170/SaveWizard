@@ -63,8 +63,8 @@ class MainWindow(QDialog, Ui_MainWindow):
 
         # Connecting buttons
         self.ui.path_button.clicked.connect(self.open_file_dialog)
-        self.ui.backup.clicked.connect(self.recover_backup)
         self.ui.second_window.clicked.connect(self.open_second_win)
+        self.ui.backup.clicked.connect(self.recover_backup)
         self.ui.apply.clicked.connect(self.apply_changes)
 
         self.clear_form_data()
@@ -174,6 +174,10 @@ class MainWindow(QDialog, Ui_MainWindow):
         else:
             return
 
+    def open_second_win(self):
+        second_win = SecondWindow(self.selected_game, self.owns, self)
+        second_win.exec()
+
     def recover_backup(self):
         backup_path = self.file_path + ".swbak"
         if not isfile(backup_path):
@@ -185,10 +189,6 @@ class MainWindow(QDialog, Ui_MainWindow):
         remove(backup_path)
         QMessageBox.information(self, "Success", "Backup successfully recovered.")
         self.get_file_data(self.file_path)
-
-    def open_second_win(self):
-        second_win = SecondWindow(self.selected_game, self.owns, self)
-        second_win.exec()
 
     def apply_changes(self):
         if not self.ui.dont_change_all_inf.isChecked():
