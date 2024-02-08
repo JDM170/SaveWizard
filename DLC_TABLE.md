@@ -16,6 +16,7 @@
 | Kansas | kansas | dlc_ks |
 | Nebraska (not released) | nebraska | ? |
 | Arkansas (not released) | arkansas | ? |
+| Missouri (not released) | missouri | ? |
 
 # Euro Truck Simulator 2 DLC table
 
@@ -31,3 +32,4 @@
 | Heart of Russia (not released) | mother_russia | ? |
 | West Balkans | west_balkans | dlc_balkan_w |
 | Greece (not released) | greece | ? |
+| Nordic Horizons (not released) | nordic_horizons | ? |
