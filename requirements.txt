@@ -1,10 +1,10 @@
 altgraph==0.17.4
 certifi==2023.11.17
 charset-normalizer==3.3.2
-cx-Freeze==6.15.12
+cx-Freeze==7.0.0
 cx-Logging==3.1.0
 idna==3.6
-lief==0.13.2
+lief==0.14.0
 packaging==23.2
 pefile==2023.2.7
 pyinstaller==6.3.0

@@ -48,19 +48,14 @@ def check_remote_hashes():
     return False
 
 
-def update_configs(cfg_list, ans_upd=0):
+def update_configs(cfg_list):
     """
     :param cfg_list: config list to update
-    :param ans_upd: ask user to update configs, update or not, remember answer or not
     """
-    if ans_upd in (0, 1):
-        for cfg in cfg_list:
-            check_path(cfg)
-            response_status, response = get_response_result(github_link + cfg)
-            if response_status:
-                remote_cfg = literal_eval(response.text)
-                if dataIO.is_valid_json(cfg) or os.path.exists(cfg):
-                    dataIO.save_json(cfg, remote_cfg)
-    if ans_upd in (1, 3):
-        with open(update_config_name, "w") as f:
-            f.write(str({"answer_updates": ans_upd == 3, "update_on_start": ans_upd == 1}))
+    for cfg in cfg_list:
+        check_path(cfg)
+        response_status, response = get_response_result(github_link + cfg)
+        if response_status:
+            remote_cfg = literal_eval(response.text)
+            if dataIO.is_valid_json(cfg) or os.path.exists(cfg):
+                dataIO.save_json(cfg, remote_cfg)

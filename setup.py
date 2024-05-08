@@ -13,8 +13,8 @@ executables = [
     Executable('init_config_editor.py', target_name='SaveWizard_Config_Editor.exe', base=base)
 ]
 
-excludes = ['html', 'pydoc_data', 'unittest', 'xml', 'pwd', 'shlex', 'platform', 'webbrowser', 'pydoc', 'tty',
-            'inspect', 'doctest', 'plistlib', 'subprocess', 'bz2', '_strptime', 'dummy_threading']
+excludes = ['html', 'pydoc_data', 'unittest', 'xml', 'pwd', 'shlex', 'platform', 'webbrowser', 'pydoc',
+            'tty', 'doctest', 'plistlib', 'subprocess', 'bz2', '_strptime', 'dummy_threading']
 
 includes = ['pkgutil', 'enum', 'queue']
 
@@ -25,7 +25,7 @@ zip_include_packages = [
     # PyQt5
     'PyQt5',
     # Modules for parsing cfg's
-    'requests', 'logging', 'certifi', 'chardet', 'idna', 'urllib3',
+    'requests', 'logging', 'certifi', 'chardet', 'idna', 'urllib3', 'inspect',
     # Self-written modules
     'module_parsing', 'module_main', 'module_second', 'module_config_editor'
 ]
@@ -49,7 +49,7 @@ options = {
 
 setup(
     name='SaveWizard',
-    version='1.4',
+    version='1.4.1',
     description='For editing ETS2 sii files',
     executables=executables,
     options=options,

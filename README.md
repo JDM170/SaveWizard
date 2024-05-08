@@ -24,4 +24,4 @@ Commands to build project:
 
 ***
 
-#### Since the program is in development, I won't give up help and guidance on my errors in the code.
+#### If you've found a bug - please open an issue
