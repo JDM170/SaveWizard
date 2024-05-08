@@ -1,22 +1,22 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from os import getcwd, remove
-from os.path import isfile
+from ast import literal_eval
 from ctypes import CDLL
+from os import getcwd, remove
+
 from PyQt5.QtCore import Qt, QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QDialog, QFileDialog
-from ast import literal_eval
-from .form import Ui_MainWindow
-from util import *
+
 from dataIO import dataIO
-from module_second.script import SecondWindow
 from module_parsing.script import check_remote_hashes, update_configs
+from module_second.script import SecondWindow
 from statics import update_config_name
+from util import *
+from .form import Ui_MainWindow
 
-
-libdecrypt = CDLL("{}\\SII_Decrypt.dll".format(getcwd()))
+libDecrypt = CDLL("{}\\SII_Decrypt.dll".format(getcwd()))
 
 
 class MainWindow(QDialog, Ui_MainWindow):
@@ -141,8 +141,8 @@ class MainWindow(QDialog, Ui_MainWindow):
 
     def get_file_data(self, file_path):
         bytes_file_path = file_path.replace("/", "\\").encode("utf-8")
-        if libdecrypt.GetFileFormat(bytes_file_path) == 2:
-            if libdecrypt.DecryptAndDecodeFile(bytes_file_path, bytes_file_path) != 0:
+        if libDecrypt.GetFileFormat(bytes_file_path) == 2:
+            if libDecrypt.DecryptAndDecodeFile(bytes_file_path, bytes_file_path) != 0:
                 QMessageBox.critical(self, "Error", "Something went wrong with decrypting file. Try again.")
                 return
 

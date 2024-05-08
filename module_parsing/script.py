@@ -1,18 +1,22 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from requests import get
-from ast import literal_eval
 import os
-from statics import github_link, update_config_name
+from ast import literal_eval
+
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QProgressDialog, QApplication
+from requests import get
+
 from dataIO import dataIO
+from statics import github_link
 from util import util
 
 
 def get_response_result(url):
     """
     Getting the result from a given url
-    :param url: url where we get data
+    :param url: place where we get data
     :return: status code (True or False), response body
     """
     response = get(url)
@@ -26,7 +30,7 @@ def check_path(path):
     """
     current_path = os.getcwd()
     for item in path.split("/"):
-        current_path = os.path.join(current_path, item)
+        current_path = os.path.join(str(current_path), item)
         if not os.path.exists(current_path):
             if item.find(".json") > 0:
                 open(current_path, "w").close()
@@ -52,6 +56,10 @@ def update_configs(cfg_list):
     """
     :param cfg_list: config list to update
     """
+    progress = QProgressDialog("Downloading configs...", None, 0, len(cfg_list), flags=Qt.Window | Qt.WindowTitleHint)
+    progress.setWindowTitle("Download progress")
+    progress.setWindowModality(Qt.WindowModal)
+    progress.show()
     for cfg in cfg_list:
         check_path(cfg)
         response_status, response = get_response_result(github_link + cfg)
@@ -59,3 +67,7 @@ def update_configs(cfg_list):
             remote_cfg = literal_eval(response.text)
             if dataIO.is_valid_json(cfg) or os.path.exists(cfg):
                 dataIO.save_json(cfg, remote_cfg)
+                progress.setValue(progress.value()+1)
+                QApplication.processEvents()
+    progress.setValue(len(cfg_list))
+    QApplication.processEvents()

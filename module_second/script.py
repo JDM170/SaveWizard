@@ -17,7 +17,7 @@ garages_stat = {
 class SecondWindow(QDialog, Ui_SecondWindow):
     def __init__(self, selected_game, owns_list, parent=None):
         # Setup UI
-        QDialog.__init__(self, parent, flags=Qt.Window)
+        QDialog.__init__(self, parent, flags=(Qt.Window | Qt.WindowTitleHint | Qt.WindowCloseButtonHint))
         Ui_SecondWindow.__init__(self)
         self.ui = Ui_SecondWindow()
         self.ui.setupUi(self)

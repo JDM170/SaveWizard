@@ -22,3 +22,6 @@
 
 ## Ignore .bak files
 *.bak
+
+## Ignore created 'update.cfg' file
+update.cfg
