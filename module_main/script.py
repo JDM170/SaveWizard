@@ -10,7 +10,7 @@ from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QDialog, QFileDialog
 
 from dataIO import dataIO
-from module_parsing.script import check_remote_hashes, update_configs
+from module_parsing.script import update_configs
 from module_second.script import SecondWindow
 from statics import update_config_name
 from util import *
@@ -35,9 +35,7 @@ class MainWindow(QDialog, Ui_MainWindow):
         update_bool = update_cfg.get("update_on_start")
         if update_bool:
             self.ui.updates_checkbox.setChecked(update_bool)
-            update_list = check_remote_hashes()
-            if update_list and len(update_list) > 0:
-                update_configs(update_list)
+            update_configs()
 
         self.file_path = ""
         self.old_file = ""

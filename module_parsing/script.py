@@ -52,15 +52,15 @@ def check_remote_hashes():
     return False
 
 
-def update_configs(cfg_list):
-    """
-    :param cfg_list: config list to update
-    """
-    progress = QProgressDialog("Downloading configs...", None, 0, len(cfg_list), flags=Qt.Window | Qt.WindowTitleHint)
+def update_configs():
+    update_list = check_remote_hashes()
+    if not update_list or len(update_list) == 0:
+        return
+    progress = QProgressDialog("Downloading configs...", None, 0, len(update_list), flags=Qt.Window | Qt.WindowTitleHint)
     progress.setWindowTitle("Download progress")
     progress.setWindowModality(Qt.WindowModal)
     progress.show()
-    for cfg in cfg_list:
+    for cfg in update_list:
         check_path(cfg)
         response_status, response = get_response_result(github_link + cfg)
         if response_status:
@@ -69,5 +69,5 @@ def update_configs(cfg_list):
                 dataIO.save_json(cfg, remote_cfg)
                 progress.setValue(progress.value()+1)
                 QApplication.processEvents()
-    progress.setValue(len(cfg_list))
+    progress.setValue(len(update_list))
     QApplication.processEvents()
