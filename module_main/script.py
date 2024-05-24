@@ -123,6 +123,10 @@ class MainWindow(QDialog, Ui_MainWindow):
         self.old_file = ""
         util.set_lines([])
 
+        self.selected_game = ""
+        self.owns = {}
+        self.dlc = {}
+
         for key, value in self.basic_edits.items():
             key.setText("")
             value[0].setChecked(True)

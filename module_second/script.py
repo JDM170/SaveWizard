@@ -301,7 +301,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         array_line = util.search_line(line_to_search)
         visited = util.get_array_items(array_line)
         for element in city_list:
-            if element in all_cities and not element not in visited:
+            if (element in all_cities) and (element not in visited):
                 util.add_array_value(array_line, element)
         QMessageBox.information(self, "Success", success_message)
         check_func()
