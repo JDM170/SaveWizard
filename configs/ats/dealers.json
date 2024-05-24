@@ -2,8 +2,10 @@
     "base" : [
         "bakersfield",
         "elko",
+        "fresno",
         "las_vegas",
         "los_angeles",
+        "modesto",
         "oxnard",
         "redding",
         "reno",
@@ -107,5 +109,12 @@
         "kansas_ci_ks",
         "salina_ks",
         "wichita"
+    ],
+    "nebraska" : [
+        "grand_island",
+        "lincoln",
+        "north_platte",
+        "omaha",
+        "sidney_ne"
     ]
 }

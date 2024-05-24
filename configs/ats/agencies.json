@@ -5,10 +5,12 @@
         "fresno",
         "las_vegas",
         "los_angeles",
+        "oakland",
         "oxnard",
         "redding",
         "san_diego",
         "san_rafael",
+        "san_francisc",
         "santa_cruz",
         "stockton"
     ],
@@ -84,5 +86,10 @@
         "salina_ks",
         "topeka",
         "wichita"
+    ],
+    "nebraska" : [
+        "grand_island",
+        "lincoln",
+        "omaha"
     ]
 }

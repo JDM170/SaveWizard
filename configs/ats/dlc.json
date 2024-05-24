@@ -10,5 +10,6 @@
     "montana" : "company.volatile.aport_gtf.great_falls",
     "texas" : "company.volatile.aport_dfw.fort_worth",
     "oklahoma" : "company.volatile.aport_tul.tulsa",
-    "kansas" : "company.volatile.ai_car_whs.junction_cty"
+    "kansas" : "company.volatile.ai_car_whs.junction_cty",
+    "nebraska" : "company.volatile.nls_rd_grg.columbus"
 }
