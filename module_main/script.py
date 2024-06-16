@@ -5,7 +5,7 @@ from ast import literal_eval
 from ctypes import CDLL
 from os import getcwd, remove
 
-from PyQt5.QtCore import Qt, QRegExp
+from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QDialog, QFileDialog
 

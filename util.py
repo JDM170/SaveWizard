@@ -4,7 +4,10 @@
 from os.path import isfile
 from re import search, match
 # from re import search, match, sub
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import (
+    QMessageBox, QProgressDialog, QApplication
+)
 from hashlib import md5
 from statics import hash_chunk_size
 
@@ -31,6 +34,23 @@ class CustomFuncs:
             for chunk in iter(lambda: f.read(hash_chunk_size), b""):
                 hash_md5.update(chunk)
         return hash_md5.hexdigest()
+
+    @staticmethod
+    def show_progress_bar(title, text, length):
+        if (not title) or (not text) or (not length) or (length <= 0):
+            return
+        progress_bar = QProgressDialog(text, None, 0, length, flags=Qt.Window | Qt.WindowTitleHint)
+        progress_bar.setWindowTitle(title)
+        progress_bar.setWindowModality(Qt.WindowModal)
+        progress_bar.show()
+        return progress_bar
+
+    @staticmethod
+    def update_progress_bar(progress_bar, value=1):
+        if not progress_bar:
+            return
+        progress_bar.setValue(progress_bar.value() + value)
+        QApplication.processEvents()
 
     # Stock functions
     def search_line(self, term, start=0, cancel=r"this_string_must_not_exist"):

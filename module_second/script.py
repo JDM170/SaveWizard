@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QDialog
 from .form import Ui_SecondWindow
 from util import *
@@ -54,36 +53,39 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         self.ui.garage_size.addItem("Medium")
         self.ui.garage_size.addItem("Big")
 
-        # Dealers and agencies properties for 'ADD' button
-        self.add_da_dict = {
-            self.ui.dealer_add: [
-                self.ui.dealer_edit,
-                "unlocked_dealers:",
-                self.dealers,
-                "Dealership",
-                self.check_dealers
+        self.da_statics = {
+            "dealer": [
+                self.dealers, # city_list
+                "unlocked_dealers:", # line_to_search
+                self.check_dealers, # check_func
             ],
-            self.ui.agency_add: [
-                self.ui.agency_edit,
-                "unlocked_recruitments:",
-                self.agencies,
-                "Recruitment agency",
-                self.check_agencies
+            "agency": [
+                self.agencies, # city_list
+                "unlocked_recruitments:", # line_to_search
+                self.check_agencies, # check_func
             ],
         }
-        # Dealers and agencies properties for 'ADD ALL' button
-        self.add_all_da_dict = {
+
+        self.add_da_handlers = {
+            self.ui.dealer_add: [
+                "dealer",
+                self.ui.dealer_edit, # city_to_add
+                "Dealership", # message_variable
+            ],
             self.ui.dealer_add_all: [
-                self.dealers,
-                "unlocked_dealers:",
-                "All dealerships unlocked.",
-                self.check_dealers
+                "dealer",
+                "All dealerships unlocked.", # success_message
+                "Visiting dealers", # progress_message
+            ],
+            self.ui.agency_add: [
+                "agency",
+                self.ui.agency_edit, # city_to_add
+                "Recruitment agency", # message_variable
             ],
             self.ui.agency_add_all: [
-                self.agencies,
-                "unlocked_recruitments:",
-                "All recruitment agencies unlocked.",
-                self.check_agencies
+                "agency",
+                "All recruitment agencies unlocked.", # success_message
+                "Visiting agencies", # progress_message
             ],
         }
 
@@ -225,11 +227,14 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             QMessageBox.critical(self, "Error", "You've already visited \"{}\".".format(city))
 
     def add_all_cities(self):
+        all_cities = self.all_cities()
         visited_cities = util.get_array_items(util.search_line("visited_cities:"))
-        for city in self.all_cities():
+        progress = util.show_progress_bar("Visiting cities", "Visiting cities...", len(all_cities)-len(visited_cities))
+        for city in all_cities:
             if city not in visited_cities:
                 util.add_array_value(util.search_line("visited_cities:"), city)
                 util.add_array_value(util.search_line("visited_cities_count:"), "1")
+                util.update_progress_bar(progress)
         QMessageBox.information(self, "Success", "All cities successfully visited.")
         self.check_cities()
 
@@ -243,15 +248,6 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             self.ui.dealerships_text.append(dealer)
         self.ui.dealerships_text.scrollToAnchor(visited_dealers[0])
 
-    # def add_all_dealers(self):
-    #     all_cities = self.all_cities()
-    #     visited_dealers = util.get_array_items(util.search_line("unlocked_dealers:"))
-    #     for dealer in self.dealers:
-    #         if dealer in all_cities and dealer not in visited_dealers:
-    #             util.add_array_value(util.search_line("unlocked_dealers:"), dealer)
-    #     QMessageBox.information(self, "Success", "All dealerships unlocked.")
-    #     self.check_dealers()
-
     def check_agencies(self):
         self.ui.agencies_text.clear()
         visited_agencies = util.get_array_items(util.search_line("unlocked_recruitments:"))
@@ -262,25 +258,17 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             self.ui.agencies_text.append(agency)
         self.ui.agencies_text.scrollToAnchor(visited_agencies[0])
 
-    # def add_all_agencies(self):
-    #     all_cities = self.all_cities()
-    #     visited_agencies = util.get_array_items(util.search_line("unlocked_recruitments:"))
-    #     for agency in self.agencies:
-    #         if agency in all_cities and agency not in visited_agencies:
-    #             util.add_array_value(util.search_line("unlocked_recruitments:"), agency)
-    #     QMessageBox.information(self, "Success", "All recruitment agencies unlocked.")
-    #     self.check_agencies()
-
     def add_da_clicked(self):
-        da_arr = self.add_da_dict.get(self.sender())
+        da_arr = self.add_da_handlers.get(self.sender())
         if da_arr is None:
             return
-        edit, line_to_search, city_list, message_variable, check_func = da_arr
-        city_element = edit.text().lower()
+        static_id, city_to_add, message_variable = da_arr
+        city_list, line_to_search, check_func = self.da_statics.get(static_id)
+        city_element = city_to_add.text().lower()
         if not city_element:
             QMessageBox.critical(self, "Error", "Enter city name!")
             return
-        edit.setText("")
+        city_to_add.setText("")
         if city_element not in city_list:
             QMessageBox.critical(self, "Error", "There is no {} in that city.".format(message_variable.lower()))
         elif city_element in util.get_array_items(util.search_line(line_to_search)):
@@ -293,15 +281,18 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             check_func()
 
     def add_all_da_clicked(self):
-        da_arr = self.add_all_da_dict.get(self.sender())
+        da_arr = self.add_da_handlers.get(self.sender())
         if da_arr is None:
             return
-        city_list, line_to_search, success_message, check_func = da_arr
+        static_id, success_message, progress_message = da_arr
+        city_list, line_to_search, check_func = self.da_statics.get(static_id)
         all_cities = self.all_cities()
         array_line = util.search_line(line_to_search)
-        visited = util.get_array_items(array_line)
+        visited_cities = util.get_array_items(array_line)
+        progress = util.show_progress_bar(progress_message, progress_message+"...", len(all_cities)-len(visited_cities))
         for element in city_list:
-            if (element in all_cities) and (element not in visited):
+            if (element in all_cities) and (element not in visited_cities):
                 util.add_array_value(array_line, element)
+                util.update_progress_bar(progress)
         QMessageBox.information(self, "Success", success_message)
         check_func()

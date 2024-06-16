@@ -4,8 +4,6 @@
 import os
 from ast import literal_eval
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QProgressDialog, QApplication
 from requests import get
 
 from dataIO import dataIO
@@ -56,10 +54,7 @@ def update_configs():
     update_list = check_remote_hashes()
     if not update_list or len(update_list) == 0:
         return
-    progress = QProgressDialog("Downloading configs...", None, 0, len(update_list), flags=Qt.Window | Qt.WindowTitleHint)
-    progress.setWindowTitle("Download progress")
-    progress.setWindowModality(Qt.WindowModal)
-    progress.show()
+    progress_bar = util.show_progress_bar("Download progress", "Downloading configs...", len(update_list))
     for cfg in update_list:
         check_path(cfg)
         response_status, response = get_response_result(github_link + cfg)
@@ -67,7 +62,5 @@ def update_configs():
             remote_cfg = literal_eval(response.text)
             if dataIO.is_valid_json(cfg) or os.path.exists(cfg):
                 dataIO.save_json(cfg, remote_cfg)
-                progress.setValue(progress.value()+1)
-                QApplication.processEvents()
-    progress.setValue(len(update_list))
-    QApplication.processEvents()
+                util.update_progress_bar(progress_bar)
+    util.update_progress_bar(progress_bar, len(update_list))
