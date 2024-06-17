@@ -8,7 +8,7 @@
 
 Features:
 1. Decrypt file, if save file crypted
-2. Check for DLC to the save file (available DLC listed at [DLC_TABLE.md](https://github.com/JDM170/SaveWizard/blob/dev/DLC_TABLE.md))
+2. Check for DLC to the save file (available DLC listed at [DLC_TABLE.md](https://github.com/JDM170/SaveWizard/blob/configs/DLC_TABLE.md))
 3. Edit money, experience and loan limit
 4. Edit skills
 5. Visit cities, unlock garages, dealers and agencies
