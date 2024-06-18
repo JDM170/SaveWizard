@@ -23,10 +23,9 @@ class SecondWindow(QDialog, Ui_SecondWindow):
 
         self.owns = owns_list  # From main window
 
-        # Checking files
+        # Checking config files
         cfg_path = "configs/{}".format(selected_game)
         dealers_path = "{}/dealers.json".format(cfg_path)
-        agencies_path = "{}/agencies.json".format(cfg_path)
         if dataIO.is_valid_json(dealers_path) is False:
             self.dealers = False
             self.ui.dealer_edit.setEnabled(False)
@@ -38,6 +37,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
             self.dealers = []
             self.dealers_file = dataIO.load_json(dealers_path)
 
+        agencies_path = "{}/agencies.json".format(cfg_path)
         if dataIO.is_valid_json(agencies_path) is False:
             self.agencies = False
             self.ui.agency_edit.setEnabled(False)
@@ -98,14 +98,13 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         self.ui.city_add_all.clicked.connect(self.add_all_cities)
         self.ui.dealer_add.clicked.connect(self.add_da_clicked)
         self.ui.agency_add.clicked.connect(self.add_da_clicked)
-        # self.ui.dealer_add_all.clicked.connect(self.add_all_dealers)
-        # self.ui.agency_add_all.clicked.connect(self.add_all_agencies)
         self.ui.dealer_add_all.clicked.connect(self.add_all_da_clicked)
         self.ui.agency_add_all.clicked.connect(self.add_all_da_clicked)
 
         if self.owns:
             self.fill_list(self.owns, self.dealers, self.dealers_file)
             self.fill_list(self.owns, self.agencies, self.agencies_file)
+
         # Checking save-file
         self.check_cities()
         self.check_dealers()
@@ -148,8 +147,8 @@ class SecondWindow(QDialog, Ui_SecondWindow):
                 array.append(value)
 
     def check_garage_size(self):
-        stat = garages_stat[self.ui.garage_size.currentText()]
-        return str(stat[0]), stat[1]
+        status_id, size = garages_stat[self.ui.garage_size.currentText()]
+        return str(status_id), size
 
     def check_garages(self):
         self.ui.garages_text.clear()
@@ -262,8 +261,8 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         da_arr = self.add_da_handlers.get(self.sender())
         if da_arr is None:
             return
-        static_id, city_to_add, message_variable = da_arr
-        city_list, line_to_search, check_func = self.da_statics.get(static_id)
+        static_key, city_to_add, message_variable = da_arr
+        city_list, line_to_search, check_func = self.da_statics.get(static_key)
         city_element = city_to_add.text().lower()
         if not city_element:
             QMessageBox.critical(self, "Error", "Enter city name!")
@@ -284,8 +283,8 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         da_arr = self.add_da_handlers.get(self.sender())
         if da_arr is None:
             return
-        static_id, success_message, progress_message = da_arr
-        city_list, line_to_search, check_func = self.da_statics.get(static_id)
+        static_key, success_message, progress_message = da_arr
+        city_list, line_to_search, check_func = self.da_statics.get(static_key)
         all_cities = self.all_cities()
         array_line = util.search_line(line_to_search)
         visited_cities = util.get_array_items(array_line)
