@@ -1,5 +1,5 @@
 altgraph==0.17.4
-certifi==2023.11.17
+certifi==2024.7.4
 charset-normalizer==3.3.2
 cx_Freeze==7.0.0
 cx-Logging==3.1.0
