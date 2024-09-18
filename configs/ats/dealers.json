@@ -116,5 +116,12 @@
         "north_platte",
         "omaha",
         "sidney_ne"
+    ],
+    "arkansas" : [
+        "el_dorado",
+        "fort_smith",
+        "jonesboro",
+        "little_rock",
+        "springdale"
     ]
 }

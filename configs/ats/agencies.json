@@ -91,5 +91,10 @@
         "grand_island",
         "lincoln",
         "omaha"
+    ],
+    "arkansas" : [
+        "little_rock",
+        "pine_bluff",
+        "texarkana_ar"
     ]
 }

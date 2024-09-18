@@ -15,7 +15,7 @@
 | Oklahoma | oklahoma | dlc_ok |
 | Kansas | kansas | dlc_ks |
 | Nebraska | nebraska | dlc_ne |
-| Arkansas (not released) | arkansas | ? |
+| Arkansas | arkansas | dlc_ar |
 | Missouri (not released) | missouri | ? |
 | Iowa (not released) | iowa | ? |
 
