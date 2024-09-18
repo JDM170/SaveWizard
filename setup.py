@@ -24,7 +24,7 @@ zip_include_packages = [
     'calendar', 'urllib', 'posixpath', 'tempfile', 'shutil', 'copy', 'stringprep', 'socket', 'ast', 'ssl', 'ctypes',
     # PyQt5
     'PyQt5',
-    # Modules for parsing cfg's
+    # Modules for parsing configs
     'requests', 'logging', 'certifi', 'chardet', 'idna', 'urllib3', 'inspect',
     # Self-written modules
     'module_parsing', 'module_main', 'module_second', 'module_config_editor'
@@ -41,7 +41,7 @@ options = {
         'excludes': excludes,
         'includes': includes,
         'include_msvcr': True,
-        'build_exe': 'prog_build',
+        'build_exe': 'app_build',
         'include_files': include_files,
         'zip_include_packages': zip_include_packages,
     }
@@ -50,7 +50,7 @@ options = {
 setup(
     name='SaveWizard',
     version='1.4.1',
-    description='For editing ETS2 sii files',
+    description='Tool for edit ATS and ETS2 save files',
     executables=executables,
     options=options,
     requires=['PyQt5', 'requests'],
