@@ -21,33 +21,32 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         self.ui = Ui_SecondWindow()
         self.ui.setupUi(self)
 
-        self.owns = owns_list  # From main window
-
         # Checking config files
-        cfg_path = "configs/{}".format(selected_game)
-        dealers_path = "{}/dealers.json".format(cfg_path)
-        if dataIO.is_valid_json(dealers_path) is False:
-            self.dealers = False
-            self.ui.dealer_edit.setEnabled(False)
-            self.ui.dealer_add.setEnabled(False)
-            self.ui.dealer_add_all.setEnabled(False)
-            QMessageBox.warning(self, "Warning", "'dealers.json' from '{}' have errors or not found.\n"
-                                                 "Dealers editing has been disabled".format(selected_game))
-        else:
-            self.dealers = []
-            self.dealers_file = dataIO.load_json(dealers_path)
+        if selected_game is not None:
+            cfg_path = "configs/{}".format(selected_game)
+            dealers_path = "{}/dealers.json".format(cfg_path)
+            if dataIO.is_valid_json(dealers_path) is False:
+                self.dealers = False
+                self.ui.dealer_edit.setEnabled(False)
+                self.ui.dealer_add.setEnabled(False)
+                self.ui.dealer_add_all.setEnabled(False)
+                QMessageBox.warning(self, "Warning", "'dealers.json' from '{}' have errors or not found.\n"
+                                                     "Dealers editing has been disabled".format(selected_game))
+            else:
+                self.dealers = []
+                self.dealers_file = dataIO.load_json(dealers_path)
 
-        agencies_path = "{}/agencies.json".format(cfg_path)
-        if dataIO.is_valid_json(agencies_path) is False:
-            self.agencies = False
-            self.ui.agency_edit.setEnabled(False)
-            self.ui.agency_add.setEnabled(False)
-            self.ui.agency_add_all.setEnabled(False)
-            QMessageBox.warning(self, "Warning", "'agencies.json' from '{}' have errors or not found.\n"
-                                                 "Agencies editing has been disabled".format(selected_game))
-        else:
-            self.agencies = []
-            self.agencies_file = dataIO.load_json(agencies_path)
+            agencies_path = "{}/agencies.json".format(cfg_path)
+            if dataIO.is_valid_json(agencies_path) is False:
+                self.agencies = False
+                self.ui.agency_edit.setEnabled(False)
+                self.ui.agency_add.setEnabled(False)
+                self.ui.agency_add_all.setEnabled(False)
+                QMessageBox.warning(self, "Warning", "'agencies.json' from '{}' have errors or not found.\n"
+                                                     "Agencies editing has been disabled".format(selected_game))
+            else:
+                self.agencies = []
+                self.agencies_file = dataIO.load_json(agencies_path)
 
         self.ui.garage_size.addItem("Small")
         self.ui.garage_size.addItem("Medium")
@@ -101,9 +100,9 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         self.ui.dealer_add_all.clicked.connect(self.add_all_da_clicked)
         self.ui.agency_add_all.clicked.connect(self.add_all_da_clicked)
 
-        if self.owns:
-            self.fill_list(self.owns, self.dealers, self.dealers_file)
-            self.fill_list(self.owns, self.agencies, self.agencies_file)
+        if isinstance(owns_list, dict):
+            self.fill_list(owns_list, self.dealers, self.dealers_file)
+            self.fill_list(owns_list, self.agencies, self.agencies_file)
 
         # Checking save-file
         self.check_cities()
@@ -228,7 +227,7 @@ class SecondWindow(QDialog, Ui_SecondWindow):
     def add_all_cities(self):
         all_cities = self.all_cities()
         visited_cities = util.get_array_items(util.search_line("visited_cities:"))
-        progress = util.show_progress_bar("Visiting cities", "Visiting cities...", len(all_cities)-len(visited_cities))
+        progress = util.show_progress_bar("Visiting cities", "Visiting cities", len(all_cities)-len(visited_cities))
         for city in all_cities:
             if city not in visited_cities:
                 util.add_array_value(util.search_line("visited_cities:"), city)
@@ -284,13 +283,13 @@ class SecondWindow(QDialog, Ui_SecondWindow):
         if da_arr is None:
             return
         static_key, success_message, progress_message = da_arr
-        city_list, line_to_search, check_func = self.da_statics.get(static_key)
+        cities_to_unlock, line_to_search, check_func = self.da_statics.get(static_key)
         all_cities = self.all_cities()
         array_line = util.search_line(line_to_search)
-        visited_cities = util.get_array_items(array_line)
-        progress = util.show_progress_bar(progress_message, progress_message+"...", len(all_cities)-len(visited_cities))
-        for element in city_list:
-            if (element in all_cities) and (element not in visited_cities):
+        unlocked_cities = util.get_array_items(array_line)
+        progress = util.show_progress_bar(progress_message, progress_message, len(all_cities)-len(unlocked_cities))
+        for element in cities_to_unlock:
+            if (element not in unlocked_cities) and (element in all_cities):
                 util.add_array_value(array_line, element)
                 util.update_progress_bar(progress)
         QMessageBox.information(self, "Success", success_message)

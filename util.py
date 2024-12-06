@@ -39,7 +39,7 @@ class CustomFuncs:
     def show_progress_bar(title, text, length):
         if (not title) or (not text) or (not length) or (length <= 0):
             return
-        progress_bar = QProgressDialog(text, None, 0, length, flags=Qt.Window | Qt.WindowTitleHint)
+        progress_bar = QProgressDialog(text + "...", None, 0, length, flags=Qt.Window | Qt.WindowTitleHint)
         progress_bar.setWindowTitle(title)
         progress_bar.setWindowModality(Qt.WindowModal)
         progress_bar.show()

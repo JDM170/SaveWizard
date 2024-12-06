@@ -14,7 +14,7 @@
 /upx
 
 ## Ignore build from cx_Freeze
-/prog_build
+/app_build
 
 ## Ignore build files from PyInstaller
 /build

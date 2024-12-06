@@ -54,7 +54,7 @@ def update_configs():
     update_list = check_remote_hashes()
     if not update_list or len(update_list) == 0:
         return
-    progress_bar = util.show_progress_bar("Download progress", "Downloading configs...", len(update_list))
+    progress_bar = util.show_progress_bar("Download progress", "Downloading configs", len(update_list))
     for cfg in update_list:
         check_path(cfg)
         response_status, response = get_response_result(github_link + cfg)

@@ -109,6 +109,9 @@ class MainWindow(QDialog, Ui_MainWindow):
         return adr_list
 
     def check_config(self):
+        if self.selected_game is None:
+            self.owns = False
+            return
         cfg_path = "configs/{}/dlc.json".format(self.selected_game)
         if dataIO.is_valid_json(cfg_path) is False:
             self.owns = False
@@ -152,10 +155,12 @@ class MainWindow(QDialog, Ui_MainWindow):
             self.old_file = f.read()
         util.set_lines(self.old_file.split("\n"))
 
-        if util.search_line("company.volatile.eurogoodies.magdeburg"):
+        if util.search_line("company.volatile.eurogoodies.dortmund"):
             self.selected_game = "ets2"
-        else:
+        elif util.search_line("company.volatile.ed_mkt.elko"):
             self.selected_game = "ats"
+        else:
+            self.selected_game = None
         self.check_config()
 
         if self.owns is not False:
@@ -186,11 +191,10 @@ class MainWindow(QDialog, Ui_MainWindow):
                                                            caption=self.tr("Choose your save file..."),
                                                            filter=self.tr("game.sii"))
         self.clear_form_data()
-        if file_path != "":
-            self.file_path = file_path
-            self.get_file_data(file_path)
-        else:
+        if file_path == "":
             return
+        self.file_path = file_path
+        self.get_file_data(file_path)
 
     def update_on_startup(self):
         with open(update_config_name, "w") as f:
