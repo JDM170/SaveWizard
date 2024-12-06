@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QResizeEvent, QCloseEvent, QClipboard
 from PyQt5.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QApplication
 from ast import literal_eval
