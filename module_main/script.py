@@ -101,13 +101,6 @@ class MainWindow(QDialog, Ui_MainWindow):
             r.append(i)
         return r
 
-    def get_adr_from_line(self):
-        adr_list = list(self.ui.adr_edit.text())
-        for i in adr_list:
-            if (i == " ") or (i == ",") or (i == "."):
-                adr_list.remove(i)
-        return adr_list
-
     def check_config(self):
         if self.selected_game is None:
             self.owns = False
@@ -173,12 +166,7 @@ class MainWindow(QDialog, Ui_MainWindow):
         for key, value in self.basic_edits.items():
             key.setText(util.get_value(util.search_line(value[1])))
 
-        adr = self.get_adr(util.get_value(util.search_line("adr:")))
-        adr_list = ""
-        for i in range(6):
-            adr_list += adr[i] + "," if i != 5 else adr[i]
-        self.ui.adr_edit.setText(adr_list)
-
+        self.ui.adr_edit.setText(",".join(self.get_adr(util.get_value(util.search_line("adr:")))))
         for key, value in self.skill_edits.items():
             key.setText(util.get_value(util.search_line(value[1])))
 
@@ -224,7 +212,7 @@ class MainWindow(QDialog, Ui_MainWindow):
                 util.set_value(util.search_line(value[1]), key.text())
                 value[0].setChecked(True)
         if self.ui.adr_dont_change.isChecked() is False:
-            adr_set = self.get_adr_from_line()
+            adr_set = [i for i in list(self.ui.adr_edit.text()) if i not in (' ', ',', '.')]
             if len(adr_set) < 6:
                 QMessageBox.critical(self, "Error", "ADR can't have less than 6 elements.")
             elif len(adr_set) > 6:
