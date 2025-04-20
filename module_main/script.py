@@ -109,7 +109,8 @@ class MainWindow(QDialog, Ui_MainWindow):
         if dataIO.is_valid_json(cfg_path) is False:
             self.owns = False
             QMessageBox.warning(self, "Warning", "'dlc.json' from '{}' have errors or not found, "
-                                                 "functionality has been limited".format(self.selected_game))
+                                                 "functionality has been limited.\n"
+                                                 "Updating configs may solve problem.".format(self.selected_game))
         else:
             self.owns = {}
             self.dlc = dataIO.load_json(cfg_path)

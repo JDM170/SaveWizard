@@ -31,7 +31,8 @@ class SecondWindow(QDialog, Ui_SecondWindow):
                 self.ui.dealer_add.setEnabled(False)
                 self.ui.dealer_add_all.setEnabled(False)
                 QMessageBox.warning(self, "Warning", "'dealers.json' from '{}' have errors or not found.\n"
-                                                     "Dealers editing has been disabled".format(selected_game))
+                                                     "Dealers editing has been disabled.\n"
+                                                     "Updating configs may solve problem.".format(selected_game))
             else:
                 self.dealers = []
                 self.dealers_file = dataIO.load_json(dealers_path)
@@ -43,7 +44,8 @@ class SecondWindow(QDialog, Ui_SecondWindow):
                 self.ui.agency_add.setEnabled(False)
                 self.ui.agency_add_all.setEnabled(False)
                 QMessageBox.warning(self, "Warning", "'agencies.json' from '{}' have errors or not found.\n"
-                                                     "Agencies editing has been disabled".format(selected_game))
+                                                     "Agencies editing has been disabled.\n"
+                                                     "Updating configs may solve problem.".format(selected_game))
             else:
                 self.agencies = []
                 self.agencies_file = dataIO.load_json(agencies_path)
