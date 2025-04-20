@@ -37,7 +37,7 @@ def check_path(path):
 
 
 def check_remote_hashes():
-    response_status, response = get_response_result(github_link + "configs/version.cfg")
+    response_status, response = get_response_result(github_link + "version.cfg")
     if response_status:
         remote_cfg = literal_eval(response.text)
         need_update = []
@@ -57,7 +57,7 @@ def update_configs():
     progress_bar = util.show_progress_bar("Download progress", "Downloading configs", len(update_list))
     for cfg in update_list:
         check_path(cfg)
-        response_status, response = get_response_result(github_link + cfg)
+        response_status, response = get_response_result(github_link + cfg.replace("configs/", ""))
         if response_status:
             remote_cfg = literal_eval(response.text)
             if dataIO.is_valid_json(cfg) or os.path.exists(cfg):
