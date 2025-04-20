@@ -49,7 +49,7 @@ options = {
 
 setup(
     name='SaveWizard',
-    version='1.4.1',
+    version='1.5',
     description='Tool for edit ATS and ETS2 save files',
     executables=executables,
     options=options,
