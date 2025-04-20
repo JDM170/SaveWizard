@@ -4,9 +4,7 @@ app = Analysis(
     ['init_main_program.py'],
     pathex=['.'],
     datas=[
-        ('SII_Decrypt.dll', '.'),
-        ('configs/ats', 'configs/ats'),
-        ('configs/ets2', 'configs/ets2')
+        ('SII_Decrypt.dll', '.')
     ]
 )
 cfg = Analysis(

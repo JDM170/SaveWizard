@@ -31,9 +31,7 @@ zip_include_packages = [
 ]
 
 include_files = [
-    'SII_Decrypt.dll',
-    ('configs/ats', 'configs/ats'),
-    ('configs/ets2', 'configs/ets2')
+    'SII_Decrypt.dll'
 ]
 
 options = {
